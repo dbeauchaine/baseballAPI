@@ -24,30 +24,37 @@ namespace baseballAPI.UnitTests.Controllers
         [Test]
         public void ReturnsPlayerID()
         {
-            var firstname = "first";
-            var lastname = "last";
+            var firstName = "first";
+            var lastName = "last";
  
             const string expectedPlayerId = "something";
 
-            _playerService.AssumeReturnsPlayerId(expectedPlayerId);
+            _playerService.AssumeReturnsPlayerId(expectedPlayerId, firstName, lastName);
 
-            var playerID = _controller.GetPlayerId(firstname, lastname);
+            var playerId = _controller.GetPlayerId(firstName, lastName);
 
-            Assert.That(playerID, Is.EqualTo(expectedPlayerId));
+            Assert.That(playerId, Is.EqualTo(expectedPlayerId));
         }
     }
 
     public class FakePlayerService : IPlayerService
     {
         private string _expectedPlayerId;
+        private string _firstName;
+        private string _lastName;
 
-        public void AssumeReturnsPlayerId(string expectedPlayerId)
+        public void AssumeReturnsPlayerId(string expectedPlayerId, string firstName, string lastName)
         {
             _expectedPlayerId = expectedPlayerId;
+            _firstName = firstName;
+            _lastName = lastName;
         }
 
-        public string GetPlayerId()
+        public string GetPlayerId(string firstName, string lastName)
         {
+            Assert.That(firstName, Is.EqualTo(_firstName));
+            Assert.That(lastName, Is.EqualTo(_lastName));
+
             return _expectedPlayerId;
         }
     }

@@ -7,6 +7,6 @@ namespace baseballAPI.Services
 {
     public interface IPlayerService
     {
-        public string GetPlayerId();
+        public string GetPlayerId(string firstName, string lastName);
     }
 }

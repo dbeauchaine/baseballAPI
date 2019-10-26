@@ -20,9 +20,9 @@ namespace baseballAPI.Controllers
         }
 
         [HttpGet]
-        public string GetPlayerId(string firstname, string lastname)
+        public string GetPlayerId(string firstName, string lastName)
         {
-            return _playerService.GetPlayerId();
+            return _playerService.GetPlayerId(firstName, lastName);
         }
     }
 }
