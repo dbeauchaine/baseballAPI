@@ -1,4 +1,5 @@
 ﻿using baseballAPI.Controllers;
+using baseballAPI.Services;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,14 @@ namespace baseballAPI.UnitTests.Controllers
     [Category("Unit")]
     public class PlayerControllerTests
     {
-        [Test]
-        public void PlayerControllerExists() 
+        private FakePlayerService _playerService;
+        private PlayerController _controller;
+
+        [SetUp]
+        public void SetUp()
         {
-            var test = new PlayerController();
+            _playerService = new FakePlayerService();
+            _controller = new PlayerController(_playerService);
         }
 
         [Test]
@@ -21,8 +26,29 @@ namespace baseballAPI.UnitTests.Controllers
         {
             var firstname = "first";
             var lastname = "last";
-            var controller = new PlayerController();
-            var playerID = controller.GetPlayerID(firstname, lastname);
+ 
+            const string expectedPlayerId = "something";
+
+            _playerService.AssumeReturnsPlayerId(expectedPlayerId);
+
+            var playerID = _controller.GetPlayerId(firstname, lastname);
+
+            Assert.That(playerID, Is.EqualTo(expectedPlayerId));
+        }
+    }
+
+    public class FakePlayerService : IPlayerService
+    {
+        private string _expectedPlayerId;
+
+        public void AssumeReturnsPlayerId(string expectedPlayerId)
+        {
+            _expectedPlayerId = expectedPlayerId;
+        }
+
+        public string GetPlayerId()
+        {
+            return _expectedPlayerId;
         }
     }
 }
