@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace baseballAPI.Services
+namespace BaseballAPI.Services
 {
     public class PlayerService : IPlayerService
     {

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using baseballAPI.Services;
+using BaseballAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace baseballAPI.Controllers
+namespace BaseballAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]

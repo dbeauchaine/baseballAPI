@@ -1,11 +1,11 @@
-﻿using baseballAPI.Controllers;
-using baseballAPI.Services;
+﻿using BaseballAPI.Controllers;
+using BaseballAPI.Services;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace baseballAPI.UnitTests.Controllers
+namespace BaseballAPI.UnitTests.Controllers
 {
     [TestFixture]
     [Category("Unit")]

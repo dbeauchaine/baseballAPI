@@ -1,7 +1,7 @@
-﻿using baseballAPI.Services;
+﻿using BaseballAPI.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace baseballAPI
+namespace BaseballAPI
 {
     public class ContainerInitializer
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace baseballAPI.Services
+namespace BaseballAPI.Services
 {
     public interface IPlayerService
     {

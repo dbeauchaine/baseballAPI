@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace baseballAPI
+namespace BaseballAPI
 {
     public class Program
     {

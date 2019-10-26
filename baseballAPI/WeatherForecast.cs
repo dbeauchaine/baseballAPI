@@ -1,6 +1,6 @@
 using System;
 
-namespace baseballAPI
+namespace BaseballAPI
 {
     public class WeatherForecast
     {
