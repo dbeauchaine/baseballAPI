@@ -1,5 +1,6 @@
 ﻿using BaseballAPI.Controllers;
 using BaseballAPI.Services;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -11,25 +12,26 @@ namespace BaseballAPI.UnitTests.Controllers
     [Category("Unit")]
     public class PlayerControllerTests
     {
-        private FakePlayerService _playerService;
+        private Mock<IPlayerService> _playerService;
         private PlayerController _controller;
 
         [SetUp]
         public void SetUp()
         {
-            _playerService = new FakePlayerService();
-            _controller = new PlayerController(_playerService);
+            _playerService = new Mock<IPlayerService>();
+            _controller = new PlayerController(_playerService.Object);
         }
+
 
         [Test]
         public void ReturnsPlayerID()
         {
             var firstName = "first";
             var lastName = "last";
- 
+
             const string expectedPlayerId = "something";
 
-            _playerService.AssumeReturnsPlayerId(expectedPlayerId, firstName, lastName);
+            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(firstName, lastName)).Returns(expectedPlayerId);
 
             var playerId = _controller.GetPlayerId(firstName, lastName);
 
@@ -37,25 +39,4 @@ namespace BaseballAPI.UnitTests.Controllers
         }
     }
 
-    public class FakePlayerService : IPlayerService
-    {
-        private string _expectedPlayerId;
-        private string _firstName;
-        private string _lastName;
-
-        public void AssumeReturnsPlayerId(string expectedPlayerId, string firstName, string lastName)
-        {
-            _expectedPlayerId = expectedPlayerId;
-            _firstName = firstName;
-            _lastName = lastName;
-        }
-
-        public string GetPlayerId(string firstName, string lastName)
-        {
-            Assert.That(firstName, Is.EqualTo(_firstName));
-            Assert.That(lastName, Is.EqualTo(_lastName));
-
-            return _expectedPlayerId;
-        }
-    }
 }
