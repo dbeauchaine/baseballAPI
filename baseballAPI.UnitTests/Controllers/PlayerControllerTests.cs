@@ -22,7 +22,6 @@ namespace BaseballAPI.UnitTests.Controllers
             _controller = new PlayerController(_playerService.Object);
         }
 
-
         [Test]
         public void ReturnsPlayerID()
         {
