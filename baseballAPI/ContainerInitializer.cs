@@ -1,4 +1,5 @@
-﻿using BaseballAPI.Services;
+﻿using BaseballAPI.Models;
+using BaseballAPI.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BaseballAPI
@@ -13,6 +14,7 @@ namespace BaseballAPI
 
         public void Execute()
         {
+            _services.AddDbContext<IBaseballDBContext, BaseballDBContext>();
             _services.AddControllers();
             _services.AddTransient<IPlayerService, PlayerService>();
         }

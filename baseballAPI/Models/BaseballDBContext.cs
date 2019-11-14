@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace BaseballAPI.Models
 {
-    public partial class BaseballDBContext : DbContext
+    public partial class BaseballDBContext : DbContext, IBaseballDBContext
     {
         public BaseballDBContext()
         {
@@ -662,7 +662,7 @@ namespace BaseballAPI.Models
 
             modelBuilder.Entity<People>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.PlayerId });
 
                 entity.Property(e => e.Bats)
                     .HasColumnName("bats")
