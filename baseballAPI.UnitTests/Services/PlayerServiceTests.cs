@@ -5,6 +5,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BaseballAPI.UnitTests.Controllers
@@ -34,13 +35,19 @@ namespace BaseballAPI.UnitTests.Controllers
             var lastName = "last";
             var expectedPlayerId = "something";
 
-            _database.Add(new People
+            var checkForDuplicate = _database.People
+                 .Where(s => s.NameFirst == firstName && s.NameLast == lastName)
+                 .FirstOrDefault();
+
+            if (checkForDuplicate == null)
             {
-                NameFirst = firstName,
-                NameLast = lastName,
-                PlayerId = expectedPlayerId
-            });
-           
+                _database.Add(new People
+                {
+                    NameFirst = firstName,
+                    NameLast = lastName,
+                    PlayerId = expectedPlayerId
+                });
+            }
             _database.SaveChanges();
 
             var playerId = _service.GetPlayerId(firstName, lastName);
@@ -58,6 +65,20 @@ namespace BaseballAPI.UnitTests.Controllers
             var anotherFirstName = "anotherFirst";
             var anotherLastName = "anotherLast";
             var anotherPlayerId = "somethingElse";
+           
+            var checkForDuplicate = _database.People
+                 .Where(s => s.NameFirst == firstName && s.NameLast == lastName)
+                 .FirstOrDefault();
+
+            if (checkForDuplicate == null)
+            {
+                _database.Add(new People
+                {
+                    NameFirst = firstName,
+                    NameLast = lastName,
+                    PlayerId = expectedPlayerId
+                });
+            }
 
             _database.Add(new People
             {
