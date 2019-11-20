@@ -58,7 +58,6 @@ namespace BaseballAPI.UnitTests.Controllers
         [Test]
         public void GetReturnsIdMultipleEntries()
         {
-            //assumes previous add to database from GetReturnsIdOneEntry
             var firstName = "first";
             var lastName = "last";
             var expectedPlayerId = "something";
