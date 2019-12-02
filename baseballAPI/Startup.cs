@@ -1,3 +1,4 @@
+using BaseballAPI.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +28,9 @@ namespace BaseballAPI
                     builder.WithOrigins("*");
                 });
             });
+            
+            services.AddControllers(options =>
+                options.Filters.Add(new HttpResponseExceptionFilter()));
 
             ContainerInitializer initializer = new ContainerInitializer(services);
             initializer.Execute();
