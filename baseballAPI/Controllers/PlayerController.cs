@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Net;
+using BaseballAPI.Models;
 using BaseballAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace BaseballAPI.Controllers
 {
@@ -23,6 +20,19 @@ namespace BaseballAPI.Controllers
         public string GetPlayerId(string firstName, string lastName)
         {
             return _playerService.GetPlayerId(firstName, lastName);
+        }
+
+        [HttpGet("{id}")]
+        public People GetPlayer(string id)
+        {
+            var player = _playerService.GetPlayer(id);
+
+            if (player == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound); 
+            }
+
+            return player;
         }
     }
 }

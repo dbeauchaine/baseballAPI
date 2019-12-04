@@ -1,5 +1,4 @@
 ﻿using BaseballAPI.Models;
-using System;
 using System.Linq;
 
 namespace BaseballAPI.Services
@@ -15,10 +14,17 @@ namespace BaseballAPI.Services
         public string GetPlayerId(string firstName, string lastName)
         {
             var playerId = _database.People
-                .Where(s => s.NameFirst == firstName && s.NameLast == lastName)
-                .FirstOrDefault();
+                .FirstOrDefault(s => s.NameFirst == firstName && s.NameLast == lastName);
 
             return playerId.PlayerId;
+        }
+
+        public People GetPlayer(string id)
+        {
+            var player = _database.People
+                .FirstOrDefault(s => s.PlayerId == id); 
+
+            return player;
         }
     }
 }
