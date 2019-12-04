@@ -17,6 +17,7 @@ namespace BaseballAPI
             _services.AddDbContext<IBaseballDBContext, BaseballDBContext>();
             _services.AddControllers();
             _services.AddTransient<IPlayerService, PlayerService>();
+            _services.AddTransient<IBattingService, BattingService>();
         }
     }
 }
