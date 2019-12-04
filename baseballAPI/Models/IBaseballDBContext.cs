@@ -9,5 +9,6 @@ namespace BaseballAPI.Models
     public interface IBaseballDBContext
     {
         public  DbSet<People> People { get; set; }
+        public DbSet<Batting> Batting { get; set; }
     }
 }
