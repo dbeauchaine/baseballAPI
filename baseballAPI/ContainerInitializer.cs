@@ -1,4 +1,5 @@
-﻿using BaseballAPI.Models;
+﻿using BaseballAPI.ApiModels;
+using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +19,7 @@ namespace BaseballAPI
             _services.AddControllers();
             _services.AddTransient<IPlayerService, PlayerService>();
             _services.AddTransient<IBattingService, BattingService>();
+            _services.AddTransient<IBattingStatsMapper, BattingStatsMapper>();
         }
     }
 }

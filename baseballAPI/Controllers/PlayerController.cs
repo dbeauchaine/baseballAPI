@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using BaseballAPI.Models;
+using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
