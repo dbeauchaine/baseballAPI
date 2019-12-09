@@ -1,5 +1,5 @@
 ﻿using BaseballAPI.Controllers;
-using BaseballAPI.Models;
+using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Moq;
 using NUnit.Framework;

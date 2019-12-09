@@ -1,4 +1,4 @@
-﻿using BaseballAPI.Models;
+﻿using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;

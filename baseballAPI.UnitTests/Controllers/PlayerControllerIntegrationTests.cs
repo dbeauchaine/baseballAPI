@@ -7,7 +7,7 @@ using BaseballAPI.Services;
 using Moq;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Net.Http;
-using BaseballAPI.Models;
+using BaseballAPI.RepositoryModels;
 using Newtonsoft.Json;
 using System.Net;
 

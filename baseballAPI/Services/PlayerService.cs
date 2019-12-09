@@ -1,4 +1,4 @@
-﻿using BaseballAPI.Models;
+﻿using BaseballAPI.RepositoryModels;
 using System.Linq;
 
 namespace BaseballAPI.Services

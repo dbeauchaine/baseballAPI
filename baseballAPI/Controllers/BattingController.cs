@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
-using BaseballAPI.Models;
+using BaseballAPI.ApiModels;
+using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +20,7 @@ namespace BaseballAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public IEnumerable<Batting> GetBattingStats(string id)
+        public IEnumerable<BattingStats> GetBattingStats(string id)
         {
             var players = _battingService.GetBattingStats(id);
 

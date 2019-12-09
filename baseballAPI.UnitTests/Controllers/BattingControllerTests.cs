@@ -1,5 +1,6 @@
-﻿using BaseballAPI.Controllers;
-using BaseballAPI.Models;
+﻿using BaseballAPI.ApiModels;
+using BaseballAPI.Controllers;
+using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Moq;
 using NUnit.Framework;
@@ -26,17 +27,17 @@ namespace BaseballAPI.UnitTests.Controllers
         [Test]
         public void GetBattingStatsReturnsEnumerableBattingRecords()
         {
-            var expectedPerson = new Batting
+            var expectedPerson = new BattingStats
             {
                 PlayerId = "personId"
             };
 
-            var secondPerson = new Batting
+            var secondPerson = new BattingStats
             {
                 PlayerId = "personId"
             };
 
-            var expectedPeople = new List<Batting>()
+            var expectedPeople = new List<BattingStats>()
             {
                 expectedPerson,
                 secondPerson
@@ -54,7 +55,7 @@ namespace BaseballAPI.UnitTests.Controllers
         public void IfGetPlayerFailsToFindEntryItThrowsNotFoundException()
         {
             string badId = "badId";
-            _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStats(badId)).Returns((IEnumerable<Batting>)null);
+            _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStats(badId)).Returns((IEnumerable<BattingStats>)null);
 
             HttpResponseException exception = Assert.Throws<HttpResponseException>(() => _controller.GetBattingStats(badId));
 

@@ -1,6 +1,8 @@
-﻿using BaseballAPI.Models;
+﻿using BaseballAPI.ApiModels;
+using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using NUnit.Framework;
 using System.Linq;
 
@@ -16,6 +18,7 @@ namespace BaseballAPI.UnitTests.Controllers
         private Batting _firstPerson;
         private Batting _secondPerson;
         private Batting _duplicatePerson;
+        private Mock<IBattingStatsMapper> _mockMapper;
 
         [SetUp]
         public void SetUp()
@@ -25,7 +28,9 @@ namespace BaseballAPI.UnitTests.Controllers
                 .Options;
             _database = new BaseballDBContext(_options);
             _database.Database.EnsureDeleted();
-            _service = new BattingService(_database);
+            _mockMapper = new Mock<IBattingStatsMapper>();
+
+            _service = new BattingService(_database, _mockMapper.Object);
 
             CreateFakeData(_database);
         }
@@ -40,17 +45,26 @@ namespace BaseballAPI.UnitTests.Controllers
 
         public void AssertGetBattingStatsReturnsStats(Batting expectedPerson)
         {
-            var actualPerson = _service.GetBattingStats(expectedPerson.PlayerId);
+            var expectedPersonStats = new BattingStats();
 
-            Assert.That(actualPerson.ElementAt(0), Is.EqualTo(expectedPerson));
+            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(expectedPerson)).Returns(expectedPersonStats);
+
+            var actualBatting = _service.GetBattingStats(expectedPerson.PlayerId);
+
+            Assert.That(actualBatting.ElementAt(0), Is.EqualTo(expectedPersonStats));
         }
 
         public void AssertGetBattingStatsReturnsStatsWithDuplicateId(Batting firstEntry, Batting secondEntry)
         {
+            var firstEntryStats = new BattingStats();
+            var secondEntryStats = new BattingStats();
+
+            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(firstEntry)).Returns(firstEntryStats);
+            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(secondEntry)).Returns(secondEntryStats);
             var actualPeople = _service.GetBattingStats(firstEntry.PlayerId);
 
-            Assert.That(actualPeople.ElementAt(0), Is.EqualTo(firstEntry));
-            Assert.That(actualPeople.ElementAt(1), Is.EqualTo(secondEntry));
+            Assert.That(actualPeople.ElementAt(0), Is.EqualTo(firstEntryStats));
+            Assert.That(actualPeople.ElementAt(1), Is.EqualTo(secondEntryStats));
         }
         public void CreateFakeData(BaseballDBContext database)
         {
@@ -83,6 +97,5 @@ namespace BaseballAPI.UnitTests.Controllers
             _database.Add(_duplicatePerson);
             _database.SaveChanges();
         }
-
     }
 }
