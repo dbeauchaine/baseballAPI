@@ -5,23 +5,23 @@ using System.Linq;
 
 namespace BaseballAPI.Services
 {
-    public class BattingService : IBattingService
+    public class FieldingService : IFieldingService
     {
         private IBaseballDBContext _database;
-        private IBattingStatsMapper _mapper;
+        private IFieldingStatsMapper _mapper;
 
-        public BattingService(IBaseballDBContext database, IBattingStatsMapper mapper)
+        public FieldingService(IBaseballDBContext database, IFieldingStatsMapper mapper)
         {
             _database = database;
             _mapper = mapper;
         }
 
-        public IEnumerable<BattingStats> GetBattingStats(string id)
+        public IEnumerable<FieldingStats> GetFieldingStats(string id)
         {
-            var stats = _database.Batting
+            var stats = _database.Fielding
                 .Where(s => s.PlayerId == id)
                 .ToList()
-                .Select<Batting,BattingStats>(stat=> 
+                .Select<Fielding,FieldingStats>(stat=> 
                 {
                     return _mapper.Map(stat);
                 });
