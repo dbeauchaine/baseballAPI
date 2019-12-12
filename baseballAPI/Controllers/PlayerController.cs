@@ -19,7 +19,13 @@ namespace BaseballAPI.Controllers
         [HttpGet]
         public string GetPlayerId(string firstName, string lastName)
         {
-            return _playerService.GetPlayerId(firstName, lastName);
+            var player = _playerService.GetPlayerId(firstName, lastName);
+            if(player == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            return player;
         }
 
         [HttpGet("{id}")]
