@@ -21,7 +21,20 @@ namespace BaseballAPI.Services
             var stats = _database.Batting
                 .Where(s => s.PlayerId == id)
                 .ToList()
-                .Select<Batting,BattingStats>(stat=> 
+                .Select<Batting,BattingStats>(stat => 
+                {
+                    return _mapper.Map(stat);
+                });
+
+            return stats;
+        }
+
+        public IEnumerable<BattingStats> GetBattingStatsByYear(int year)
+        {
+            var stats = _database.Batting
+                .Where(s => s.YearId == year)
+                .ToList()
+                .Select<Batting, BattingStats>(stat =>
                 {
                     return _mapper.Map(stat);
                 });
