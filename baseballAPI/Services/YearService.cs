@@ -5,29 +5,27 @@ using System.Linq;
 
 namespace BaseballAPI.Services
 {
-    public class BattingService : IBattingService
+    public class YearService : IYearService
     {
         private IBaseballDBContext _database;
         private IBattingStatsMapper _mapper;
 
-        public BattingService(IBaseballDBContext database, IBattingStatsMapper mapper)
+        public YearService(IBaseballDBContext database, IBattingStatsMapper mapper)
         {
             _database = database;
             _mapper = mapper;
         }
-
-        public IEnumerable<BattingStats> GetBattingStats(string id)
+        public IEnumerable<BattingStats> GetBattingStatsByYear(int year)
         {
             var stats = _database.Batting
-                .Where(s => s.PlayerId == id)
+                .Where(s => s.YearId == year)
                 .ToList()
-                .Select<Batting,BattingStats>(stat => 
+                .Select<Batting, BattingStats>(stat =>
                 {
                     return _mapper.Map(stat);
                 });
 
             return stats;
         }
-
     }
 }

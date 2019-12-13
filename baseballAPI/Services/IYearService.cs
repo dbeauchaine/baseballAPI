@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace BaseballAPI.Services
 {
-    public interface IBattingService
-    {       
-        public IEnumerable<BattingStats> GetBattingStats(string id);
+    public interface IYearService 
+    {
+        public IEnumerable<BattingStats> GetBattingStatsByYear(int year);
     }
 }

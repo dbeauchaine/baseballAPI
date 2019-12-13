@@ -49,34 +49,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(actualPerson.ElementAt(0), Is.EqualTo(expectedPerson));
             Assert.That(actualPerson.ElementAt(1), Is.EqualTo(secondPerson));
         }
-        [Test]
-        public void GetBattingStatsByYearReturnsEnumerableBattingRecords()
-        {
-            var firstPerson = new BattingStats
-            {
-                PlayerId = "personId",
-                YearId = 2000
-            };
 
-            var secondPerson = new BattingStats
-            {
-                PlayerId = "personId",
-                YearId = 2000
-            };
-
-            var expectedPeople = new List<BattingStats>()
-            {
-                firstPerson,
-                secondPerson
-            };
-
-            _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStatsByYear(firstPerson.YearId)).Returns(expectedPeople);
-
-            var actualPerson = _controller.GetBattingStatsByYear(firstPerson.YearId);
-
-            Assert.That(actualPerson.ElementAt(0), Is.EqualTo(firstPerson));
-            Assert.That(actualPerson.ElementAt(1), Is.EqualTo(secondPerson));
-        }
 
         [Test]
         public void IfGetBattingFailsToFindEntryItThrowsNotFoundException()
@@ -89,16 +62,6 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(exception.Status, Is.EqualTo(HttpStatusCode.NotFound));
         }
 
-        [Test]
-        public void IfGetBattingByYearFailsToFindEntryItThrowsNotFoundException()
-        {
-            int badYear = 1;
-            _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStatsByYear(badYear)).Returns((IEnumerable<BattingStats>)null);
-
-            HttpResponseException exception = Assert.Throws<HttpResponseException>(() => _controller.GetBattingStatsByYear(badYear));
-
-            Assert.That(exception.Status, Is.EqualTo(HttpStatusCode.NotFound));
-        }
     }
 
 }
