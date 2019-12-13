@@ -3,10 +3,9 @@ using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
-using System.Text;
 
 namespace BaseballAPI.UnitTests.Controllers
 {
@@ -25,18 +24,23 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public void ReturnsPlayerID()
+        public void ReturnsPlayerId()
         {
             var firstName = "first";
             var lastName = "last";
 
             const string expectedPlayerId = "something";
 
-            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(firstName, lastName)).Returns(expectedPlayerId);
+            People expectedPlayer = new People()
+            {
+                PlayerId = expectedPlayerId
+            };
+
+            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(firstName, lastName)).Returns(new List<People>() { expectedPlayer });
 
             var playerId = _controller.GetPlayerId(firstName, lastName);
 
-            Assert.That(playerId, Is.EqualTo(expectedPlayerId));
+            Assert.That(playerId.ElementAt(0).PlayerId, Is.EqualTo(expectedPlayer.PlayerId));
         }
 
         [Test]

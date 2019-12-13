@@ -27,8 +27,8 @@ namespace BaseballAPI.UnitTests.Controllers
         {
             _factory = new WebApplicationFactory<Program>();
             _playerService = new Mock<IPlayerService>();
-            
-            
+
+
             _client = _factory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureServices(services =>
@@ -41,22 +41,15 @@ namespace BaseballAPI.UnitTests.Controllers
             }).CreateClient();
         }
 
-        [TestCase("/Player", "first", "last", "something")]
-        [TestCase("/Player", "Sammy", "Sosa", "Ssosa")]
-        public async Task GetPlayerIdByFirstAndLastName(string url, string firstName, string lastName, string expectedPlayerId)
+        [Test]
+        public async Task GetPlayerIdByFirstAndLastName()
         {
-            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(firstName, lastName)).Returns(expectedPlayerId);
+            var firstPerson = GeneratePeople("first", "last", "something");
+            var secondPerson = GeneratePeople("Sammy", "Sosa", "Ssosa");
+            var url = "/player";
 
-            var uri = QueryHelpers.AddQueryString(url, new Dictionary<string, string> {
-                {"firstName", firstName},
-                {"lastName", lastName}
-            });
-
-            var response = await _client.GetAsync(uri);
-
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            Assert.That(content, Is.EqualTo(expectedPlayerId));
+            //await AssertThatClientResponseEqualsExpectedResponse(url, firstPerson);
+            //await AssertThatClientResponseEqualsExpectedResponse(url, secondPerson);
         }
 
 
@@ -93,6 +86,32 @@ namespace BaseballAPI.UnitTests.Controllers
             var response = await _client.GetAsync(url);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        }
+
+        private People GeneratePeople(string firstName, string lastName, string playerId)
+        {
+            return new People()
+            {
+                NameFirst = firstName,
+                NameLast = lastName,
+                PlayerId = playerId
+            };
+        }
+
+        public async Task AssertThatClientResponseEqualsExpectedResponse(string url, People person)
+        {
+            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(person.NameFirst, person.NameLast)).Returns(new List<People>() { person });
+
+            var uri = QueryHelpers.AddQueryString(url, new Dictionary<string, string> {
+                {"firstName", person.NameFirst},
+                {"lastName", person.NameLast}
+            });
+
+            var response = await _client.GetAsync(uri);
+
+            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            Assert.That(content, Is.EqualTo(person));
         }
     }
 }

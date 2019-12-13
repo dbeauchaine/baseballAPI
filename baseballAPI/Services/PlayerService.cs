@@ -12,18 +12,24 @@ namespace BaseballAPI.Services
         {
             _database = database;
         }
-        public string GetPlayerId(string firstName, string lastName)
+        public IEnumerable<People> GetPlayerId(string firstName, string lastName)
         {
-            var playerId = _database.People
-                .FirstOrDefault(s => s.NameFirst == firstName && s.NameLast == lastName);
 
-            return playerId.PlayerId;
+            var player = _database.People
+            .Where(s => s.NameFirst == firstName && s.NameLast == lastName)
+            .ToList()
+            .Select(s =>
+            {
+                return s;
+            });
+            
+            return player;
         }
 
         public People GetPlayer(string id)
         {
             var player = _database.People
-                .FirstOrDefault(s => s.PlayerId == id); 
+                .FirstOrDefault(s => s.PlayerId == id);
 
             return player;
         }
