@@ -17,12 +17,8 @@ namespace BaseballAPI.Services
 
             var player = _database.People
             .Where(s => s.NameFirst == firstName && s.NameLast == lastName)
-            .ToList()
-            .Select(s =>
-            {
-                return s;
-            });
-            
+            .ToList();
+
             return player;
         }
 

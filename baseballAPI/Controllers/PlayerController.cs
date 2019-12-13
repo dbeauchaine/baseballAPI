@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
@@ -21,7 +22,8 @@ namespace BaseballAPI.Controllers
         public IEnumerable<People> GetPlayerId(string firstName, string lastName)
         {
             var players = _playerService.GetPlayerId(firstName, lastName);
-            if(players == null)
+
+            if(!players.Any())
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
