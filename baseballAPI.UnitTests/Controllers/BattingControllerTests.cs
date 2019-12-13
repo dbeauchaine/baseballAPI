@@ -1,6 +1,5 @@
 ﻿using BaseballAPI.ApiModels;
 using BaseballAPI.Controllers;
-using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Moq;
 using NUnit.Framework;
@@ -51,8 +50,9 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(actualPerson.ElementAt(1), Is.EqualTo(secondPerson));
         }
 
+
         [Test]
-        public void IfGetPlayerFailsToFindEntryItThrowsNotFoundException()
+        public void IfGetBattingFailsToFindEntryItThrowsNotFoundException()
         {
             string badId = "badId";
             _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStats(badId)).Returns((IEnumerable<BattingStats>)null);
@@ -61,6 +61,7 @@ namespace BaseballAPI.UnitTests.Controllers
 
             Assert.That(exception.Status, Is.EqualTo(HttpStatusCode.NotFound));
         }
+
     }
 
 }
