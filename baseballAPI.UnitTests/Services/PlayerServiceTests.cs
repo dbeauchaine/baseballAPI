@@ -2,6 +2,7 @@
 using BaseballAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using System.Linq;
 
 namespace BaseballAPI.UnitTests.Controllers
 {
@@ -46,7 +47,7 @@ namespace BaseballAPI.UnitTests.Controllers
         {
             var playerId = _service.GetPlayerId(person.NameFirst, person.NameLast);
 
-            Assert.That(playerId, Is.EqualTo(person.PlayerId));
+            Assert.That(playerId.ElementAt(0).PlayerId, Is.EqualTo(person.PlayerId));
         }
 
         public void AssertGetPlayerReturnsPlayer(People expectedPerson)
