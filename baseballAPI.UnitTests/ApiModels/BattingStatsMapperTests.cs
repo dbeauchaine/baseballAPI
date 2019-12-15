@@ -29,6 +29,15 @@ namespace BaseballAPI.UnitTests.Controllers
             AssertThatEachElementIsEqualWithNullValues(battingWithNull, battingStatsWithNull);
         }
 
+        [Test]
+        public void MapYearCopiesDataFromBattingAndPlayerToBattingLeagueStats()
+        {
+            Batting batting = GenerateBattingWithPlayer();
+            BattingLeaderBoardStats battingLeaderBoardStats = _mapper.MapYear(batting);
+
+            AssertThatEachElementIsEqualWithPlayerValues(batting, battingLeaderBoardStats);
+        }
+
         private void AssertThatEachElementIsEqualWithoutNullValues(Batting batting, BattingStats battingStats)
         {
             Assert.That(battingStats.PlayerId, Is.EqualTo(batting.PlayerId));
@@ -81,6 +90,36 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(battingStats.Sh, Is.EqualTo(0));
             Assert.That(battingStats.Sf, Is.EqualTo(0));
             Assert.That(battingStats.Gidp, Is.EqualTo(0));
+        }
+
+        private void AssertThatEachElementIsEqualWithPlayerValues(Batting batting, BattingLeaderBoardStats battingStats)
+        {
+            Assert.That(battingStats.NameFirst, Is.EqualTo(batting.Player.NameFirst));
+            Assert.That(battingStats.NameGiven, Is.EqualTo(batting.Player.NameGiven));
+            Assert.That(battingStats.NameLast, Is.EqualTo(batting.Player.NameLast));
+            Assert.That(battingStats.PlayerId, Is.EqualTo(batting.PlayerId));
+            Assert.That(battingStats.YearId, Is.EqualTo(batting.YearId));
+            Assert.That(battingStats.Stint, Is.EqualTo(batting.Stint));
+            Assert.That(battingStats.TeamId, Is.EqualTo(batting.TeamId));
+            Assert.That(battingStats.LgId, Is.EqualTo(batting.LgId));
+            Assert.That(battingStats.G, Is.EqualTo(batting.G));
+            Assert.That(battingStats.GBatting, Is.EqualTo(batting.GBatting));
+            Assert.That(battingStats.Ab, Is.EqualTo(batting.Ab));
+            Assert.That(battingStats.R, Is.EqualTo(batting.R));
+            Assert.That(battingStats.H, Is.EqualTo(batting.H));
+            Assert.That(battingStats.X2b, Is.EqualTo(batting.X2b));
+            Assert.That(battingStats.X3b, Is.EqualTo(batting.X3b));
+            Assert.That(battingStats.Hr, Is.EqualTo(batting.Hr));
+            Assert.That(battingStats.Rbi, Is.EqualTo(batting.Rbi));
+            Assert.That(battingStats.Sb, Is.EqualTo(batting.Sb));
+            Assert.That(battingStats.Cs, Is.EqualTo(batting.Cs));
+            Assert.That(battingStats.Bb, Is.EqualTo(batting.Bb));
+            Assert.That(battingStats.So, Is.EqualTo(batting.So));
+            Assert.That(battingStats.Ibb, Is.EqualTo(batting.Ibb));
+            Assert.That(battingStats.Hbp, Is.EqualTo(batting.Hbp));
+            Assert.That(battingStats.Sh, Is.EqualTo(batting.Sh));
+            Assert.That(battingStats.Sf, Is.EqualTo(batting.Sf));
+            Assert.That(battingStats.Gidp, Is.EqualTo(batting.Gidp));
         }
 
         private Batting GenerateBattingWithoutNullValues()
@@ -140,6 +179,43 @@ namespace BaseballAPI.UnitTests.Controllers
                 Sh = null,
                 Sf = null,
                 Gidp = null
+            };
+        }
+
+        private Batting GenerateBattingWithPlayer()
+        {
+            return new Batting()
+            {
+                PlayerId = "id",
+                YearId = 2000,
+                Stint = 2,
+                TeamId = "team",
+                LgId = "league",
+                G = 1,
+                GBatting = 1,
+                Ab = 4,
+                R = 1,
+                H = 2,
+                X2b = 1,
+                X3b = 0,
+                Hr = 1,
+                Rbi = 2,
+                Sb = 1,
+                Cs = 1,
+                Bb = 1,
+                So = 2,
+                Ibb = 1,
+                Hbp = 1,
+                Sh = 1,
+                Sf = 1,
+                Gidp = 1,
+                Player = new People() { 
+                    PlayerId = "id",
+                    NameFirst = "first",
+                    NameGiven = "first middle",
+                    NameLast = "last"
+                
+                }
             };
         }
     }

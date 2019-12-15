@@ -31,5 +31,18 @@ namespace BaseballAPI.Controllers
 
             return players;
         }
+
+        [HttpGet("/year/{year}")]
+        public IEnumerable<BattingLeaderBoardStats> GetBattingStatsByYear(int year)
+        {
+            var players = _battingService.GetBattingStatsByYear(year);
+
+            if (players == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            return players;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BaseballAPI.ApiModels;
 using BaseballAPI.Controllers;
+using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Moq;
 using NUnit.Framework;
@@ -26,7 +27,7 @@ namespace BaseballAPI.UnitTests.Controllers
         [Test]
         public void GetBattingStatsReturnsEnumerableBattingRecords()
         {
-            var expectedPerson = new BattingStats
+            var firstPerson = new BattingStats
             {
                 PlayerId = "personId"
             };
@@ -38,16 +39,16 @@ namespace BaseballAPI.UnitTests.Controllers
 
             var expectedPeople = new List<BattingStats>()
             {
-                expectedPerson,
+                firstPerson,
                 secondPerson
             };
 
-            _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStats(expectedPerson.PlayerId)).Returns(expectedPeople);
+            _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStats(firstPerson.PlayerId)).Returns(expectedPeople);
 
-            var actualPerson = _controller.GetBattingStats(expectedPerson.PlayerId);
+            var actualReturn = _controller.GetBattingStats(firstPerson.PlayerId);
 
-            Assert.That(actualPerson.ElementAt(0), Is.EqualTo(expectedPerson));
-            Assert.That(actualPerson.ElementAt(1), Is.EqualTo(secondPerson));
+            Assert.That(actualReturn.ElementAt(0), Is.EqualTo(firstPerson));
+            Assert.That(actualReturn.ElementAt(1), Is.EqualTo(secondPerson));
         }
 
 
@@ -60,6 +61,35 @@ namespace BaseballAPI.UnitTests.Controllers
             HttpResponseException exception = Assert.Throws<HttpResponseException>(() => _controller.GetBattingStats(badId));
 
             Assert.That(exception.Status, Is.EqualTo(HttpStatusCode.NotFound));
+        }
+
+        [Test]
+        public void GetBattingStatsByYearReturnsEnumerableLeagueBattingStats()
+        {
+            var firstPerson = new BattingLeaderBoardStats
+            {
+                PlayerId = "personId",
+                NameLast = "last"
+            };
+
+            var secondPerson = new BattingLeaderBoardStats
+            {
+                PlayerId = "personId",
+                NameLast ="last"
+            };
+
+            var expectedRecord = new List<BattingLeaderBoardStats>()
+            {
+                firstPerson,
+                secondPerson
+            };
+
+            _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStatsByYear(firstPerson.YearId)).Returns(expectedRecord);
+
+            var actualReturn = _controller.GetBattingStats(firstPerson.PlayerId);
+
+            Assert.That(actualReturn.ElementAt(0), Is.EqualTo(firstPerson));
+            Assert.That(actualReturn.ElementAt(1), Is.EqualTo(secondPerson));
         }
 
     }
