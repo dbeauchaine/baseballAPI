@@ -10,5 +10,6 @@ namespace BaseballAPI.ApiModels
     {
         public BattingStats Map(Batting batting);
 
+        public BattingLeaderBoardStats MapYear(Batting batting);
     }
 }

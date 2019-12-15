@@ -6,6 +6,7 @@ namespace BaseballAPI.RepositoryModels
     public partial class Batting
     {
         public string PlayerId { get; set; }
+        public People Player { get; set; }
         public short YearId { get; set; }
         public short Stint { get; set; }
         public string TeamId { get; set; }

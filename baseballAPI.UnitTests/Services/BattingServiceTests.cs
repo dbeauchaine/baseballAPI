@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BaseballAPI.UnitTests.Controllers
@@ -18,7 +19,8 @@ namespace BaseballAPI.UnitTests.Controllers
         private DbContextOptions<BaseballDBContext> _options;
         private Batting _firstPerson;
         private Batting _secondPerson;
-        private Batting _duplicatePerson;
+        private Batting _thirdPerson;
+        private Batting _fourthPerson;
         private Mock<IBattingStatsMapper> _mockMapper;
 
         [SetUp]
@@ -41,18 +43,35 @@ namespace BaseballAPI.UnitTests.Controllers
         {
             AssertGetBattingStatsReturnsStats(_firstPerson);
             AssertGetBattingStatsReturnsStats(_secondPerson);
-            AssertGetBattingStatsReturnsStatsWithDuplicateId(_firstPerson, _duplicatePerson);
+            AssertGetBattingStatsReturnsStatsWithDuplicateId(_firstPerson, _thirdPerson);
         }
 
-        public void AssertGetBattingStatsReturnsStats(Batting expectedPerson)
+        [Test]
+        public void GetBattingStatsByYearReturnsStats()
         {
-            var expectedPersonStats = new BattingStats();
+            AssertGetBattingLeaderboardStatsByYearReturnsStats(_fourthPerson);
+        }
 
-            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(expectedPerson)).Returns(expectedPersonStats);
+        private void AssertGetBattingLeaderboardStatsByYearReturnsStats(Batting expectedBatting)
+        {
+            var expectedBattingLeaderboardStats = new BattingLeaderBoardStats();
 
-            var actualBatting = _service.GetBattingStats(expectedPerson.PlayerId);
+            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.MapYear(expectedBatting)).Returns(expectedBattingLeaderboardStats);
 
-            Assert.That(actualBatting.ElementAt(0), Is.EqualTo(expectedPersonStats));
+            var actualBattingLeaderboardStats = _service.GetBattingStatsByYear(expectedBatting.YearId);
+
+            Assert.That(actualBattingLeaderboardStats.ElementAt(0), Is.EqualTo(expectedBattingLeaderboardStats));
+        }
+
+        public void AssertGetBattingStatsReturnsStats(Batting expectedBatting)
+        {
+            var expectedBattingStats = new BattingStats();
+
+            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(expectedBatting)).Returns(expectedBattingStats);
+
+            var actualBatting = _service.GetBattingStats(expectedBatting.PlayerId);
+
+            Assert.That(actualBatting.ElementAt(0), Is.EqualTo(expectedBattingStats));
         }
 
         public void AssertGetBattingStatsReturnsStatsWithDuplicateId(Batting firstEntry, Batting secondEntry)
@@ -87,7 +106,7 @@ namespace BaseballAPI.UnitTests.Controllers
                 PlayerId = "anotherId"
             };
 
-            _duplicatePerson = new Batting()
+            _thirdPerson = new Batting()
             {
                 YearId = 1999,
                 Hr = 18,
@@ -95,9 +114,24 @@ namespace BaseballAPI.UnitTests.Controllers
                 PlayerId = "id"
             };
 
+            _fourthPerson = new Batting()
+            {
+                YearId = 1998,
+                Hr = 18,
+                Ab = 20,
+                PlayerId = "fourthId",
+                Player = new People()
+                {
+                    PlayerId = "fourthId",
+                    NameFirst = "first",
+                    NameGiven = "first middle",
+                    NameLast = "last"
+                }
+            };
+
             _database.Add(_firstPerson);
             _database.Add(_secondPerson);
-            _database.Add(_duplicatePerson);
+            _database.Add(_thirdPerson);
             _database.SaveChanges();
         }
     }

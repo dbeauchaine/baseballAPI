@@ -255,6 +255,10 @@ namespace BaseballAPI.RepositoryModels
                     .HasColumnName("playerID")
                     .HasMaxLength(9);
 
+                entity.HasOne(e => e.Player)
+                    .WithMany()
+                    .HasForeignKey(e => e.PlayerId);
+
                 entity.Property(e => e.YearId).HasColumnName("yearID");
 
                 entity.Property(e => e.Stint).HasColumnName("stint");
@@ -297,6 +301,7 @@ namespace BaseballAPI.RepositoryModels
 
                 entity.Property(e => e.X3b).HasColumnName("3B");
             });
+                
 
             modelBuilder.Entity<BattingPost>(entity =>
             {
