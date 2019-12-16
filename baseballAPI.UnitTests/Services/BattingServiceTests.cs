@@ -114,7 +114,7 @@ namespace BaseballAPI.UnitTests.Controllers
                 PlayerId = "id"
             };
 
-            _fourthPerson = new Batting()
+            _fourthPerson = new Batting
             {
                 YearId = 1998,
                 Hr = 18,
@@ -132,6 +132,7 @@ namespace BaseballAPI.UnitTests.Controllers
             _database.Add(_firstPerson);
             _database.Add(_secondPerson);
             _database.Add(_thirdPerson);
+            _database.Add(_fourthPerson);
             _database.SaveChanges();
         }
     }

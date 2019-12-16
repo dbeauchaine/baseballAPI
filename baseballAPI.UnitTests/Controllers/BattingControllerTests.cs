@@ -69,13 +69,15 @@ namespace BaseballAPI.UnitTests.Controllers
             var firstPerson = new BattingLeaderBoardStats
             {
                 PlayerId = "personId",
-                NameLast = "last"
+                NameLast = "last",
+                YearId = 2000
             };
 
             var secondPerson = new BattingLeaderBoardStats
             {
-                PlayerId = "personId",
-                NameLast ="last"
+                PlayerId = "secondPersonId",
+                NameLast = "secondLast",
+                YearId = 2000
             };
 
             var expectedRecord = new List<BattingLeaderBoardStats>()
@@ -86,12 +88,23 @@ namespace BaseballAPI.UnitTests.Controllers
 
             _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStatsByYear(firstPerson.YearId)).Returns(expectedRecord);
 
-            var actualReturn = _controller.GetBattingStats(firstPerson.PlayerId);
+            var actualReturn = _controller.GetBattingStatsByYear(firstPerson.YearId);
 
             Assert.That(actualReturn.ElementAt(0), Is.EqualTo(firstPerson));
             Assert.That(actualReturn.ElementAt(1), Is.EqualTo(secondPerson));
         }
 
+        [Test]
+        public void IfGetBattingByYearFailsToFindEntryItThrowsNotFoundException()
+        {
+            int badId = 1;
+            _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStatsByYear(badId)).Returns((IEnumerable<BattingLeaderBoardStats>)null);
+
+            HttpResponseException exception = Assert.Throws<HttpResponseException>(() => _controller.GetBattingStatsByYear(badId));
+
+            Assert.That(exception.Status, Is.EqualTo(HttpStatusCode.NotFound));
+
+        }
     }
 
 }
