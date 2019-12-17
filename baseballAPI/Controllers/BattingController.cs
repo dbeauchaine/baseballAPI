@@ -24,9 +24,9 @@ namespace BaseballAPI.Controllers
         {
             var players = _battingService.GetBattingStats(id);
 
-            if (players == null)
+            if (!players.Any())
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound); 
+                throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
             return players;
@@ -37,11 +37,11 @@ namespace BaseballAPI.Controllers
         {
             var players = _battingService.GetBattingStatsByYear(year);
 
-            if (players == null)
+            if (!players.Any())
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
-
+            
             return players;
         }
     }
