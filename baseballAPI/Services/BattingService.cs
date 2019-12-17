@@ -22,10 +22,10 @@ namespace BaseballAPI.Services
             var stats = _database.Batting
                 .Where(s => s.PlayerId == id)
                 .ToList()
-                .Select<Batting,BattingStats>(s => 
-                {
-                    return _mapper.Map(s);
-                });
+                .Select<Batting, BattingStats>(s =>
+                 {
+                     return _mapper.Map(s);
+                 });
 
             return stats;
         }
@@ -42,8 +42,15 @@ namespace BaseballAPI.Services
                     return _mapper.MapYear(b);
                 });
 
-            return query;
-        }
+            if (query.Any())
+            {
+                return query;
+            }
 
+            else
+            {
+                return null;
+            }
+        }
     }
 }
