@@ -56,7 +56,7 @@ namespace BaseballAPI.UnitTests.Controllers
         public void IfGetBattingFailsToFindEntryItThrowsNotFoundException()
         {
             string badId = "badId";
-            _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStats(badId)).Returns((IEnumerable<BattingStats>)null);
+            _battingService.Setup(mockBattingService => mockBattingService.GetBattingStats(badId)).Returns((IEnumerable<BattingStats>)null);
 
             HttpResponseException exception = Assert.Throws<HttpResponseException>(() => _controller.GetBattingStats(badId));
 
@@ -98,7 +98,7 @@ namespace BaseballAPI.UnitTests.Controllers
         public void IfGetBattingByYearFailsToFindEntryItThrowsNotFoundException()
         {
             int badId = 1;
-            _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStatsByYear(badId)).Returns((IEnumerable<BattingLeaderBoardStats>)null);
+            _battingService.Setup(mockBattingService => mockBattingService.GetBattingStatsByYear(badId)).Returns((IEnumerable<BattingLeaderBoardStats>)null);
 
             HttpResponseException exception = Assert.Throws<HttpResponseException>(() => _controller.GetBattingStatsByYear(badId));
 
