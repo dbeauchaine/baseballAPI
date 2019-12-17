@@ -24,7 +24,7 @@ namespace BaseballAPI.Controllers
         {
             var players = _fieldingService.GetFieldingStats(id);
 
-            if (players == null)
+            if (!players.Any())
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound); 
             }
