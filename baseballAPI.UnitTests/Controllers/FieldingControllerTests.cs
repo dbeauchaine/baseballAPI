@@ -56,11 +56,13 @@ namespace BaseballAPI.UnitTests.Controllers
         public void IfGetPlayerFailsToFindEntryItThrowsNotFoundException()
         {
             string badId = "badId";
-            _fieldingService.Setup(mockPlayerService => mockPlayerService.GetFieldingStats(badId)).Returns((IEnumerable<FieldingStats>)null);
+            var emptyList = new List<FieldingStats>();
 
-            HttpResponseException exception = Assert.Throws<HttpResponseException>(() => _controller.GetFieldingStats(badId));
+            _fieldingService.Setup(mockPlayerService => mockPlayerService.GetFieldingStats(badId)).Returns(emptyList);
 
-            Assert.That(exception.Status, Is.EqualTo(HttpStatusCode.NotFound));
+           var badReturn = _controller.GetFieldingStats(badId);
+
+            Assert.That(!badReturn.Any());
         }
     }
 

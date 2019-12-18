@@ -42,15 +42,8 @@ namespace BaseballAPI.Services
                     return _mapper.MapYear(b);
                 });
 
-            if (query.Any())
-            {
-                return query;
-            }
 
-            else
-            {
-                return null;
-            }
+                return query;
         }
     }
 }

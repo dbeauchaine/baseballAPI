@@ -56,11 +56,13 @@ namespace BaseballAPI.UnitTests.Controllers
         public void IfGetPitchingFailsToFindEntryItThrowsNotFoundException()
         {
             string badId = "badId";
-            _service.Setup(mockPitchingService => mockPitchingService.GetPitchingStats(badId)).Returns((IEnumerable<PitchingStats>)null);
+            var emptyList = new List<PitchingStats>();
+            
+            _service.Setup(mockPitchingService => mockPitchingService.GetPitchingStats(badId)).Returns(emptyList);
 
-            HttpResponseException exception = Assert.Throws<HttpResponseException>(() => _controller.GetPitchingStats(badId));
+            var badReturn = _controller.GetPitchingStats(badId);
 
-            Assert.That(exception.Status, Is.EqualTo(HttpStatusCode.NotFound));
+            Assert.That(!badReturn.Any());
         }
 
         [Test]
@@ -98,12 +100,13 @@ namespace BaseballAPI.UnitTests.Controllers
         public void IfGetPitchingByYearFailsToFindEntryItThrowsNotFoundException()
         {
             int badId = 1;
+            var emptyList = new List<PitchingLeaderBoardStats>();
 
-            _service.Setup(mockPitchingService => mockPitchingService.GetPitchingStatsByYear(badId)).Returns((IEnumerable<PitchingLeaderBoardStats>)null);
+            _service.Setup(mockPitchingService => mockPitchingService.GetPitchingStatsByYear(badId)).Returns(emptyList);
 
-            HttpResponseException exception = Assert.Throws<HttpResponseException>(() => _controller.GetPitchingStatsByYear(badId));
+            var badReturn = _controller.GetPitchingStatsByYear(badId);
 
-            Assert.That(exception.Status, Is.EqualTo(HttpStatusCode.NotFound));
+            Assert.That(!badReturn.Any());
 
         }
     }
