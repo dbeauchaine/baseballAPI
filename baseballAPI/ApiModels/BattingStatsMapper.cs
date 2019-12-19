@@ -24,6 +24,7 @@ namespace BaseballAPI.ApiModels
             return battingStats;
         }
 
+
         public BattingLeaderBoardStats MapYear(Batting batting)
         {
             var battingLeaderboardStats = new BattingLeaderBoardStats()

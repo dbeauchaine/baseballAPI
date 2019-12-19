@@ -1,6 +1,8 @@
-﻿using BaseballAPI.RepositoryModels;
+﻿using BaseballAPI.ApiModels;
+using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using NUnit.Framework;
 using System.Linq;
 
@@ -15,6 +17,7 @@ namespace BaseballAPI.UnitTests.Controllers
         private DbContextOptions<BaseballDBContext> _options;
         private People _firstPerson;
         private People _secondPerson;
+        private Mock<IPlayerMapper> _mockMapper;
 
         [SetUp]
         public void SetUp()
@@ -24,7 +27,8 @@ namespace BaseballAPI.UnitTests.Controllers
                 .Options;
             _database = new BaseballDBContext(_options);
             _database.Database.EnsureDeleted();
-            _service = new PlayerService(_database);
+            _mockMapper = new Mock<IPlayerMapper>();
+            _service = new PlayerService(_database, _mockMapper.Object);
 
             CreateFakeData(_database);
         }
@@ -45,16 +49,24 @@ namespace BaseballAPI.UnitTests.Controllers
 
         public void AssertGetPlayerIdReturnsId(People person)
         {
-            var playerId = _service.GetPlayerId(person.NameFirst, person.NameLast);
+            var expectedPlayer = new Player();
 
-            Assert.That(playerId.ElementAt(0).PlayerId, Is.EqualTo(person.PlayerId));
+            _mockMapper.Setup(mockPlayerMapper => mockPlayerMapper.Map(person)).Returns(expectedPlayer);
+
+            var actualPlayerId = _service.GetPlayerId(person.NameFirst, person.NameLast);
+
+            Assert.That(actualPlayerId.ElementAt(0).PlayerId, Is.EqualTo(expectedPlayer.PlayerId));
         }
 
         public void AssertGetPlayerReturnsPlayer(People expectedPerson)
         {
-            var actualPerson = _service.GetPlayer(expectedPerson.PlayerId);
+            var expectedPlayer = new Player();
 
-            Assert.That(actualPerson, Is.EqualTo(expectedPerson));
+            _mockMapper.Setup(mockPlayerMapper => mockPlayerMapper.Map(expectedPerson)).Returns(expectedPlayer);
+
+            var actualPlayer = _service.GetPlayer(expectedPerson.PlayerId);
+
+            Assert.That(actualPlayer, Is.EqualTo(expectedPlayer));
         }
         public void CreateFakeData(BaseballDBContext database)
         {

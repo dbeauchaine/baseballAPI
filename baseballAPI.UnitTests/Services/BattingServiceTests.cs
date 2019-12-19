@@ -50,6 +50,15 @@ namespace BaseballAPI.UnitTests.Controllers
         public void GetBattingStatsByYearReturnsStats()
         {
             AssertGetBattingLeaderboardStatsByYearReturnsStats(_fourthPerson);
+            AssertGetBattingLeaderboardStatsByYearWithBadIdReturnsEmptyIEnumerable();
+        }
+
+        private void AssertGetBattingLeaderboardStatsByYearWithBadIdReturnsEmptyIEnumerable()
+        {
+            var badYear = 1;
+            var badReturn = _service.GetBattingStatsByYear(badYear);
+
+            Assert.That(!badReturn.Any());
         }
 
         private void AssertGetBattingLeaderboardStatsByYearReturnsStats(Batting expectedBatting)

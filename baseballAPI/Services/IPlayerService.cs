@@ -1,12 +1,13 @@
-﻿using BaseballAPI.RepositoryModels;
+﻿using BaseballAPI.ApiModels;
+using BaseballAPI.RepositoryModels;
 using System.Collections.Generic;
 
 namespace BaseballAPI.Services
 {
     public interface IPlayerService
     {
-        public IEnumerable<People> GetPlayerId(string firstName, string lastName);
+        public IEnumerable<Player> GetPlayerId(string firstName, string lastName);
 
-        public People GetPlayer(string id);
+        public Player GetPlayer(string id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using BaseballAPI.Controllers;
+﻿using BaseballAPI.ApiModels;
+using BaseballAPI.Controllers;
 using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Moq;
@@ -31,12 +32,12 @@ namespace BaseballAPI.UnitTests.Controllers
 
             const string expectedPlayerId = "something";
 
-            People expectedPlayer = new People()
+            Player expectedPlayer = new Player()
             {
                 PlayerId = expectedPlayerId
             };
 
-            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(firstName, lastName)).Returns(new List<People>() { expectedPlayer });
+            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(firstName, lastName)).Returns(new List<Player>() { expectedPlayer });
 
             var playerId = _controller.GetPlayerId(firstName, lastName);
 
@@ -46,7 +47,7 @@ namespace BaseballAPI.UnitTests.Controllers
         [Test]
         public void ReturnsPlayer()
         {
-            var expectedPerson = new People();
+            var expectedPerson = new Player();
             expectedPerson.PlayerId = "personId";
 
             _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayer(expectedPerson.PlayerId)).Returns(expectedPerson);
@@ -60,11 +61,14 @@ namespace BaseballAPI.UnitTests.Controllers
         public void IfGetPlayerFailsToFindEntryItThrowsNotFoundException()
         {
             string badId = "badId";
-            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayer(badId)).Returns((People)null);
 
-            HttpResponseException exception = Assert.Throws<HttpResponseException>(() => _controller.GetPlayer(badId));
+            var emptyList = new Player();
 
-            Assert.That(exception.Status, Is.EqualTo(HttpStatusCode.NotFound));
+            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayer(badId)).Returns(emptyList);
+
+            var actualReturn = _controller.GetPlayer(badId);
+
+            Assert.That(actualReturn.PlayerId == null);
         }
     }
 

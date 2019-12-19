@@ -10,6 +10,7 @@ using System.Net.Http;
 using BaseballAPI.RepositoryModels;
 using Newtonsoft.Json;
 using System.Net;
+using BaseballAPI.ApiModels;
 
 namespace BaseballAPI.UnitTests.Controllers
 {
@@ -42,76 +43,57 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public async Task GetPlayerIdByFirstAndLastName()
-        {
-            var firstPerson = GeneratePeople("first", "last", "something");
-            var secondPerson = GeneratePeople("Sammy", "Sosa", "Ssosa");
-            var url = "/player";
-
-            //await AssertThatClientResponseEqualsExpectedResponse(url, firstPerson);
-            //await AssertThatClientResponseEqualsExpectedResponse(url, secondPerson);
-        }
-
-
-        [Test]
         public async Task GetPlayerById()
         {
-            var expectedPerson = new People
+            var expectedPlayer = new Player
             {
                 PlayerId = "id"
             };
 
-            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayer(expectedPerson.PlayerId)).Returns(expectedPerson);
+            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayer(expectedPlayer.PlayerId)).Returns(expectedPlayer);
 
-            var url = $"/player/{expectedPerson.PlayerId}";
+            var url = $"/player/{expectedPlayer.PlayerId}";
 
             var response = await _client.GetAsync(url);
 
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();
-            var actualPerson = JsonConvert.DeserializeObject<People>(content);
+            var actualPlayer = JsonConvert.DeserializeObject<Player>(content);
 
-            Assert.That(actualPerson.PlayerId, Is.EqualTo(expectedPerson.PlayerId));
+            Assert.That(actualPlayer.PlayerId, Is.EqualTo(expectedPlayer.PlayerId));
         }
 
         [Test]
-        public async Task IfGetPlayerByIdDoesNotFindAPlayerReturnsA404Response()
+        public async Task IfGetPlayerByIdDoesNotFindAPlayerReturnsSuccess()
         {
             string badId = "badId";
-            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayer(badId)).Returns((People)null);
+
+            var emptyList = new Player();
+
+            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayer(badId)).Returns(emptyList);
 
             var url = $"/player/{badId}";
 
             var response = await _client.GetAsync(url);
 
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
-        private People GeneratePeople(string firstName, string lastName, string playerId)
+        public async Task AssertThatClientResponseEqualsExpectedResponse(string url, Player player)
         {
-            return new People()
-            {
-                NameFirst = firstName,
-                NameLast = lastName,
-                PlayerId = playerId
-            };
-        }
-
-        public async Task AssertThatClientResponseEqualsExpectedResponse(string url, People person)
-        {
-            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(person.NameFirst, person.NameLast)).Returns(new List<People>() { person });
+            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(player.NameFirst, player.NameLast)).Returns(new List<Player>() { player });
 
             var uri = QueryHelpers.AddQueryString(url, new Dictionary<string, string> {
-                {"firstName", person.NameFirst},
-                {"lastName", person.NameLast}
+                {"firstName", player.NameFirst},
+                {"lastName", player.NameLast}
             });
 
             var response = await _client.GetAsync(uri);
 
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
-            Assert.That(content, Is.EqualTo(person));
+            Assert.That(content, Is.EqualTo(player));
         }
     }
 }

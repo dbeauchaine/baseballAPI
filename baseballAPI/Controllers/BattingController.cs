@@ -24,24 +24,14 @@ namespace BaseballAPI.Controllers
         {
             var players = _battingService.GetBattingStats(id);
 
-            if (!players.Any())
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-
             return players;
         }
 
-        [HttpGet("/year/{year}")]
+        [HttpGet("/batting/year/{year}")]
         public IEnumerable<BattingLeaderBoardStats> GetBattingStatsByYear(int year)
         {
             var players = _battingService.GetBattingStatsByYear(year);
 
-            if (!players.Any())
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-            
             return players;
         }
     }

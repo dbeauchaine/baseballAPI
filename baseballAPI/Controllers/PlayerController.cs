@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using BaseballAPI.ApiModels;
 using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -19,27 +20,17 @@ namespace BaseballAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<People> GetPlayerId(string firstName, string lastName)
+        public IEnumerable<Player> GetPlayerId(string firstName, string lastName)
         {
             var players = _playerService.GetPlayerId(firstName, lastName);
-
-            if(!players.Any())
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
 
             return players;
         }
 
         [HttpGet("{id}")]
-        public People GetPlayer(string id)
+        public Player GetPlayer(string id)
         {
             var player = _playerService.GetPlayer(id);
-
-            if (player == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound); 
-            }
 
             return player;
         }
