@@ -8,6 +8,12 @@ namespace BaseballAPI.ApiModels
 {
     public class BattingStatsMapper : IBattingStatsMapper
     {
+        private IBattingStatsCalculator _calculator;
+        public BattingStatsMapper(IBattingStatsCalculator calculator)
+        {
+            _calculator = calculator;
+        }
+
         public BattingStats Map(Batting batting)
         {
             var battingStats = new BattingStats()
@@ -20,6 +26,8 @@ namespace BaseballAPI.ApiModels
             };
 
             ConvertOptionalParamsToNonNullable(batting, battingStats);
+
+            _calculator.CalculateStats(battingStats);
 
             return battingStats;
         }

@@ -17,7 +17,6 @@ namespace BaseballAPI.Services
         }
         public IEnumerable<Player> GetPlayerId(string firstName, string lastName)
         {
-
             var player = _database.People
             .Where(s => s.NameFirst == firstName && s.NameLast == lastName)
             .ToList()
