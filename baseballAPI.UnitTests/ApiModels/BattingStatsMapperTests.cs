@@ -1,5 +1,6 @@
 ﻿using BaseballAPI.ApiModels;
 using BaseballAPI.RepositoryModels;
+using Moq;
 using NUnit.Framework;
 
 namespace BaseballAPI.UnitTests.Controllers
@@ -9,10 +10,13 @@ namespace BaseballAPI.UnitTests.Controllers
     public class BattingStatsMapperTests
     {
         private BattingStatsMapper _mapper;
+        private Mock<BattingStatsCalculator> _calculator;
+
         [SetUp]
         public void SetUp()
         {
-            _mapper = new BattingStatsMapper();
+            _calculator = new Mock<BattingStatsCalculator>();
+            _mapper = new BattingStatsMapper(_calculator.Object);
         }
 
         [Test]
