@@ -10,26 +10,45 @@ namespace BaseballAPI.UnitTests.Controllers
     public class BattingStatsCalculatorTests
     {
         public BattingStatsCalculator _calculator;
+        public BattingStats _fakeBattingStats;
+        public BattingStats _computedBattingStats;
+
         [SetUp]
         public void SetUp()
         {
             _calculator = new BattingStatsCalculator();
+            _fakeBattingStats = GenerateFakeBattingStats();
+            _computedBattingStats = _calculator.CalculateStats(_fakeBattingStats);
+
         }
 
         [Test]
-        public void CalculateAvgReturnsCorrectValue()
+        public void CalculateStatsReturnsCorrectValues()
         {
-            var fakeBattingStats = new BattingStats() { H = 2, Ab = 10 };
+            double expectedSingles = (5 - 2 - 1 - 1);
+            Assert.That(_computedBattingStats.Singles, Is.EqualTo(expectedSingles));
+            
+            double expectedAvg = 2 / 10;
+            Assert.That(_computedBattingStats.Avg, Is.EqualTo(expectedAvg));
+        
+            double expectedObp = ((2 + 2 + 0) / 10);
+            Assert.That(_computedBattingStats.Obp, Is.EqualTo(expectedObp));
 
-            double expectedAvg = fakeBattingStats.H / fakeBattingStats.Ab;
+            double expectedSlg = (1 + 2 * 2 + 3 * 1 + 4 * 1) / 10;
+            Assert.That(_computedBattingStats.Slg, Is.EqualTo(expectedSlg));
+        }
 
-            expectedAvg = Math.Round(expectedAvg, 4);
-
-            fakeBattingStats = _calculator.CalculateStats(fakeBattingStats);
-
-            var computedAvg = fakeBattingStats.Avg;
-
-            Assert.That(expectedAvg, Is.EqualTo(computedAvg));
+        public BattingStats GenerateFakeBattingStats()
+        {
+            return new BattingStats()
+            {
+                H = 5,
+                X2b = 2,
+                X3b = 1,
+                Hr = 1,
+                Ab = 10,
+                Ibb = 0,
+            };
         }
     }
 }

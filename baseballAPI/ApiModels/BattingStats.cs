@@ -32,5 +32,13 @@ namespace BaseballAPI.ApiModels
         public short Gidp { get; set; }
 
         public double Avg { get; set; }
+
+        public double Obp { get; set; }
+
+        public double Slg { get; set; }
+
+        public int Singles { get; set; }
+
+        public double Ops { get; set; }
     }
 }
