@@ -20,9 +20,9 @@ namespace BaseballAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Player> GetPlayerId(string firstName, string lastName)
+        public IEnumerable<Player> GetPlayerId(string name)
         {
-            var players = _playerService.GetPlayerId(firstName, lastName);
+            var players = _playerService.GetPlayerId(name);
 
             return players;
         }

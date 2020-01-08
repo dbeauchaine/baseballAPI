@@ -6,7 +6,7 @@ namespace BaseballAPI.Services
 {
     public interface IPlayerService
     {
-        public IEnumerable<Player> GetPlayerId(string firstName, string lastName);
+        public IEnumerable<Player> GetPlayerId(string name);
 
         public Player GetPlayer(string id);
     }

@@ -30,9 +30,9 @@ namespace BaseballAPI.ApiModels
                 return 0;
             }
 
-            double avg = batting.H / batting.Ab;
+            double avg = (double)batting.H / batting.Ab;
             
-            return Math.Round(avg, 4);
+            return Math.Round(avg, 3);
         }
 
         private double CalculateObp(BattingStats batting)
@@ -42,9 +42,9 @@ namespace BaseballAPI.ApiModels
                 return 0;
             }
 
-            double obp = (batting.H + batting.Bb + batting.Ibb) / batting.Ab;
+            double obp = ((double)batting.H + batting.Bb + batting.Ibb) / batting.Ab;
 
-            return Math.Round(obp, 4);
+            return Math.Round(obp, 3);
         }
 
         private double CalculateSlg(BattingStats batting)
@@ -54,9 +54,9 @@ namespace BaseballAPI.ApiModels
                 return 0;
             }
 
-            double slg = (batting.Singles + batting.X2b * 2 + batting.X3b * 3 + batting.Hr * 4) / batting.Ab;
+            double slg = ((double)batting.Singles + batting.X2b * 2 + batting.X3b * 3 + batting.Hr * 4) / batting.Ab;
 
-            return Math.Round(slg, 4);
+            return Math.Round(slg, 3);
         }
 
         private double CalculateOps(BattingStats batting)

@@ -4,6 +4,7 @@ using BaseballAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
+using System;
 using System.Linq;
 
 namespace BaseballAPI.UnitTests.Controllers
@@ -36,8 +37,9 @@ namespace BaseballAPI.UnitTests.Controllers
         [Test]
         public void GetPlayerIdReturnsId()
         {
-            AssertGetPlayerIdReturnsId(_firstPerson);
-            AssertGetPlayerIdReturnsId(_secondPerson);
+            AssertGetPlayerIdReturnsIdWithFullName(_firstPerson);
+            AssertGetPlayerIdReturnsIdWithFullName(_secondPerson);
+            AssertGetPlayerIdReturnsIdWithPartialName(_firstPerson);
         }
 
         [Test]
@@ -47,15 +49,34 @@ namespace BaseballAPI.UnitTests.Controllers
             AssertGetPlayerReturnsPlayer(_secondPerson);
         }
 
-        public void AssertGetPlayerIdReturnsId(People person)
+        public void AssertGetPlayerIdReturnsIdWithFullName(People person)
         {
             var expectedPlayer = new Player();
 
             _mockMapper.Setup(mockPlayerMapper => mockPlayerMapper.Map(person)).Returns(expectedPlayer);
 
-            var actualPlayerId = _service.GetPlayerId(person.NameFirst, person.NameLast);
+            var actualPlayerId = _service.GetPlayerId(person.NameFirst);
+            var idFromLastName = _service.GetPlayerId(person.NameLast);
+            var idFromGivenName = _service.GetPlayerId(person.NameGiven);
+            var idFromFullName = _service.GetPlayerId($"{person.NameFirst} {person.NameLast}");
 
             Assert.That(actualPlayerId.ElementAt(0).PlayerId, Is.EqualTo(expectedPlayer.PlayerId));
+            Assert.That(idFromLastName.ElementAt(0).PlayerId, Is.EqualTo(expectedPlayer.PlayerId));
+            Assert.That(idFromFullName.ElementAt(0).PlayerId, Is.EqualTo(expectedPlayer.PlayerId));
+        }
+        private void AssertGetPlayerIdReturnsIdWithPartialName(People person)
+        {
+            var expectedPlayer = new Player();
+            _mockMapper.Setup(MockPlayerMapper => MockPlayerMapper.Map(person)).Returns(expectedPlayer);
+
+            var actualPlayerId = _service.GetPlayerId("fir");
+            var actualPlayerIdFromLastName = _service.GetPlayerId("las");
+            var actualPlayerIdFromGivenName = _service.GetPlayerId("first mi");
+            var actualPlayerIdFromFullName = _service.GetPlayerId("fir las");
+
+            Assert.That(actualPlayerId.ElementAt(0).PlayerId, Is.EqualTo(expectedPlayer.PlayerId));
+            Assert.That(actualPlayerIdFromLastName.ElementAt(0).PlayerId, Is.EqualTo(expectedPlayer.PlayerId));
+            Assert.That(actualPlayerIdFromFullName.ElementAt(0).PlayerId, Is.EqualTo(expectedPlayer.PlayerId));
         }
 
         public void AssertGetPlayerReturnsPlayer(People expectedPerson)
@@ -74,14 +95,16 @@ namespace BaseballAPI.UnitTests.Controllers
             {
                 NameFirst = "first",
                 NameLast = "last",
-                PlayerId = "id"
+                PlayerId = "id",
+                NameGiven = "first middle"
             };
 
             _secondPerson = new People()
             {
                 NameFirst = "anotherFirst",
                 NameLast = "antherLast",
-                PlayerId = "anotherId"
+                PlayerId = "anotherId",
+                NameGiven = "anotherFirst anotherMiddle"
             };
 
             _database.Add(_firstPerson);
