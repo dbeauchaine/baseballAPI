@@ -82,7 +82,7 @@ namespace BaseballAPI.UnitTests.Controllers
 
         public async Task AssertThatClientResponseEqualsExpectedResponse(string url, Player player)
         {
-            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(player.NameFirst, player.NameLast)).Returns(new List<Player>() { player });
+            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId($"{player.NameFirst} {player.NameLast}")).Returns(new List<Player>() { player });
 
             var uri = QueryHelpers.AddQueryString(url, new Dictionary<string, string> {
                 {"firstName", player.NameFirst},

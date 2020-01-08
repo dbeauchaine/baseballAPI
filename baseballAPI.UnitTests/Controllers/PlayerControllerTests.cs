@@ -27,8 +27,7 @@ namespace BaseballAPI.UnitTests.Controllers
         [Test]
         public void ReturnsPlayerId()
         {
-            var firstName = "first";
-            var lastName = "last";
+            var name = "first last";
 
             const string expectedPlayerId = "something";
 
@@ -37,9 +36,9 @@ namespace BaseballAPI.UnitTests.Controllers
                 PlayerId = expectedPlayerId
             };
 
-            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(firstName, lastName)).Returns(new List<Player>() { expectedPlayer });
+            _playerService.Setup(mockPlayerService => mockPlayerService.GetPlayerId(name)).Returns(new List<Player>() { expectedPlayer });
 
-            var playerId = _controller.GetPlayerId(firstName, lastName);
+            var playerId = _controller.GetPlayerId(name);
 
             Assert.That(playerId.ElementAt(0).PlayerId, Is.EqualTo(expectedPlayer.PlayerId));
         }

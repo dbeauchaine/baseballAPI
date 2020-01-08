@@ -28,13 +28,13 @@ namespace BaseballAPI.UnitTests.Controllers
             double expectedSingles = (5 - 2 - 1 - 1);
             Assert.That(_computedBattingStats.Singles, Is.EqualTo(expectedSingles));
             
-            double expectedAvg = 2 / 10;
+            double expectedAvg = 5 / 10.0;
             Assert.That(_computedBattingStats.Avg, Is.EqualTo(expectedAvg));
         
-            double expectedObp = ((2 + 2 + 0) / 10);
+            double expectedObp = ((5 + 0 + 0) / 10.0);
             Assert.That(_computedBattingStats.Obp, Is.EqualTo(expectedObp));
 
-            double expectedSlg = (1 + 2 * 2 + 3 * 1 + 4 * 1) / 10;
+            double expectedSlg = (1 + 2 * 2 + 3 * 1 + 4 * 1) / 10.0;
             Assert.That(_computedBattingStats.Slg, Is.EqualTo(expectedSlg));
         }
 
@@ -48,6 +48,7 @@ namespace BaseballAPI.UnitTests.Controllers
                 Hr = 1,
                 Ab = 10,
                 Ibb = 0,
+                Bb = 0,
             };
         }
     }
