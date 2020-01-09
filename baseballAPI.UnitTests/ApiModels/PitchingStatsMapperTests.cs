@@ -33,7 +33,7 @@ namespace BaseballAPI.UnitTests.Controllers
         public void MapYearCopiesDataFromPitchingAndPlayerToBattingLeagueStats()
         {
             Pitching pitching = GeneratePitchingWithPlayer();
-            PitchingLeaderBoardStats pitchingLeaderBoardStats = _mapper.MapYear(pitching);
+            PitchingStats pitchingLeaderBoardStats = _mapper.Map(pitching);
 
             AssertThatEachElementIsEqualWithPlayerValues(pitching, pitchingLeaderBoardStats);
         }
@@ -106,7 +106,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Gidp, Is.EqualTo(0));
         }
 
-        private void AssertThatEachElementIsEqualWithPlayerValues(Pitching pitching, PitchingLeaderBoardStats pitchingStats)
+        private void AssertThatEachElementIsEqualWithPlayerValues(Pitching pitching, PitchingStats pitchingStats)
         {
             Assert.That(pitchingStats.NameFirst, Is.EqualTo(pitching.Player.NameFirst));
             Assert.That(pitchingStats.NameGiven, Is.EqualTo(pitching.Player.NameGiven));

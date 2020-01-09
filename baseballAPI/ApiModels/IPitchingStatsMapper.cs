@@ -9,7 +9,5 @@ namespace BaseballAPI.ApiModels
     public interface IPitchingStatsMapper
     {
         public PitchingStats Map(Pitching pitching);
-
-        public PitchingLeaderBoardStats MapYear(Pitching pitching);
     }
 }

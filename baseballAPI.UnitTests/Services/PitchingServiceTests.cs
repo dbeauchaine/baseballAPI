@@ -54,9 +54,9 @@ namespace BaseballAPI.UnitTests.Controllers
 
         private void AssertGetPitchingLeaderboardStatsByYearReturnsStats(Pitching expectedPitching)
         {
-            var expectedPitchingLeaderboardStats = new PitchingLeaderBoardStats();
+            var expectedPitchingLeaderboardStats = new PitchingStats();
 
-            _mockMapper.Setup(mockPitchingMapper => mockPitchingMapper.MapYear(expectedPitching)).Returns(expectedPitchingLeaderboardStats);
+            _mockMapper.Setup(mockPitchingMapper => mockPitchingMapper.Map(expectedPitching)).Returns(expectedPitchingLeaderboardStats);
 
             var actualPitchingLeaderboardStats = _service.GetPitchingStatsByYear(expectedPitching.YearId);
 
