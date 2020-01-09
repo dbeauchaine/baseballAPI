@@ -7,6 +7,9 @@ namespace BaseballAPI.ApiModels
 {
     public class BattingStats
     {
+        public string NameFirst { get; set; }
+        public string NameLast { get; set; }
+        public string NameGiven { get; set; }
         public string PlayerId { get; set; }
         public short YearId { get; set; }
         public short Stint { get; set; }
@@ -31,13 +34,12 @@ namespace BaseballAPI.ApiModels
         public short Sf { get; set; }
         public short Gidp { get; set; }
 
+        public int Singles { get; set; }
         public double Avg { get; set; }
 
         public double Obp { get; set; }
 
         public double Slg { get; set; }
-
-        public int Singles { get; set; }
 
         public double Ops { get; set; }
     }

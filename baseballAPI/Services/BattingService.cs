@@ -30,16 +30,16 @@ namespace BaseballAPI.Services
             return stats;
         }
 
-        public IEnumerable<BattingLeaderBoardStats> GetBattingStatsByYear(int year)
+        public IEnumerable<BattingStats> GetBattingStatsByYear(int year)
         {
             var query = _database.Batting
                 .Include(b => b.Player)
                 .Where(b => b.YearId == year)
                 .OrderBy(b => b.Player.NameLast)
                 .ToList()
-                .Select<Batting, BattingLeaderBoardStats>(b =>
+                .Select<Batting, BattingStats>(b =>
                 {
-                    return _mapper.MapYear(b);
+                    return _mapper.Map(b);
                 });
 
 
