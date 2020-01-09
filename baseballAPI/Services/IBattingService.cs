@@ -7,6 +7,6 @@ namespace BaseballAPI.Services
     public interface IBattingService
     {       
         public IEnumerable<BattingStats> GetBattingStats(string id);
-        public IEnumerable<BattingLeaderBoardStats> GetBattingStatsByYear(int year);
+        public IEnumerable<BattingStats> GetBattingStatsByYear(int year);
     }
 }

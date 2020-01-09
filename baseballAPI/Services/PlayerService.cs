@@ -17,6 +17,11 @@ namespace BaseballAPI.Services
         }
         public IEnumerable<Player> GetPlayerId(string name)
         {
+            if(name == null)
+            {
+                return new List<Player>();
+            }
+
             var data = _database.People;
             var names = name.Split(null);
 

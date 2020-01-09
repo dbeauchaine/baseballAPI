@@ -49,7 +49,7 @@ namespace BaseballAPI.UnitTests.Controllers
         [Test]
         public void GetBattingStatsByYearReturnsStats()
         {
-            AssertGetBattingLeaderboardStatsByYearReturnsStats(_fourthPerson);
+            AssertGetBattingStatsByYearReturnsStats(_fourthPerson);
             AssertGetBattingLeaderboardStatsByYearWithBadIdReturnsEmptyIEnumerable();
         }
 
@@ -61,15 +61,15 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(!badReturn.Any());
         }
 
-        private void AssertGetBattingLeaderboardStatsByYearReturnsStats(Batting expectedBatting)
+        private void AssertGetBattingStatsByYearReturnsStats(Batting expectedBatting)
         {
-            var expectedBattingLeaderboardStats = new BattingLeaderBoardStats();
+            var expectedBattingStatsByYear = new BattingStats();
 
-            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.MapYear(expectedBatting)).Returns(expectedBattingLeaderboardStats);
+            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(expectedBatting)).Returns(expectedBattingStatsByYear);
 
             var actualBattingLeaderboardStats = _service.GetBattingStatsByYear(expectedBatting.YearId);
 
-            Assert.That(actualBattingLeaderboardStats.ElementAt(0), Is.EqualTo(expectedBattingLeaderboardStats));
+            Assert.That(actualBattingLeaderboardStats.ElementAt(0), Is.EqualTo(expectedBattingStatsByYear));
         }
 
         public void AssertGetBattingStatsReturnsStats(Batting expectedBatting)

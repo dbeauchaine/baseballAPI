@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BaseballAPI.Helpers;
+using System;
 
 namespace BaseballAPI.ApiModels
 {
@@ -6,62 +7,58 @@ namespace BaseballAPI.ApiModels
     {
         public BattingStats CalculateStats(BattingStats batting)
         {
-            batting.Singles = CalculateSingles(batting);
+            var localBatting = batting;
 
-            batting.Avg = CalculateAvg(batting);
+            localBatting.Singles = CalculateSingles(localBatting);
 
-            batting.Obp = CalculateObp(batting);
+            localBatting.Avg = CalculateAvg(localBatting);
 
-            batting.Slg = CalculateSlg(batting);
+            localBatting.Obp = CalculateObp(localBatting);
 
-            batting.Ops = CalculateOps(batting);
+            localBatting.Slg = CalculateSlg(localBatting);
 
-            return batting;
+            localBatting.Ops = CalculateOps(localBatting);
+
+            return localBatting;
         }
+
+     
 
         private int CalculateSingles(BattingStats batting)
         {
             return batting.H - (batting.X2b + batting.X3b + batting.Hr);
         }
+
         private double CalculateAvg(BattingStats batting)
         {
-            if(batting.Ab == 0)
-            {
-                return 0;
-            }
-
-            double avg = (double)batting.H / batting.Ab;
+            double avg = SafeDivide.divideDouble((double)batting.H, batting.Ab);
             
             return Math.Round(avg, 3);
         }
 
         private double CalculateObp(BattingStats batting)
         {
-            if (batting.Ab == 0)
-            {
-                return 0;
-            }
+            var numerator = (double)batting.H + batting.Bb + batting.Ibb;
+            var denominator = batting.Ab;
 
-            double obp = ((double)batting.H + batting.Bb + batting.Ibb) / batting.Ab;
+            double obp = SafeDivide.divideDouble(numerator, denominator);
 
             return Math.Round(obp, 3);
         }
 
         private double CalculateSlg(BattingStats batting)
         {
-            if(batting.Ab == 0)
-            {
-                return 0;
-            }
+            var numerator = (double)batting.Singles + batting.X2b * 2 + batting.X3b * 3 + batting.Hr * 4;
+            var denominator = batting.Ab;
 
-            double slg = ((double)batting.Singles + batting.X2b * 2 + batting.X3b * 3 + batting.Hr * 4) / batting.Ab;
+            double slg = SafeDivide.divideDouble(numerator, denominator);
 
             return Math.Round(slg, 3);
         }
 
         private double CalculateOps(BattingStats batting)
         {
-            return batting.Obp + batting.Slg;
+            return Math.Round(batting.Obp + batting.Slg, 3);
         }
     }
 }

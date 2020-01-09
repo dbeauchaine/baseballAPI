@@ -9,5 +9,6 @@ namespace BaseballAPI.ApiModels
     public interface IBattingStatsCalculator
     {
         public BattingStats CalculateStats(BattingStats batting);
+
     }
 }

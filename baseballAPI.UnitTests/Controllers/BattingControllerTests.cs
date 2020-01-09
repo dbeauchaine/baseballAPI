@@ -67,29 +67,29 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public void GetBattingStatsByYearReturnsEnumerableLeagueBattingStats()
+        public void GetBattingStatsByYearReturnsEnumerableBattingStatsWithNames()
         {
-            var firstPerson = new BattingLeaderBoardStats
+            var firstPerson = new BattingStats
             {
                 PlayerId = "personId",
                 NameLast = "last",
                 YearId = 2000
             };
 
-            var secondPerson = new BattingLeaderBoardStats
+            var secondPerson = new BattingStats
             {
                 PlayerId = "secondPersonId",
                 NameLast = "secondLast",
                 YearId = 2000
             };
 
-            var expectedRecord = new List<BattingLeaderBoardStats>()
+            var expectedRecord = new List<BattingStats>()
             {
                 firstPerson,
                 secondPerson
             };
 
-            _battingService.Setup(mockPlayerService => mockPlayerService.GetBattingStatsByYear(firstPerson.YearId)).Returns(expectedRecord);
+            _battingService.Setup(mockBattingService => mockBattingService.GetBattingStatsByYear(firstPerson.YearId)).Returns(expectedRecord);
 
             var actualReturn = _controller.GetBattingStatsByYear(firstPerson.YearId);
 
@@ -102,7 +102,7 @@ namespace BaseballAPI.UnitTests.Controllers
         {
             int badId = 1;
 
-            var emptyList = new List<BattingLeaderBoardStats>();
+            var emptyList = new List<BattingStats>();
             _battingService.Setup(mockBattingService => mockBattingService.GetBattingStatsByYear(badId)).Returns(emptyList);
 
             var actualReturn = _controller.GetBattingStatsByYear(badId);
