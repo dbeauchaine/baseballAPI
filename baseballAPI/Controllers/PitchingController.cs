@@ -28,7 +28,7 @@ namespace BaseballAPI.Controllers
         }
 
         [HttpGet("/pitching/year/{year}")]
-        public IEnumerable<PitchingLeaderBoardStats> GetPitchingStatsByYear(int year)
+        public IEnumerable<PitchingStats> GetPitchingStatsByYear(int year)
         {
             var players = _pitchingService.GetPitchingStatsByYear(year);
 

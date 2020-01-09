@@ -68,21 +68,21 @@ namespace BaseballAPI.UnitTests.Controllers
         [Test]
         public void GetPitchingStatsByYearReturnsEnumerableLeagueBattingStats()
         {
-            var firstPerson = new PitchingLeaderBoardStats
+            var firstPerson = new PitchingStats
             {
                 PlayerId = "personId",
                 NameLast = "last",
                 YearId = 2000
             };
 
-            var secondPerson = new PitchingLeaderBoardStats
+            var secondPerson = new PitchingStats
             {
                 PlayerId = "secondPersonId",
                 NameLast = "secondLast",
                 YearId = 2000
             };
 
-            var expectedRecord = new List<PitchingLeaderBoardStats>()
+            var expectedRecord = new List<PitchingStats>()
             {
                 firstPerson,
                 secondPerson
@@ -100,7 +100,7 @@ namespace BaseballAPI.UnitTests.Controllers
         public void IfGetPitchingByYearFailsToFindEntryItThrowsNotFoundException()
         {
             int badId = 1;
-            var emptyList = new List<PitchingLeaderBoardStats>();
+            var emptyList = new List<PitchingStats>();
 
             _service.Setup(mockPitchingService => mockPitchingService.GetPitchingStatsByYear(badId)).Returns(emptyList);
 

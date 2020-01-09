@@ -7,6 +7,9 @@ namespace BaseballAPI.ApiModels
 {
     public class PitchingStats
     {
+        public string NameFirst { get; set; }
+        public string NameLast { get; set; }
+        public string NameGiven { get; set; }
         public string PlayerId { get; set; }
         public short YearId { get; set; }
         public short Stint { get; set; }
