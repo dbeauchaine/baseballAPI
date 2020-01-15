@@ -5,38 +5,64 @@ namespace BaseballAPI.ApiModels
 {
     public class StatsCalculator : IStatsCalculator
     {
+        public TeamStats CalculateStats(TeamStats teamStats)
+        {
+            var copy = teamStats;
+
+            copy.Pa = CalulatePa(copy.Ab, copy.Bb, copy.Hbp, copy.Sf, copy.Sh);
+
+            copy.Singles = CalculateSingles(copy.H, copy.X2b, copy.X3b, copy.Hr);
+
+            copy.Avg = CalculateAvg(copy.H, copy.Ab);
+
+            copy.Obp = CalculateObp(copy.H, copy.Bb, copy.Ibb, copy.Ab);
+
+            copy.Slg = CalculateSlg(copy.Singles, copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+
+            copy.Ops = CalculateOps(copy.Obp, copy.Slg);
+
+            copy.BbRate = CalculateBbRate(copy.Bb, copy.Pa);
+
+            copy.KRate = CalculateKRate(copy.So, copy.Pa);
+
+            copy.Iso = CalculateIso(copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+
+            copy.Babip = CalculateBabip(copy.H, copy.Hr, copy.Ab, copy.So, copy.Sf);
+
+            return copy;
+        }
         public BattingStats CalculateStats(BattingStats batting)
         {
-            var localBatting = batting;
+            var copy = batting;
 
-            localBatting.Pa = CalulatePa(localBatting);
+            copy.Pa = CalulatePa(copy.Ab, copy.Bb, copy.Hbp, copy.Sf, copy.Sh);
 
-            localBatting.Singles = CalculateSingles(localBatting);
+            copy.Singles = CalculateSingles(copy.H, copy.X2b, copy.X3b, copy.Hr);
 
-            localBatting.Avg = CalculateAvg(localBatting);
+            copy.Avg = CalculateAvg(copy.H, copy.Ab);
 
-            localBatting.Obp = CalculateObp(localBatting);
+            copy.Obp = CalculateObp(copy.H, copy.Bb, copy.Ibb, copy.Ab);
 
-            localBatting.Slg = CalculateSlg(localBatting);
+            copy.Slg = CalculateSlg(copy.Singles, copy.X2b, copy.X3b, copy.Hr, copy.Ab);
 
-            localBatting.Ops = CalculateOps(localBatting);
+            copy.Ops = CalculateOps(copy.Obp, copy.Slg);
 
-            localBatting.BbRate = CalculateBbRate(localBatting);
+            copy.BbRate = CalculateBbRate(copy.Bb, copy.Pa);
 
-            localBatting.KRate = CalculateKRate(localBatting);
+            copy.KRate = CalculateKRate(copy.So, copy.Pa);
 
-            localBatting.Iso = CalculateIso(localBatting);
+            copy.Iso = CalculateIso(copy.X2b, copy.X3b, copy.Hr, copy.Ab);
 
-            localBatting.Babip = CalculateBabip(localBatting);
+            copy.Babip = CalculateBabip(copy.H, copy.Hr, copy.Ab, copy.So, copy.Sf);
 
-            return localBatting;
+            return copy;
         }
 
         //BABIP - Batting Average On Balls In Play (http://www.fangraphs.com/library/offense/babip/)
-        private double CalculateBabip(BattingStats batting)
+        private double CalculateBabip(short H, short Hr, short Ab, short So, short Sf)
         {
-            var numerator = (double)batting.H - batting.Hr;
-            var denominator = batting.Ab - batting.So - batting.Hr + batting.Sf;
+            var numerator = (double)H - Hr;
+            var denominator = Ab - So - Hr + Sf;
 
             double babip = SafeDivide.divideDouble(numerator, denominator);
 
@@ -44,10 +70,10 @@ namespace BaseballAPI.ApiModels
         }
 
         //ISO - Isolated Power (http://www.fangraphs.com/library/offense/iso/)
-        private double CalculateIso(BattingStats batting)
+        private double CalculateIso(short X2b, short X3b, short Hr, short Ab)
         {
-            var numerator = (double)batting.X2b + (2 * batting.X3b) + (3 * batting.Hr);
-            var denominator = (double)batting.Ab;
+            var numerator = (double)X2b + (2 * X3b) + (3 * Hr);
+            var denominator = Ab;
 
             double iso = SafeDivide.divideDouble(numerator, denominator);
 
@@ -55,10 +81,10 @@ namespace BaseballAPI.ApiModels
         }
 
         //K% - Strikeout Percentage (http://www.fangraphs.com/library/offense/rate-stats/)
-        private double CalculateKRate(BattingStats batting)
+        private double CalculateKRate(short So, int Pa)
         {
-            var numerator = (double)batting.So;
-            var denominator = batting.Pa;
+            var numerator = (double)So;
+            var denominator = Pa;
 
             double kRate = SafeDivide.divideDouble(numerator, denominator);
 
@@ -66,40 +92,40 @@ namespace BaseballAPI.ApiModels
         }
 
         //BB% - Walk Percentage (http://www.fangraphs.com/library/offense/rate-stats/)
-        private double CalculateBbRate(BattingStats batting)
+        private double CalculateBbRate(short Bb, int Pa)
         {
-            var numerator = (double)batting.Bb;
-            var denominator = batting.Pa;
+            var numerator = (double)Bb;
+            var denominator = Pa;
             double bbRate = SafeDivide.divideDouble(numerator, denominator);
 
             return Math.Round(bbRate, 3);
         }
 
         //Pa - Plate Appearances
-        private int CalulatePa(BattingStats batting)
+        private int CalulatePa(short Ab, short Bb, short Hbp, short Sf, short Sh)
         {
-            return batting.Ab + batting.Bb + batting.Hbp + batting.Sf + batting.Sh;
+            return Ab + Bb + Hbp + Sf + Sh;
         }
 
         //S - Singles
-        private int CalculateSingles(BattingStats batting)
+        private int CalculateSingles(short H, short X2b, short X3b, short Hr)
         {
-            return batting.H - (batting.X2b + batting.X3b + batting.Hr);
+            return H - (X2b + X3b + Hr);
         }
 
         //AVG - Batting Average
-        private double CalculateAvg(BattingStats batting)
+        private double CalculateAvg(short H, short Ab)
         {
-            double avg = SafeDivide.divideDouble((double)batting.H, batting.Ab);
+            double avg = SafeDivide.divideDouble((double)H, Ab);
 
             return Math.Round(avg, 3);
         }
 
         //OBP - On Base Percentage (http://www.fangraphs.com/library/offense/obp/)
-        private double CalculateObp(BattingStats batting)
+        private double CalculateObp(short H, short Bb, short Ibb, short Ab)
         {
-            var numerator = (double)batting.H + batting.Bb + batting.Ibb;
-            var denominator = batting.Ab;
+            var numerator = (double)H + Bb + Ibb;
+            var denominator = Ab;
 
             double obp = SafeDivide.divideDouble(numerator, denominator);
 
@@ -107,10 +133,10 @@ namespace BaseballAPI.ApiModels
         }
 
         //SLG - Slugging Percentage
-        private double CalculateSlg(BattingStats batting)
+        private double CalculateSlg(int Singles, short X2b, short X3b, short Hr, short Ab)
         {
-            var numerator = (double)batting.Singles + batting.X2b * 2 + batting.X3b * 3 + batting.Hr * 4;
-            var denominator = batting.Ab;
+            var numerator = (double)Singles + X2b * 2 + X3b * 3 + Hr * 4;
+            var denominator = Ab;
 
             double slg = SafeDivide.divideDouble(numerator, denominator);
 
@@ -118,9 +144,9 @@ namespace BaseballAPI.ApiModels
         }
 
         //OPS - On Base + Slugging (http://www.fangraphs.com/library/offense/ops/)
-        private double CalculateOps(BattingStats batting)
+        private double CalculateOps(double Obp, double Slg)
         {
-            return Math.Round(batting.Obp + batting.Slg, 3);
+            return Math.Round(Obp + Slg, 3);
         }
     }
 }

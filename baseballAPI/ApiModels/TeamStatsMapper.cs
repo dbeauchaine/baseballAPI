@@ -26,7 +26,9 @@ namespace BaseballAPI.ApiModels
                 Park = teams.Park,
                 TeamIdbr = teams.TeamIdbr,
                 TeamIdlahman45 = teams.TeamIdlahman45,
-                TeamIdretro = teams.TeamIdretro
+                TeamIdretro = teams.TeamIdretro,
+                Sh = 0,
+                Ibb = 0
             };
 
             ConvertOptionalParamsToNonNullable(teams, teamsStats);
@@ -205,6 +207,7 @@ namespace BaseballAPI.ApiModels
                 teamsStats.Ppf = (short)teams.Ppf;
             else
                 teamsStats.Ppf = 0;
+
         }
 
     }
