@@ -12,7 +12,7 @@ namespace BaseballAPI.UnitTests.Controllers
 {
     [TestFixture]
     [Category("Unit")]
-    public class BattingServiceTests
+    public class BattingServicePostTests
     {
         private BaseballDBContext _database;
         private BattingService _service;
@@ -44,96 +44,73 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public void GetBattingStatsReturnsStats()
+        public void GetBattingPostStatsReturnsStats()
         {
-            AssertGetBattingStatsReturnsStats(_firstPerson);
-            AssertGetBattingStatsReturnsStats(_secondPerson);
-            AssertGetBattingStatsReturnsStatsWithDuplicateId(_firstPerson, _thirdPerson);
+            AssertGetBattingPostStatsReturnsStats(_firstPersonPost);
+            AssertGetBattingPostStatsReturnsStats(_secondPersonPost);
+            AssertGetBattingPostStatsReturnsStatsWithDuplicateId(_firstPersonPost, _thirdPersonPost);
         }
 
-        [Test]
-        public void GetBattingStatsByYearReturnsStats()
+        private void AssertGetBattingPostStatsReturnsStats(BattingPost expectedBattingPost)
         {
-            AssertGetBattingStatsByYearReturnsStats(_fourthPerson);
-            AssertGetBattingLeaderboardStatsByYearWithBadIdReturnsEmptyIEnumerable();
+            var expectedBattingPostStats = new BattingPostStats();
+
+            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(expectedBattingPost)).Returns(expectedBattingPostStats);
+
+            var actualBatting = _service.GetBattingPostStats(expectedBattingPost.PlayerId);
+
+            Assert.That(actualBatting.ElementAt(0), Is.EqualTo(expectedBattingPostStats));
         }
 
-        private void AssertGetBattingLeaderboardStatsByYearWithBadIdReturnsEmptyIEnumerable()
+        private void AssertGetBattingPostStatsReturnsStatsWithDuplicateId(BattingPost firstEntry, BattingPost secondEntry)
         {
-            var badYear = 1;
-            var badReturn = _service.GetBattingStatsByYear(badYear);
-
-            Assert.That(!badReturn.Any());
-        }
-
-        private void AssertGetBattingStatsByYearReturnsStats(Batting expectedBatting)
-        {
-            var expectedBattingStatsByYear = new BattingStats();
-
-            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(expectedBatting)).Returns(expectedBattingStatsByYear);
-
-            var actualBattingLeaderboardStats = _service.GetBattingStatsByYear(expectedBatting.YearId);
-
-            Assert.That(actualBattingLeaderboardStats.ElementAt(0), Is.EqualTo(expectedBattingStatsByYear));
-        }
-
-        public void AssertGetBattingStatsReturnsStats(Batting expectedBatting)
-        {
-            var expectedBattingStats = new BattingStats();
-
-            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(expectedBatting)).Returns(expectedBattingStats);
-
-            var actualBatting = _service.GetBattingStats(expectedBatting.PlayerId);
-
-            Assert.That(actualBatting.ElementAt(0), Is.EqualTo(expectedBattingStats));
-        }
-
-        public void AssertGetBattingStatsReturnsStatsWithDuplicateId(Batting firstEntry, Batting secondEntry)
-        {
-            var firstEntryStats = new BattingStats();
-            var secondEntryStats = new BattingStats();
+            var firstEntryStats = new BattingPostStats();
+            var secondEntryStats = new BattingPostStats();
 
             _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(firstEntry)).Returns(firstEntryStats);
             _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(secondEntry)).Returns(secondEntryStats);
 
-            var actualBatting = _service.GetBattingStats(firstEntry.PlayerId);
+            var actualBatting = _service.GetBattingPostStats(firstEntry.PlayerId);
 
             Assert.That(actualBatting.ElementAt(0), Is.EqualTo(firstEntryStats));
             Assert.That(actualBatting.ElementAt(1), Is.EqualTo(secondEntryStats));
         }
-       
         public void CreateFakeData(BaseballDBContext database)
         {
-            _firstPerson = new Batting()
+            _firstPersonPost = new BattingPost()
             {
                 YearId = 2000,
                 Hr = 20,
                 Ab = 100,
-                PlayerId = "id"
+                PlayerId = "id",
+                Round = "WC"
             };
 
-            _secondPerson = new Batting()
+            _secondPersonPost = new BattingPost()
             {
                 YearId = 2000,
                 Hr = 10,
                 Ab = 200,
-                PlayerId = "anotherId"
+                PlayerId = "anotherId",
+                Round = "WS"
             };
 
-            _thirdPerson = new Batting()
+            _thirdPersonPost = new BattingPost()
             {
                 YearId = 1999,
                 Hr = 18,
                 Ab = 99,
-                PlayerId = "id"
+                PlayerId = "id",
+                Round = "WC"
             };
 
-            _fourthPerson = new Batting
+            _fourthPersonPost = new BattingPost()
             {
                 YearId = 1998,
                 Hr = 18,
                 Ab = 20,
                 PlayerId = "fourthId",
+                Round = "WS",
                 Player = new People()
                 {
                     PlayerId = "fourthId",
@@ -143,10 +120,10 @@ namespace BaseballAPI.UnitTests.Controllers
                 }
             };
 
-            _database.Add(_firstPerson);
-            _database.Add(_secondPerson);
-            _database.Add(_thirdPerson);
-            _database.Add(_fourthPerson);
+            _database.Add(_firstPersonPost);
+            _database.Add(_secondPersonPost);
+            _database.Add(_thirdPersonPost);
+            _database.Add(_fourthPersonPost);
             _database.SaveChanges();
         }
     }

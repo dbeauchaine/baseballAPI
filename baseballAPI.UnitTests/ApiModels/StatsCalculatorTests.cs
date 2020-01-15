@@ -14,6 +14,8 @@ namespace BaseballAPI.UnitTests.Controllers
         public BattingStats _computedBattingStats;
         public TeamStats _fakeTeamStats;
         public TeamStats _computedTeamStats;
+        public BattingPostStats _fakeBattingPostStats;
+        public BattingPostStats _computedBattingPostStats;
 
         [SetUp]
         public void SetUp()
@@ -25,6 +27,8 @@ namespace BaseballAPI.UnitTests.Controllers
             _fakeTeamStats = GenerateFakeTeamStats();
             _computedTeamStats = _calculator.CalculateStats(_fakeTeamStats);
 
+            _fakeBattingPostStats = GenerateFakeBattingPostStats();
+            _computedBattingPostStats = _calculator.CalculateStats(_fakeBattingPostStats);
         }
 
         [Test]
@@ -114,6 +118,51 @@ namespace BaseballAPI.UnitTests.Controllers
             double expectedBbRate = (double)_fakeTeamStats.Bb / _fakeTeamStats.Pa;
             Assert.That(_computedTeamStats.BbRate, Is.EqualTo(expectedBbRate));
         }
+
+        [Test]
+        public void CalculateBattingPostStatsReturnsCorrectValues()
+        {
+            //singles = H - 2B - 3B - HR
+            int expectedSingles = (_fakeBattingPostStats.H - _fakeBattingPostStats.X2b - _fakeBattingPostStats.X3b - _fakeBattingPostStats.Hr);
+            Assert.That(_computedBattingPostStats.Singles, Is.EqualTo(expectedSingles));
+
+            //AVG = H / Ab
+            double expectedAvg = (double)_fakeBattingPostStats.H / _fakeBattingPostStats.Ab;
+            Assert.That(_computedBattingPostStats.Avg, Is.EqualTo(expectedAvg));
+
+            //OBP = (H + BB + IBB)/Ab
+            double expectedObp = ((double)_fakeBattingPostStats.H + _fakeBattingPostStats.Bb + _fakeBattingPostStats.Ibb) / _fakeBattingPostStats.Ab;
+            Assert.That(_computedBattingPostStats.Obp, Is.EqualTo(expectedObp));
+
+            //SLG = (Singles + 2B*2 + 3B*3 + HR*4)/Ab
+            double expectedSlg = ((double)_fakeBattingPostStats.Singles + (_fakeBattingPostStats.X2b * 2) + (_fakeBattingPostStats.X3b * 3) + (_fakeBattingPostStats.Hr * 4)) / _fakeBattingPostStats.Ab;
+            Assert.That(_computedBattingPostStats.Slg, Is.EqualTo(expectedSlg));
+
+            //OPS = (OBP + SLG)
+            double expectedOps = ((double)_fakeBattingPostStats.Obp + _fakeBattingPostStats.Slg);
+            Assert.That(_computedBattingPostStats.Ops, Is.EqualTo(expectedOps));
+
+            //Pa = AB + BB + HBP + SF + SH
+            int expectedPa = _fakeBattingPostStats.Ab + _fakeBattingPostStats.Bb + _fakeBattingPostStats.Hbp + _fakeBattingPostStats.Sf + _fakeBattingPostStats.Sh;
+            Assert.That(_computedBattingPostStats.Pa, Is.EqualTo(expectedPa));
+
+            //BABIP = (H - HR) / (Ab - K -Hr + Sf)
+            double expectedBabip = ((double)_fakeBattingPostStats.H - _fakeBattingPostStats.Hr) / (_fakeBattingPostStats.Ab - _fakeBattingPostStats.So - _fakeBattingPostStats.Hr + _fakeBattingPostStats.Sf);
+            Assert.That(_computedBattingPostStats.Babip, Is.EqualTo(Math.Round(expectedBabip, 3)));
+
+            //ISO = (2B + 2 * 3B + 3 * HR) / Ab
+            double expectedIso = ((double)_fakeBattingPostStats.X2b + 2 * _fakeBattingPostStats.X3b + 3 * _fakeBattingPostStats.Hr) / _fakeBattingPostStats.Ab;
+            Assert.That(_computedBattingPostStats.Iso, Is.EqualTo(expectedIso));
+
+            //K% = K / PA
+            double expectedKRate = (double)_fakeBattingPostStats.So / _fakeBattingPostStats.Pa;
+            Assert.That(_computedBattingPostStats.KRate, Is.EqualTo(expectedKRate));
+
+            //BB% = BB / PA
+            double expectedBbRate = (double)_fakeBattingPostStats.Bb / _fakeBattingPostStats.Pa;
+            Assert.That(_computedBattingPostStats.BbRate, Is.EqualTo(expectedBbRate));
+        }
+
         public BattingStats GenerateFakeBattingStats()
         {
             return new BattingStats()
@@ -131,10 +180,26 @@ namespace BaseballAPI.UnitTests.Controllers
             };
         }
 
-
         private TeamStats GenerateFakeTeamStats()
         {
             return new TeamStats()
+            {
+                H = 5,
+                X2b = 2,
+                X3b = 1,
+                Hr = 1,
+                Ab = 10,
+                Ibb = 1,
+                Bb = 2,
+                Hbp = 1,
+                Sf = 2,
+                Sh = 1
+            };
+        }
+
+        private BattingPostStats GenerateFakeBattingPostStats()
+        {
+            return new BattingPostStats()
             {
                 H = 5,
                 X2b = 2,

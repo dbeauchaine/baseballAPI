@@ -58,6 +58,33 @@ namespace BaseballAPI.ApiModels
             return copy;
         }
 
+        public BattingPostStats CalculateStats(BattingPostStats battingPostStats)
+        {
+            var copy = battingPostStats;
+
+            copy.Pa = CalulatePa(copy.Ab, copy.Bb, copy.Hbp, copy.Sf, copy.Sh);
+
+            copy.Singles = CalculateSingles(copy.H, copy.X2b, copy.X3b, copy.Hr);
+
+            copy.Avg = CalculateAvg(copy.H, copy.Ab);
+
+            copy.Obp = CalculateObp(copy.H, copy.Bb, copy.Ibb, copy.Ab);
+
+            copy.Slg = CalculateSlg(copy.Singles, copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+
+            copy.Ops = CalculateOps(copy.Obp, copy.Slg);
+
+            copy.BbRate = CalculateBbRate(copy.Bb, copy.Pa);
+
+            copy.KRate = CalculateKRate(copy.So, copy.Pa);
+
+            copy.Iso = CalculateIso(copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+
+            copy.Babip = CalculateBabip(copy.H, copy.Hr, copy.Ab, copy.So, copy.Sf);
+
+            return copy;
+        }
+
         //BABIP - Batting Average On Balls In Play (http://www.fangraphs.com/library/offense/babip/)
         private double CalculateBabip(short H, short Hr, short Ab, short So, short Sf)
         {

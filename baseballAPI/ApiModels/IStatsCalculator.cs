@@ -9,6 +9,7 @@ namespace BaseballAPI.ApiModels
     public interface IStatsCalculator
     {
         public BattingStats CalculateStats(BattingStats batting);
-
+        public BattingPostStats CalculateStats(BattingPostStats batting);
+        public TeamStats CalculateStats(TeamStats teamStats);
     }
 }
