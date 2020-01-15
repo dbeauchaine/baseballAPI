@@ -24,7 +24,7 @@ namespace BaseballAPI.ApiModels
                 Wswin = teams.Wswin,
                 Name = teams.Name,
                 Park = teams.Park,
-                TeamIdbr = teams.TeamId,
+                TeamIdbr = teams.TeamIdbr,
                 TeamIdlahman45 = teams.TeamIdlahman45,
                 TeamIdretro = teams.TeamIdretro
             };

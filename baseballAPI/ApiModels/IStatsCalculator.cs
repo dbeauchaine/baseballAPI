@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BaseballAPI.ApiModels
 {
-    public interface IBattingStatsCalculator
+    public interface IStatsCalculator
     {
         public BattingStats CalculateStats(BattingStats batting);
 

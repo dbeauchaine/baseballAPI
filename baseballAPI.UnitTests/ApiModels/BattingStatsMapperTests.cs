@@ -10,12 +10,12 @@ namespace BaseballAPI.UnitTests.Controllers
     public class BattingStatsMapperTests
     {
         private BattingStatsMapper _mapper;
-        private Mock<BattingStatsCalculator> _calculator;
+        private Mock<StatsCalculator> _calculator;
 
         [SetUp]
         public void SetUp()
         {
-            _calculator = new Mock<BattingStatsCalculator>();
+            _calculator = new Mock<StatsCalculator>();
             _mapper = new BattingStatsMapper(_calculator.Object);
         }
 

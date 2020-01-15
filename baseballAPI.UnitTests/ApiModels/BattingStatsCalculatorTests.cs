@@ -9,14 +9,14 @@ namespace BaseballAPI.UnitTests.Controllers
     [Category("Unit")]
     public class BattingStatsCalculatorTests
     {
-        public BattingStatsCalculator _calculator;
+        public StatsCalculator _calculator;
         public BattingStats _fakeBattingStats;
         public BattingStats _computedBattingStats;
 
         [SetUp]
         public void SetUp()
         {
-            _calculator = new BattingStatsCalculator();
+            _calculator = new StatsCalculator();
             _fakeBattingStats = GenerateFakeBattingStats();
             _computedBattingStats = _calculator.CalculateStats(_fakeBattingStats);
 

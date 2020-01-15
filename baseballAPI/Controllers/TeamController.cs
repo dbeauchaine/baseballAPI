@@ -10,11 +10,11 @@ namespace BaseballAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TeamsController : ControllerBase
+    public class TeamController : ControllerBase
     {
         private ITeamService _teamService;
 
-        public TeamsController(ITeamService teamsService)
+        public TeamController(ITeamService teamsService)
         {
             _teamService = teamsService;
         }

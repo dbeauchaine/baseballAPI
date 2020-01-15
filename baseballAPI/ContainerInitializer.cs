@@ -25,7 +25,7 @@ namespace BaseballAPI
             _services.AddTransient<IPitchingService, PitchingService>();
             _services.AddTransient<IPitchingStatsMapper, PitchingStatsMapper>();
             _services.AddTransient<IPlayerMapper, PlayerMapper>();
-            _services.AddTransient<IBattingStatsCalculator, BattingStatsCalculator>();
+            _services.AddTransient<IStatsCalculator, StatsCalculator>();
         }
     }
 }

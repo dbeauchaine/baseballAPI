@@ -8,8 +8,8 @@ namespace BaseballAPI.ApiModels
 {
     public class BattingStatsMapper : IBattingStatsMapper
     {
-        private IBattingStatsCalculator _calculator;
-        public BattingStatsMapper(IBattingStatsCalculator calculator)
+        private IStatsCalculator _calculator;
+        public BattingStatsMapper(IStatsCalculator calculator)
         {
             _calculator = calculator;
         }

@@ -3,7 +3,7 @@ using System;
 
 namespace BaseballAPI.ApiModels
 {
-    public class BattingStatsCalculator : IBattingStatsCalculator
+    public class StatsCalculator : IStatsCalculator
     {
         public BattingStats CalculateStats(BattingStats batting)
         {
