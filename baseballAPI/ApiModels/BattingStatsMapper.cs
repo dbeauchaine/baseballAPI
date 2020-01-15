@@ -8,8 +8,8 @@ namespace BaseballAPI.ApiModels
 {
     public class BattingStatsMapper : IBattingStatsMapper
     {
-        private IBattingStatsCalculator _calculator;
-        public BattingStatsMapper(IBattingStatsCalculator calculator)
+        private IStatsCalculator _calculator;
+        public BattingStatsMapper(IStatsCalculator calculator)
         {
             _calculator = calculator;
         }
@@ -33,6 +33,25 @@ namespace BaseballAPI.ApiModels
             return battingStats;
         }
 
+        public BattingPostStats Map(BattingPost battingPost)
+        {
+            var battingPostStats = new BattingPostStats()
+            {
+                PlayerId = battingPost.PlayerId,
+                YearId = battingPost.YearId,
+                Round = battingPost.Round,
+                TeamId = battingPost.TeamId,
+                LgId = battingPost.LgId
+            };
+
+            CopyPlayerDataIfPlayerExists(battingPost, battingPostStats);
+            ConvertOptionalParamsToNonNullable(battingPost, battingPostStats);
+
+            _calculator.CalculateStats(battingPostStats);
+
+            return battingPostStats;
+        }
+
         private void CopyPlayerDataIfPlayerExists(Batting batting, BattingStats battingStats)
         {
             if(batting.Player != null)
@@ -40,6 +59,16 @@ namespace BaseballAPI.ApiModels
                 battingStats.NameFirst = batting.Player.NameFirst;
                 battingStats.NameLast = batting.Player.NameLast;
                 battingStats.NameGiven = batting.Player.NameGiven;
+            }
+        }
+
+        private void CopyPlayerDataIfPlayerExists(BattingPost battingPost, BattingPostStats battingPostStats)
+        {
+            if (battingPost.Player != null)
+            {
+                battingPostStats.NameFirst = battingPost.Player.NameFirst;
+                battingPostStats.NameLast = battingPost.Player.NameLast;
+                battingPostStats.NameGiven = battingPost.Player.NameGiven;
             }
         }
 
@@ -136,6 +165,98 @@ namespace BaseballAPI.ApiModels
                 battingStats.Gidp = 0;
         }
 
+        private void ConvertOptionalParamsToNonNullable(BattingPost battingPost, BattingPostStats battingPostStats)
+        {
+            if (battingPost.G != null)
+                battingPostStats.G = (short)battingPost.G;
+            else
+                battingPostStats.G = 0;
+
+            if (battingPost.Ab != null)
+                battingPostStats.Ab = (short)battingPost.Ab;
+            else
+                battingPostStats.Ab = 0;
+
+            if (battingPost.R != null)
+                battingPostStats.R = (short)battingPost.R;
+            else
+                battingPostStats.R = 0;
+
+            if (battingPost.H != null)
+                battingPostStats.H = (short)battingPost.H;
+            else
+                battingPostStats.H = 0;
+
+            if (battingPost.X2b != null)
+                battingPostStats.X2b = (short)battingPost.X2b;
+            else
+                battingPostStats.X2b = 0;
+
+            if (battingPost.X3b != null)
+                battingPostStats.X3b = (short)battingPost.X3b;
+            else
+                battingPostStats.X3b = 0;
+
+            if (battingPost.Hr != null)
+                battingPostStats.Hr = (short)battingPost.Hr;
+            else
+                battingPostStats.Hr = 0;
+
+            if (battingPost.Rbi != null)
+                battingPostStats.Rbi = (short)battingPost.Rbi;
+            else
+                battingPostStats.Rbi = 0;
+
+            if (battingPost.Sb != null)
+                battingPostStats.Sb = (short)battingPost.Sb;
+            else
+                battingPostStats.Sb = 0;
+
+            if (battingPost.Cs != null)
+                battingPostStats.Cs = (short)battingPost.Cs;
+            else
+                battingPostStats.Cs = 0;
+
+            if (battingPost.Bb != null)
+                battingPostStats.Bb = (short)battingPost.Bb;
+            else
+                battingPostStats.Bb = 0;
+
+            if (battingPost.So != null)
+                battingPostStats.So = (short)battingPost.So;
+            else
+                battingPostStats.So = 0;
+
+            if (battingPost.Ibb != null)
+                battingPostStats.Ibb = (short)battingPost.Ibb;
+            else
+                battingPostStats.Ibb = 0;
+
+            if (battingPost.Hbp != null)
+                battingPostStats.Hbp = (short)battingPost.Hbp;
+            else
+                battingPostStats.Hbp = 0;
+
+            if (battingPost.Sh != null)
+                battingPostStats.Sh = (short)battingPost.Sh;
+            else
+                battingPostStats.Sh = 0;
+
+            if (battingPost.Sf != null)
+                battingPostStats.Sf = (short)battingPost.Sf;
+            else
+                battingPostStats.Sf = 0;
+
+            if (battingPost.Gidp != null)
+                battingPostStats.Gidp = (short)battingPost.Gidp;
+            else
+                battingPostStats.Gidp = 0;
+        }
+
     }
+
+   
+
 }
+
 

@@ -42,8 +42,20 @@ namespace BaseballAPI.Services
                     return _mapper.Map(b);
                 });
 
+            return query;
+        }
 
-                return query;
+        public IEnumerable<BattingPostStats> GetBattingPostStats(string id)
+        {
+            var stats = _database.BattingPost
+                .Where(s => s.PlayerId == id)
+                .ToList()
+                .Select<BattingPost, BattingPostStats>(s =>
+                {
+                    return _mapper.Map(s);
+                });
+
+            return stats;
         }
     }
 }

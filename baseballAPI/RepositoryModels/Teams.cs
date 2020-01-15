@@ -53,5 +53,6 @@ namespace BaseballAPI.RepositoryModels
         public string TeamIdbr { get; set; }
         public string TeamIdlahman45 { get; set; }
         public string TeamIdretro { get; set; }
+        
     }
 }

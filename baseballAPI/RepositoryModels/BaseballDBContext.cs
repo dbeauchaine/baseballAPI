@@ -305,8 +305,12 @@ namespace BaseballAPI.RepositoryModels
 
             modelBuilder.Entity<BattingPost>(entity =>
             {
-                entity.HasKey(e => new { e.YearId, e.Round, e.PlayerId })
+                entity.HasKey(e => new { e.PlayerId, e.YearId, e.Round })
                     .HasName("BattingPost$Index_8C81D106_6E96_4318");
+
+                entity.HasOne(e => e.Player)
+                    .WithMany()
+                    .HasForeignKey(e => e.PlayerId);
 
                 entity.Property(e => e.YearId).HasColumnName("yearID");
 
@@ -350,9 +354,9 @@ namespace BaseballAPI.RepositoryModels
                     .HasColumnName("teamID")
                     .HasMaxLength(3);
 
-                entity.Property(e => e._2b).HasColumnName("2B");
+                entity.Property(e => e.X2b).HasColumnName("2B");
 
-                entity.Property(e => e._3b).HasColumnName("3B");
+                entity.Property(e => e.X3b).HasColumnName("3B");
             });
 
             modelBuilder.Entity<CollegePlaying>(entity =>

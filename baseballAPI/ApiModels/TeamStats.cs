@@ -55,5 +55,17 @@ namespace BaseballAPI.ApiModels
         public string TeamIdbr { get; set; }
         public string TeamIdlahman45 { get; set; }
         public string TeamIdretro { get; set; }
+        public int Singles { get; set; }
+        public int Pa { get; set; }
+        public double Avg { get; set; }
+        public double Obp { get; set; }
+        public double Slg { get; set; }
+        public double Ops { get; set; }
+        public double BbRate { get; set; }
+        public double KRate { get; set; }
+        public double Iso { get; set; }
+        public double Babip { get; set; }
+        public short Sh { get; set; }
+        public short Ibb { get; set; }
     }
 }

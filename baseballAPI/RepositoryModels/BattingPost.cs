@@ -5,6 +5,7 @@ namespace BaseballAPI.RepositoryModels
 {
     public partial class BattingPost
     {
+        public People Player { get; set; }
         public short YearId { get; set; }
         public string Round { get; set; }
         public string PlayerId { get; set; }
@@ -14,8 +15,8 @@ namespace BaseballAPI.RepositoryModels
         public short? Ab { get; set; }
         public short? R { get; set; }
         public short? H { get; set; }
-        public short? _2b { get; set; }
-        public short? _3b { get; set; }
+        public short? X2b { get; set; }
+        public short? X3b { get; set; }
         public short? Hr { get; set; }
         public short? Rbi { get; set; }
         public short? Sb { get; set; }

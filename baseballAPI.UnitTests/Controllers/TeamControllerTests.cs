@@ -15,13 +15,13 @@ namespace BaseballAPI.UnitTests.Controllers
     public class TeamControllerTests
     {
         private Mock<ITeamService> _teamsService;
-        private TeamsController _controller;
+        private TeamController _controller;
 
         [SetUp]
         public void SetUp()
         {
             _teamsService = new Mock<ITeamService>();
-            _controller = new TeamsController(_teamsService.Object);
+            _controller = new TeamController(_teamsService.Object);
         }
 
         [Test]

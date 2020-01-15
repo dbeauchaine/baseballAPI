@@ -23,7 +23,6 @@ namespace BaseballAPI.Controllers
         public IEnumerable<BattingStats> GetBattingStats(string id)
         {
             var players = _battingService.GetBattingStats(id);
-
             return players;
         }
 
@@ -31,7 +30,13 @@ namespace BaseballAPI.Controllers
         public IEnumerable<BattingStats> GetBattingStatsByYear(int year)
         {
             var players = _battingService.GetBattingStatsByYear(year);
+            return players;
+        }
 
+        [HttpGet("/batting/post/{id}")]
+        public IEnumerable<BattingPostStats> GetBattingPostStats(string id)
+        {
+            var players = _battingService.GetBattingPostStats(id);
             return players;
         }
     }
