@@ -22,8 +22,8 @@ namespace BaseballAPI.RepositoryModels
         public short? R { get; set; }
         public short? Ab { get; set; }
         public short? H { get; set; }
-        public short? _2b { get; set; }
-        public short? _3b { get; set; }
+        public short? X2b { get; set; }
+        public short? X3b { get; set; }
         public short? Hr { get; set; }
         public short? Bb { get; set; }
         public short? So { get; set; }

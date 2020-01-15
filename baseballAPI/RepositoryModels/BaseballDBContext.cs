@@ -1065,9 +1065,9 @@ namespace BaseballAPI.RepositoryModels
                     .HasColumnName("WSWin")
                     .HasMaxLength(1);
 
-                entity.Property(e => e._2b).HasColumnName("2B");
+                entity.Property(e => e.X2b).HasColumnName("2B");
 
-                entity.Property(e => e._3b).HasColumnName("3B");
+                entity.Property(e => e.X3b).HasColumnName("3B");
             });
 
             modelBuilder.Entity<TeamsFranchises>(entity =>

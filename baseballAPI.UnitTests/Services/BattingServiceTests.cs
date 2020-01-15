@@ -91,10 +91,10 @@ namespace BaseballAPI.UnitTests.Controllers
             _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(firstEntry)).Returns(firstEntryStats);
             _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(secondEntry)).Returns(secondEntryStats);
 
-            var actualPeople = _service.GetBattingStats(firstEntry.PlayerId);
+            var actualBatting = _service.GetBattingStats(firstEntry.PlayerId);
 
-            Assert.That(actualPeople.ElementAt(0), Is.EqualTo(firstEntryStats));
-            Assert.That(actualPeople.ElementAt(1), Is.EqualTo(secondEntryStats));
+            Assert.That(actualBatting.ElementAt(0), Is.EqualTo(firstEntryStats));
+            Assert.That(actualBatting.ElementAt(1), Is.EqualTo(secondEntryStats));
         }
 
         public void CreateFakeData(BaseballDBContext database)

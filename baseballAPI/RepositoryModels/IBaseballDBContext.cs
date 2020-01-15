@@ -11,7 +11,7 @@ namespace BaseballAPI.RepositoryModels
         public  DbSet<People> People { get; set; }
         public DbSet<Batting> Batting { get; set; }
         public DbSet<Fielding> Fielding { get; set; }
-
+        public DbSet<Teams> Teams { get; set; }
         public DbSet<Pitching> Pitching { get; set; }
     }
 }
