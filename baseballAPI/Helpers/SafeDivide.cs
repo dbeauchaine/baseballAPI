@@ -11,10 +11,5 @@ namespace BaseballAPI.Helpers
         {
             return denominator != 0 ? numerator / denominator : 0;
         }
-
-        public static int divideInt(int numerator, int denominator)
-        {
-            return denominator != 0 ? numerator / denominator : 0;
-        }
     }
 }
