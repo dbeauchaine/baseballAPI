@@ -53,7 +53,7 @@ namespace BaseballAPI.UnitTests.Controllers
 
 
         [Test]
-        public void IfGetBattingFailsToFindEntryItThrowsNotFoundException()
+        public void IfGetBattingFailsToFindEntryItReturnsEmptyList()
         {
             string badId = "badId";
 
@@ -98,7 +98,7 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public void IfGetBattingByYearFailsToFindEntryItThrowsNotFoundException()
+        public void IfGetBattingByYearFailsToFindEntryItReturnsEmptyList()
         {
             int badId = 1;
 
