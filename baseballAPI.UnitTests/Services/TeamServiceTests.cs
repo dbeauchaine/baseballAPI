@@ -38,7 +38,7 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public void GetTeamsStatsReturnsStats()
+        public void GetTeamStatsReturnsStats()
         {
             AssertGetTeamsStatsReturnsStats(_firstTeam);
             AssertGetTeamsStatsReturnsStats(_secondTeam);
@@ -46,9 +46,29 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public void GetTeamsStatsByYearReturnsStats()
+        public void GetTeamStatsByYearReturnsStats()
         {
             AssertGetTeamsStatsByYearReturnsStats(_firstTeam, _secondTeam);
+        }
+
+        [Test]
+        public void GetTeamStatsByTeamReturnsStats()
+        {
+            AssertGetTeamStatsByTeamReturnsStats(_firstTeam, _thirdTeam);
+        }
+
+        private void AssertGetTeamStatsByTeamReturnsStats(Teams firstEntry, Teams secondEntry)
+        {
+            var firstEntryStats = new TeamStats();
+            var secondEntryStats = new TeamStats();
+
+            _mockMapper.Setup(mockTeamMapper => mockTeamMapper.Map(firstEntry)).Returns(firstEntryStats);
+            _mockMapper.Setup(mockTeamMapper => mockTeamMapper.Map(secondEntry)).Returns(secondEntryStats);
+
+            var actualTeams = _service.GetTeamStatsByTeam(firstEntry.TeamId);
+
+            Assert.That(actualTeams.ElementAt(0), Is.EqualTo(firstEntryStats));
+            Assert.That(actualTeams.ElementAt(1), Is.EqualTo(secondEntryStats));
         }
 
         private void AssertGetTeamsStatsByYearReturnsStats(Teams firstEntry, Teams secondEntry)

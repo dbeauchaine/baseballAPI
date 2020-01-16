@@ -57,5 +57,18 @@ namespace BaseballAPI.Services
 
             return stats;
         }
+
+        public IEnumerable<BattingPostStats> GetBattingPostStatsByYear(int year)
+        {
+            var stats = _database.BattingPost
+                .Include(e => e.Player)
+                .Where(e => e.YearId == year)
+                .ToList()
+                .Select<BattingPost, BattingPostStats>(e =>
+                {
+                    return _mapper.Map(e);
+                });
+            return stats;
+        }
     }
 }

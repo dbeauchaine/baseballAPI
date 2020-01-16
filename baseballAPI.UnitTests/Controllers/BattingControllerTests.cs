@@ -137,6 +137,37 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(actualReturn.ElementAt(0), Is.EqualTo(firstPerson));
             Assert.That(actualReturn.ElementAt(1), Is.EqualTo(secondPerson));
         }
+
+        [Test]
+        public void GetBattingPostStatsByYearReturnsEnumerableBattingStatsWithNames()
+        {
+            var firstPerson = new BattingPostStats
+            {
+                PlayerId = "personId",
+                NameLast = "last",
+                YearId = 2000
+            };
+
+            var secondPerson = new BattingPostStats
+            {
+                PlayerId = "secondPersonId",
+                NameLast = "secondLast",
+                YearId = 2000
+            };
+
+            var expectedRecord = new List<BattingPostStats>()
+            {
+                firstPerson,
+                secondPerson
+            };
+
+            _battingService.Setup(mockBattingService => mockBattingService.GetBattingPostStatsByYear(firstPerson.YearId)).Returns(expectedRecord);
+
+            var actualReturn = _controller.GetBattingPostStatsByYear(firstPerson.YearId);
+
+            Assert.That(actualReturn.ElementAt(0), Is.EqualTo(firstPerson));
+            Assert.That(actualReturn.ElementAt(1), Is.EqualTo(secondPerson));
+        }
     }
 
 }
