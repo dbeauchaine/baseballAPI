@@ -8,5 +8,6 @@ namespace BaseballAPI.Services
     {       
         public IEnumerable<TeamStats> GetTeamStats(string id);
         public IEnumerable<TeamStats> GetTeamStatsByYear(int year);
+        public IEnumerable<TeamStats> GetTeamStatsByTeam(string team);
     }
 }

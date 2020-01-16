@@ -42,5 +42,18 @@ namespace BaseballAPI.Services
 
             return query;
         }
+
+        public IEnumerable<TeamStats> GetTeamStatsByTeam(string team)
+        {
+            var query = _database.Teams
+                .Where(e => e.TeamId == team)
+                .ToList()
+                .Select<Teams, TeamStats>(e =>
+                {
+                    return _mapper.Map(e);
+                });
+
+            return query;
+        }
     }
 }

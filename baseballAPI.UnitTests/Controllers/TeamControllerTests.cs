@@ -110,6 +110,35 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(!actualReturn.Any());
 
         }
+
+        [Test]
+        public void GetTeamStatsByTeamReturnsEnumerableBattingRecord()
+        {
+            var firstTeam = new TeamStats
+            {
+                TeamId = "SEA",
+                YearId = 2000
+            };
+
+            var secondTeam = new TeamStats
+            {
+                TeamId = "SEA",
+                YearId = 1999
+            };
+
+            var expectedTeams = new List<TeamStats>()
+            {
+                firstTeam,
+                secondTeam
+            };
+
+            _teamsService.Setup(mockTeamsService => mockTeamsService.GetTeamStatsByTeam(firstTeam.TeamId)).Returns(expectedTeams);
+
+            var actualReturn = _controller.GetTeamStatsByTeam(firstTeam.TeamId);
+
+            Assert.That(actualReturn.ElementAt(0), Is.EqualTo(firstTeam));
+            Assert.That(actualReturn.ElementAt(1), Is.EqualTo(secondTeam));
+        }
     }
 
 }

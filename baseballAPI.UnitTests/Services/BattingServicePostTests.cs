@@ -17,10 +17,6 @@ namespace BaseballAPI.UnitTests.Controllers
         private BaseballDBContext _database;
         private BattingService _service;
         private DbContextOptions<BaseballDBContext> _options;
-        private Batting _firstPerson;
-        private Batting _secondPerson;
-        private Batting _thirdPerson;
-        private Batting _fourthPerson;
         private BattingPost _firstPersonPost;
         private BattingPost _secondPersonPost;
         private BattingPost _thirdPersonPost;
@@ -51,6 +47,13 @@ namespace BaseballAPI.UnitTests.Controllers
             AssertGetBattingPostStatsReturnsStatsWithDuplicateId(_firstPersonPost, _thirdPersonPost);
         }
 
+        [Test]
+        public void GetBattingPostStatsByYearReturnsStats()
+        {
+            AssertGetBattingPostStatsByYearReturnsStats(_fourthPersonPost);
+            AssertGetBattingPostLeaderboardStatsByYearWithBadIdReturnsEmptyIEnumerable();
+        }
+
         private void AssertGetBattingPostStatsReturnsStats(BattingPost expectedBattingPost)
         {
             var expectedBattingPostStats = new BattingPostStats();
@@ -75,6 +78,26 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(actualBatting.ElementAt(0), Is.EqualTo(firstEntryStats));
             Assert.That(actualBatting.ElementAt(1), Is.EqualTo(secondEntryStats));
         }
+
+        private void AssertGetBattingPostLeaderboardStatsByYearWithBadIdReturnsEmptyIEnumerable()
+        {
+            var badYear = 1;
+            var badReturn = _service.GetBattingPostStatsByYear(badYear);
+
+            Assert.That(!badReturn.Any());
+        }
+
+        private void AssertGetBattingPostStatsByYearReturnsStats(BattingPost expectedBattingPost)
+        {
+            var expectedBattingStatsByYear = new BattingPostStats();
+
+            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(expectedBattingPost)).Returns(expectedBattingStatsByYear);
+
+            var actualBattingLeaderboardStats = _service.GetBattingPostStatsByYear(expectedBattingPost.YearId);
+
+            Assert.That(actualBattingLeaderboardStats.ElementAt(0), Is.EqualTo(expectedBattingStatsByYear));
+        }
+
         public void CreateFakeData(BaseballDBContext database)
         {
             _firstPersonPost = new BattingPost()

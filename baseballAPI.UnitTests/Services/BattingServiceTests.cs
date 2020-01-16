@@ -21,10 +21,6 @@ namespace BaseballAPI.UnitTests.Controllers
         private Batting _secondPerson;
         private Batting _thirdPerson;
         private Batting _fourthPerson;
-        private BattingPost _firstPersonPost;
-        private BattingPost _secondPersonPost;
-        private BattingPost _thirdPersonPost;
-        private BattingPost _fourthPersonPost;
 
         private Mock<IBattingStatsMapper> _mockMapper;
 

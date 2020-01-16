@@ -39,5 +39,12 @@ namespace BaseballAPI.Controllers
             var players = _battingService.GetBattingPostStats(id);
             return players;
         }
+
+        [HttpGet("/batting/post/year/{year}")]
+        public IEnumerable<BattingPostStats> GetBattingPostStatsByYear(int year)
+        {
+            var players = _battingService.GetBattingPostStatsByYear(year);
+            return players;
+        }
     }
 }

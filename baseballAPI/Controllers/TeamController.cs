@@ -34,5 +34,13 @@ namespace BaseballAPI.Controllers
 
             return players;
         }
+
+        [HttpGet("/teams/{teamId}")]
+        public IEnumerable<TeamStats> GetTeamStatsByTeam(string teamId)
+        {
+            var players = _teamService.GetTeamStatsByTeam(teamId);
+
+            return players;
+        }
     }
 }
