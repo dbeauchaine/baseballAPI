@@ -106,7 +106,7 @@ namespace BaseballAPI.ApiModels
                 pitchingStats.Baopp = 0;
 
             if (pitching.Era != null)
-                pitchingStats.Era = (short)pitching.Era;
+                pitchingStats.Era = Math.Round((double)pitching.Era/100,3);
             else
                 pitchingStats.Era = 0;
 
