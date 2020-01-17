@@ -20,11 +20,12 @@ namespace BaseballAPI.Services
         public IEnumerable<BattingStats> GetBattingStats(string id)
         {
             var stats = _database.Batting
-                .Where(s => s.PlayerId == id)
+                .Where(e => e.PlayerId == id)
+                .OrderByDescending(e => e.YearId)
                 .ToList()
-                .Select<Batting, BattingStats>(s =>
+                .Select<Batting, BattingStats>(e =>
                  {
-                     return _mapper.Map(s);
+                     return _mapper.Map(e);
                  });
 
             return stats;
@@ -33,13 +34,13 @@ namespace BaseballAPI.Services
         public IEnumerable<BattingStats> GetBattingStatsByYear(int year)
         {
             var query = _database.Batting
-                .Include(b => b.Player)
-                .Where(b => b.YearId == year)
-                .OrderBy(b => b.Player.NameLast)
+                .Include(e => e.Player)
+                .Where(e => e.YearId == year && e.Ab > 100)
+                .OrderBy(e => e.Player.NameLast)
                 .ToList()
-                .Select<Batting, BattingStats>(b =>
+                .Select<Batting, BattingStats>(e =>
                 {
-                    return _mapper.Map(b);
+                    return _mapper.Map(e);
                 });
 
             return query;
@@ -48,11 +49,12 @@ namespace BaseballAPI.Services
         public IEnumerable<BattingPostStats> GetBattingPostStats(string id)
         {
             var stats = _database.BattingPost
-                .Where(s => s.PlayerId == id)
+                .Where(e => e.PlayerId == id)
+                .OrderByDescending(e => e.YearId)
                 .ToList()
-                .Select<BattingPost, BattingPostStats>(s =>
+                .Select<BattingPost, BattingPostStats>(e =>
                 {
-                    return _mapper.Map(s);
+                    return _mapper.Map(e);
                 });
 
             return stats;
@@ -63,6 +65,7 @@ namespace BaseballAPI.Services
             var stats = _database.BattingPost
                 .Include(e => e.Player)
                 .Where(e => e.YearId == year)
+                .OrderByDescending(e => e.YearId)
                 .ToList()
                 .Select<BattingPost, BattingPostStats>(e =>
                 {

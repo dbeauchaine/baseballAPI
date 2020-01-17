@@ -128,7 +128,7 @@ namespace BaseballAPI.UnitTests.Controllers
             {
                 YearId = 1998,
                 Hr = 18,
-                Ab = 20,
+                Ab = 101,
                 PlayerId = "fourthId",
                 Player = new People()
                 {
