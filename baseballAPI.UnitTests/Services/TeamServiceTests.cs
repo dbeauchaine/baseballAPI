@@ -65,7 +65,7 @@ namespace BaseballAPI.UnitTests.Controllers
             _mockMapper.Setup(mockTeamMapper => mockTeamMapper.Map(firstEntry)).Returns(firstEntryStats);
             _mockMapper.Setup(mockTeamMapper => mockTeamMapper.Map(secondEntry)).Returns(secondEntryStats);
 
-            var actualTeams = _service.GetTeamStatsByTeam(firstEntry.TeamId);
+            var actualTeams = _service.GetTeamStats(firstEntry.TeamId);
 
             Assert.That(actualTeams.ElementAt(0), Is.EqualTo(firstEntryStats));
             Assert.That(actualTeams.ElementAt(1), Is.EqualTo(secondEntryStats));

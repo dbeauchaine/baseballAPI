@@ -132,9 +132,9 @@ namespace BaseballAPI.UnitTests.Controllers
                 secondTeam
             };
 
-            _teamsService.Setup(mockTeamsService => mockTeamsService.GetTeamStatsByTeam(firstTeam.TeamId)).Returns(expectedTeams);
+            _teamsService.Setup(mockTeamsService => mockTeamsService.GetTeamStats(firstTeam.TeamId)).Returns(expectedTeams);
 
-            var actualReturn = _controller.GetTeamStatsByTeam(firstTeam.TeamId);
+            var actualReturn = _controller.GetTeamStats(firstTeam.TeamId);
 
             Assert.That(actualReturn.ElementAt(0), Is.EqualTo(firstTeam));
             Assert.That(actualReturn.ElementAt(1), Is.EqualTo(secondTeam));
