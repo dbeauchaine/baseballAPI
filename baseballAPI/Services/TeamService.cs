@@ -21,6 +21,7 @@ namespace BaseballAPI.Services
         {
             var query = _database.Teams
                 .Where(e => e.YearId == year)
+                .OrderByDescending(e => e.W)
                 .ToList()
                 .Select<Teams, TeamStats>(e =>
                 {
@@ -34,6 +35,7 @@ namespace BaseballAPI.Services
         {
             var query = _database.Teams
                 .Where(e => e.TeamId == team)
+                .OrderByDescending(e => e.YearId)
                 .ToList()
                 .Select<Teams, TeamStats>(e =>
                 {

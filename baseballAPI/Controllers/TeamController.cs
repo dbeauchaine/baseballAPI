@@ -20,14 +20,14 @@ namespace BaseballAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public IEnumerable<TeamStats> GetTeamStats(string teamId)
+        public IEnumerable<TeamStats> GetTeamStats(string id)
         {
-            var players = _teamService.GetTeamStats(teamId);
+            var players = _teamService.GetTeamStats(id);
 
             return players;
         }
 
-        [HttpGet("team/year/{year}")]
+        [HttpGet("/team/year/{year}")]
         public IEnumerable<TeamStats> GetTeamStatsByYear(int year)
         {
             var players = _teamService.GetTeamStatsByYear(year);
