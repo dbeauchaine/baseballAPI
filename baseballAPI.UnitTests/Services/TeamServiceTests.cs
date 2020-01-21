@@ -117,7 +117,8 @@ namespace BaseballAPI.UnitTests.Controllers
                 YearId = 2000,
                 Hr = 20,
                 Ab = 100,
-                TeamId = "SEA",
+                TeamId = "SE1",
+                FranchId ="SEA",
                 LgId = "AL"
             };
 
@@ -126,7 +127,8 @@ namespace BaseballAPI.UnitTests.Controllers
                 YearId = 2000,
                 Hr = 10,
                 Ab = 200,
-                TeamId = "ATL",
+                TeamId = "AT1",
+                FranchId="ATL",
                 LgId ="NL"
             };
 
@@ -135,7 +137,8 @@ namespace BaseballAPI.UnitTests.Controllers
                 YearId = 1999,
                 Hr = 18,
                 Ab = 99,
-                TeamId = "SEA",
+                TeamId = "SE1",
+                FranchId = "SEA",
                 LgId = "AL"
             };
 
