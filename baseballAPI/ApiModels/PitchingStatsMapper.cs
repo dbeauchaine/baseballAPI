@@ -101,7 +101,7 @@ namespace BaseballAPI.ApiModels
                 pitchingStats.So = 0;
 
             if (pitching.Baopp != null)
-                pitchingStats.Baopp = (short)pitching.Baopp;
+                pitchingStats.Baopp = Math.Round((double)pitching.Baopp / 100, 3);
             else
                 pitchingStats.Baopp = 0;
 

@@ -17,23 +17,11 @@ namespace BaseballAPI.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<TeamStats> GetTeamStats(string id)
-        {
-            var stats = _database.Teams
-                .Where(e => e.TeamId == id)
-                .ToList()
-                .Select<Teams, TeamStats>(e =>
-                 {
-                     return _mapper.Map(e);
-                 });
-
-            return stats;
-        }
-
         public IEnumerable<TeamStats> GetTeamStatsByYear(int year)
         {
             var query = _database.Teams
                 .Where(e => e.YearId == year)
+                .OrderByDescending(e => e.W)
                 .ToList()
                 .Select<Teams, TeamStats>(e =>
                 {
@@ -43,10 +31,11 @@ namespace BaseballAPI.Services
             return query;
         }
 
-        public IEnumerable<TeamStats> GetTeamStatsByTeam(string team)
+        public IEnumerable<TeamStats> GetTeamStats(string team)
         {
             var query = _database.Teams
                 .Where(e => e.TeamId == team)
+                .OrderByDescending(e => e.YearId)
                 .ToList()
                 .Select<Teams, TeamStats>(e =>
                 {

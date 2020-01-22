@@ -1,12 +1,15 @@
 ﻿using BaseballAPI.RepositoryModels;
+using System;
 
 namespace BaseballAPI.ApiModels
 {
     public class TeamStatsMapper : ITeamStatsMapper
     {
-        public TeamStatsMapper()
-        {
+        private IStatsCalculator _calculator;
 
+        public TeamStatsMapper(IStatsCalculator statsCalculator)
+        {
+            _calculator = statsCalculator;
         }
 
         public TeamStats Map(Teams teams)
@@ -33,6 +36,8 @@ namespace BaseballAPI.ApiModels
 
             ConvertOptionalParamsToNonNullable(teams, teamsStats);
 
+            _calculator.CalculateStats(teamsStats);
+
             return teamsStats;
         }
 
@@ -52,7 +57,7 @@ namespace BaseballAPI.ApiModels
                 teamsStats.Ghome = (short)teams.Ghome;
             else
                 teamsStats.Ghome = 0;
-            
+
             if (teams.W != null)
                 teamsStats.W = (short)teams.W;
             else
@@ -134,7 +139,7 @@ namespace BaseballAPI.ApiModels
                 teamsStats.Er = 0;
 
             if (teams.Era != null)
-                teamsStats.Era = (short)teams.Era;
+                teamsStats.Era = Math.Round((double)teams.Era / 100, 3);
             else
                 teamsStats.Era = 0;
 

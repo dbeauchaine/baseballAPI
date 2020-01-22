@@ -1,6 +1,7 @@
 ﻿using BaseballAPI.ApiModels;
 using BaseballAPI.RepositoryModels;
 using NUnit.Framework;
+using System;
 
 namespace BaseballAPI.UnitTests.Controllers
 {
@@ -58,8 +59,8 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Hr, Is.EqualTo(pitching.Hr));
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
-            Assert.That(pitchingStats.Baopp, Is.EqualTo(pitching.Baopp));
-            Assert.That(pitchingStats.Era, Is.EqualTo(pitching.Era));
+            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round((double)pitching.Baopp/100,3)));
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round((double)pitching.Era/100,3)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));
@@ -129,8 +130,8 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Hr, Is.EqualTo(pitching.Hr));
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
-            Assert.That(pitchingStats.Baopp, Is.EqualTo(pitching.Baopp));
-            Assert.That(pitchingStats.Era, Is.EqualTo(pitching.Era));
+            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round((double)pitching.Baopp/100,3)));
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round((double)pitching.Era/100,3)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));

@@ -27,7 +27,7 @@ namespace BaseballAPI.Controllers
             return players;
         }
 
-        [HttpGet("/teams/year/{year}")]
+        [HttpGet("/team/year/{year}")]
         public IEnumerable<TeamStats> GetTeamStatsByYear(int year)
         {
             var players = _teamService.GetTeamStatsByYear(year);
@@ -35,12 +35,5 @@ namespace BaseballAPI.Controllers
             return players;
         }
 
-        [HttpGet("/teams/{teamId}")]
-        public IEnumerable<TeamStats> GetTeamStatsByTeam(string teamId)
-        {
-            var players = _teamService.GetTeamStatsByTeam(teamId);
-
-            return players;
-        }
     }
 }

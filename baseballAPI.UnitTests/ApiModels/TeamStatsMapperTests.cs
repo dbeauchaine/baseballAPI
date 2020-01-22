@@ -2,6 +2,7 @@
 using BaseballAPI.RepositoryModels;
 using Moq;
 using NUnit.Framework;
+using System;
 
 namespace BaseballAPI.UnitTests.Controllers
 {
@@ -10,11 +11,13 @@ namespace BaseballAPI.UnitTests.Controllers
     public class TeamStatsMapperTests
     {
         private TeamStatsMapper _mapper;
+        private Mock<StatsCalculator> _calculator;
 
         [SetUp]
         public void SetUp()
         {
-            _mapper = new TeamStatsMapper();
+            _calculator = new Mock<StatsCalculator>();
+            _mapper = new TeamStatsMapper(_calculator.Object);
         }
 
         [Test]
@@ -61,7 +64,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(teamStats.Sf, Is.EqualTo(teams.Sf));
             Assert.That(teamStats.Ra, Is.EqualTo(teams.Ra));
             Assert.That(teamStats.Er, Is.EqualTo(teams.Er));
-            Assert.That(teamStats.Era, Is.EqualTo(teams.Era));
+            Assert.That(teamStats.Era, Is.EqualTo(Math.Round((double)teams.Era/100,3)));
             Assert.That(teamStats.Cg, Is.EqualTo(teams.Cg));
             Assert.That(teamStats.Sho, Is.EqualTo(teams.Sho));
             Assert.That(teamStats.Sv, Is.EqualTo(teams.Sv));
