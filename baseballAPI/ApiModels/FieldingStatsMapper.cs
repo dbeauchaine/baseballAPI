@@ -21,67 +21,52 @@ namespace BaseballAPI.ApiModels
             return fieldingStats;
         }
 
-        private void ConvertOptionalParamsToNonNullable(Fielding fielding, FieldingStats fieldingStats)
+        public FieldingPostStats Map(FieldingPost fieldingPost)
         {
-            if (fielding.G != null)
-                fieldingStats.G = (short)fielding.G;
-            else
-                fieldingStats.G = 0;
+            var fieldingStats = new FieldingPostStats()
+            {
+                PlayerId = fieldingPost.PlayerId,
+                YearId = fieldingPost.YearId,
+                Round = fieldingPost.Round,
+                TeamId = fieldingPost.TeamId,
+                LgId = fieldingPost.LgId,
+                Pos = fieldingPost.Pos
+            };
 
-            if (fielding.Gs != null)
-                fieldingStats.Gs = (short)fielding.Gs;
-            else
-                fieldingStats.Gs = 0;
+            ConvertOptionalParamsToNonNullable(fieldingPost, fieldingStats);
 
-            if (fielding.InnOuts != null)
-                fieldingStats.InnOuts = (short)fielding.InnOuts;
-            else
-                fieldingStats.InnOuts = 0;
+            return fieldingStats;
+        }
 
-            if (fielding.Po != null)
-                fieldingStats.Po = (short)fielding.Po;
-            else
-                fieldingStats.Po = 0;
+        private void ConvertOptionalParamsToNonNullable(Fielding fielding, FieldingStats fieldingStats)
+        { 
+                fieldingStats.G = fielding.G;
+                fieldingStats.Gs = fielding.Gs;
+                fieldingStats.InnOuts = fielding.InnOuts;
+                fieldingStats.Po = fielding.Po;        
+                fieldingStats.A = fielding.A;
+                fieldingStats.E = fielding.E;
+                fieldingStats.Dp = fielding.Dp;
+                fieldingStats.Pb = fielding.Pb;
+                fieldingStats.Wp = fielding.Wp;
+                fieldingStats.Sb = fielding.Sb;
+                fieldingStats.Cs = fielding.Cs;
+                fieldingStats.Zr = fielding.Zr;
+        }
 
-            if (fielding.A != null)
-                fieldingStats.A = (short)fielding.A;
-            else
-                fieldingStats.A = 0;
-
-            if (fielding.E != null)
-                fieldingStats.E = (short)fielding.E;
-            else
-                fieldingStats.E = 0;
-
-            if (fielding.Dp != null)
-                fieldingStats.Dp = (short)fielding.Dp;
-            else
-                fieldingStats.Dp = 0;
-
-            if (fielding.Pb != null)
-                fieldingStats.Pb = (short)fielding.Pb;
-            else
-                fieldingStats.Pb = 0;
-
-            if (fielding.Wp != null)
-                fieldingStats.Wp = (short)fielding.Wp;
-            else
-                fieldingStats.Wp = 0;
-
-            if (fielding.Sb != null)
-                fieldingStats.Sb = (short)fielding.Sb;
-            else
-                fieldingStats.Sb = 0;
-
-            if (fielding.Cs != null)
-                fieldingStats.Cs = (short)fielding.Cs;
-            else
-                fieldingStats.Cs = 0;
-
-            if (fielding.Zr != null)
-                fieldingStats.Zr = (short)fielding.Zr;
-            else
-                fieldingStats.Zr = 0;
+        private void ConvertOptionalParamsToNonNullable(FieldingPost fielding, FieldingPostStats fieldingStats)
+        {
+                fieldingStats.G = fielding.G;
+                fieldingStats.Gs = fielding.Gs;
+                fieldingStats.InnOuts = fielding.InnOuts;
+                fieldingStats.Po = fielding.Po;
+                fieldingStats.A = fielding.A;
+                fieldingStats.E = fielding.E;
+                fieldingStats.Dp = fielding.Dp;
+                fieldingStats.Tp = fielding.Tp;
+                fieldingStats.Pb = fielding.Pb;
+                fieldingStats.Sb = fielding.Sb;
+                fieldingStats.Cs = fielding.Cs;
         }
     }
 }

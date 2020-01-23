@@ -9,6 +9,7 @@ namespace BaseballAPI.ApiModels
     public interface IFieldingStatsMapper
     {
         public FieldingStats Map(Fielding fielding);
+        public FieldingPostStats Map(FieldingPost fieldingPost);
 
     }
 }

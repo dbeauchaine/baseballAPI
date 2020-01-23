@@ -105,7 +105,8 @@ namespace BaseballAPI.UnitTests.Controllers
                 YearId = 2000,
                 Hr = 20,
                 Ab = 100,
-                PlayerId = "id"
+                PlayerId = "id",
+                TeamId = "SEA"
             };
 
             _secondPerson = new Batting()
@@ -113,7 +114,8 @@ namespace BaseballAPI.UnitTests.Controllers
                 YearId = 2000,
                 Hr = 10,
                 Ab = 200,
-                PlayerId = "anotherId"
+                PlayerId = "anotherId",
+                TeamId = "SEA"
             };
 
             _thirdPerson = new Batting()
@@ -121,7 +123,8 @@ namespace BaseballAPI.UnitTests.Controllers
                 YearId = 1999,
                 Hr = 18,
                 Ab = 99,
-                PlayerId = "id"
+                PlayerId = "id",
+                TeamId = "SEA"
             };
 
             _fourthPerson = new Batting
@@ -136,7 +139,8 @@ namespace BaseballAPI.UnitTests.Controllers
                     NameFirst = "first",
                     NameGiven = "first middle",
                     NameLast = "last"
-                }
+                },
+                TeamId = "SEA"
             };
 
             _database.Add(_firstPerson);

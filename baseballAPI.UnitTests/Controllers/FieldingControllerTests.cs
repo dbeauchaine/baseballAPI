@@ -24,7 +24,7 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public void GetBattingStatsReturnsEnumerableBattingRecords()
+        public void GetFieldingStatsReturnsEnumerableFieldingRecords()
         {
             var expectedPerson = new FieldingStats
             {
@@ -53,7 +53,36 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public void IfGetPlayerFailsToFindEntryItThrowsNotFoundException()
+        public void GetFieldingPostStatsReturnsEnumerableFieldingPostStatsRecords()
+        {
+            var expectedPerson = new FieldingPostStats
+            {
+                Pos = "C",
+                PlayerId = "personId"
+            };
+
+            var secondPerson = new FieldingPostStats
+            {
+                Pos = "P",
+                PlayerId = "personId"
+            };
+
+            var expectedPeople = new List<FieldingPostStats>()
+            {
+                expectedPerson,
+                secondPerson
+            };
+
+            _fieldingService.Setup(mockFieldingService => mockFieldingService.GetFieldingPostStats(expectedPerson.PlayerId)).Returns(expectedPeople);
+
+            var actualPerson = _controller.GetFieldingPostStats(expectedPerson.PlayerId);
+
+            Assert.That(actualPerson.ElementAt(0), Is.EqualTo(expectedPerson));
+            Assert.That(actualPerson.ElementAt(1), Is.EqualTo(secondPerson));
+        }
+
+        [Test]
+        public void IfGetPlayerFailsToFindEntryItReturnsEmptyList()
         {
             string badId = "badId";
             var emptyList = new List<FieldingStats>();

@@ -31,58 +31,55 @@ namespace BaseballAPI.ApiModels
 
             return copy;
         }
-        public BattingStats CalculateStats(BattingStats batting)
+        public void CalculateStats(BattingStats batting)
         {
-            var copy = batting;
+            var calculatorStats = ConvertOptionalParamsToNonNullable(batting);
 
-            copy.Pa = CalulatePa(copy.Ab, copy.Bb, copy.Hbp, copy.Sf, copy.Sh);
+            batting.Pa = CalulatePa(calculatorStats.Ab, calculatorStats.Bb, calculatorStats.Hbp, calculatorStats.Sf, calculatorStats.Sh);
 
-            copy.Singles = CalculateSingles(copy.H, copy.X2b, copy.X3b, copy.Hr);
+            batting.Singles = CalculateSingles(calculatorStats.H, calculatorStats.X2b, calculatorStats.X3b, calculatorStats.Hr);
 
-            copy.Avg = CalculateAvg(copy.H, copy.Ab);
+            batting.Avg = CalculateAvg(calculatorStats.H, calculatorStats.Ab);
 
-            copy.Obp = CalculateObp(copy.H, copy.Bb, copy.Ibb, copy.Ab);
+            batting.Obp = CalculateObp(calculatorStats.H, calculatorStats.Bb, calculatorStats.Ibb, calculatorStats.Ab);
 
-            copy.Slg = CalculateSlg(copy.Singles, copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+            batting.Slg = CalculateSlg(batting.Singles, calculatorStats.X2b, calculatorStats.X3b, calculatorStats.Hr, calculatorStats.Ab);
 
-            copy.Ops = CalculateOps(copy.Obp, copy.Slg);
+            batting.Ops = CalculateOps(batting.Obp, batting.Slg);
 
-            copy.BbRate = CalculateBbRate(copy.Bb, copy.Pa);
+            batting.BbRate = CalculateBbRate(calculatorStats.Bb, batting.Pa);
 
-            copy.KRate = CalculateKRate(copy.So, copy.Pa);
+            batting.KRate = CalculateKRate(calculatorStats.So, batting.Pa);
 
-            copy.Iso = CalculateIso(copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+            batting.Iso = CalculateIso(calculatorStats.X2b, calculatorStats.X3b, calculatorStats.Hr, calculatorStats.Ab);
 
-            copy.Babip = CalculateBabip(copy.H, copy.Hr, copy.Ab, copy.So, copy.Sf);
+            batting.Babip = CalculateBabip(calculatorStats.H, calculatorStats.Hr, calculatorStats.Ab, calculatorStats.So, calculatorStats.Sf);
 
-            return copy;
         }
 
-        public BattingPostStats CalculateStats(BattingPostStats battingPostStats)
+        public void CalculateStats(BattingPostStats battingPostStats)
         {
-            var copy = battingPostStats;
+            var calculatorStats = ConvertOptionalParamsToNonNullable(battingPostStats);
 
-            copy.Pa = CalulatePa(copy.Ab, copy.Bb, copy.Hbp, copy.Sf, copy.Sh);
+            battingPostStats.Pa = CalulatePa(calculatorStats.Ab, calculatorStats.Bb, calculatorStats.Hbp, calculatorStats.Sf, calculatorStats.Sh);
 
-            copy.Singles = CalculateSingles(copy.H, copy.X2b, copy.X3b, copy.Hr);
+            battingPostStats.Singles = CalculateSingles(calculatorStats.H, calculatorStats.X2b, calculatorStats.X3b, calculatorStats.Hr);
 
-            copy.Avg = CalculateAvg(copy.H, copy.Ab);
+            battingPostStats.Avg = CalculateAvg(calculatorStats.H, calculatorStats.Ab);
 
-            copy.Obp = CalculateObp(copy.H, copy.Bb, copy.Ibb, copy.Ab);
+            battingPostStats.Obp = CalculateObp(calculatorStats.H, calculatorStats.Bb, calculatorStats.Ibb, calculatorStats.Ab);
 
-            copy.Slg = CalculateSlg(copy.Singles, copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+            battingPostStats.Slg = CalculateSlg(battingPostStats.Singles, calculatorStats.X2b, calculatorStats.X3b, calculatorStats.Hr, calculatorStats.Ab);
 
-            copy.Ops = CalculateOps(copy.Obp, copy.Slg);
+            battingPostStats.Ops = CalculateOps(battingPostStats.Obp, battingPostStats.Slg);
 
-            copy.BbRate = CalculateBbRate(copy.Bb, copy.Pa);
+            battingPostStats.BbRate = CalculateBbRate(calculatorStats.Bb, battingPostStats.Pa);
 
-            copy.KRate = CalculateKRate(copy.So, copy.Pa);
+            battingPostStats.KRate = CalculateKRate(calculatorStats.So, battingPostStats.Pa);
 
-            copy.Iso = CalculateIso(copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+            battingPostStats.Iso = CalculateIso(calculatorStats.X2b, calculatorStats.X3b, calculatorStats.Hr, calculatorStats.Ab);
 
-            copy.Babip = CalculateBabip(copy.H, copy.Hr, copy.Ab, copy.So, copy.Sf);
-
-            return copy;
+            battingPostStats.Babip = CalculateBabip(calculatorStats.H, calculatorStats.Hr, calculatorStats.Ab, calculatorStats.So, calculatorStats.Sf);
         }
 
         //BABIP - Batting Average On Balls In Play (http://www.fangraphs.com/library/offense/babip/)
@@ -175,6 +172,134 @@ namespace BaseballAPI.ApiModels
         {
             return Math.Round(Obp + Slg, 3);
         }
+
+        private CalculatorStats ConvertOptionalParamsToNonNullable(BattingStats battingStats)
+        {
+            var calculatorStats = new CalculatorStats();
+    
+            if (battingStats.Ab != null)
+                calculatorStats.Ab = (short)battingStats.Ab;
+            else
+                calculatorStats.Ab = 0;
+
+            if (battingStats.H != null)
+                calculatorStats.H = (short)battingStats.H;
+            else
+                calculatorStats.H = 0;
+
+            if (battingStats.X2b != null)
+                calculatorStats.X2b = (short)battingStats.X2b;
+            else
+                calculatorStats.X2b = 0;
+
+            if (battingStats.X3b != null)
+                calculatorStats.X3b = (short)battingStats.X3b;
+            else
+                calculatorStats.X3b = 0;
+
+            if (battingStats.Hr != null)
+                calculatorStats.Hr = (short)battingStats.Hr;
+            else
+                calculatorStats.Hr = 0;
+
+
+            if (battingStats.Bb != null)
+                calculatorStats.Bb = (short)battingStats.Bb;
+            else
+                calculatorStats.Bb = 0;
+
+            if (battingStats.So != null)
+                calculatorStats.So = (short)battingStats.So;
+            else
+                calculatorStats.So = 0;
+
+            if (battingStats.Ibb != null)
+                calculatorStats.Ibb = (short)battingStats.Ibb;
+            else
+                calculatorStats.Ibb = 0;
+
+            if (battingStats.Hbp != null)
+                calculatorStats.Hbp = (short)battingStats.Hbp;
+            else
+                calculatorStats.Hbp = 0;
+
+            if (battingStats.Sh != null)
+                calculatorStats.Sh = (short)battingStats.Sh;
+            else
+                calculatorStats.Sh = 0;
+
+            if (battingStats.Sf != null)
+                calculatorStats.Sf = (short)battingStats.Sf;
+            else
+                calculatorStats.Sf = 0;
+
+            return calculatorStats;
+        }
+
+        private CalculatorStats ConvertOptionalParamsToNonNullable(BattingPostStats battingStats)
+        {
+            var calculatorStats = new CalculatorStats();
+
+            if (battingStats.Ab != null)
+                calculatorStats.Ab = (short)battingStats.Ab;
+            else
+                calculatorStats.Ab = 0;
+
+            if (battingStats.H != null)
+                calculatorStats.H = (short)battingStats.H;
+            else
+                calculatorStats.H = 0;
+
+            if (battingStats.X2b != null)
+                calculatorStats.X2b = (short)battingStats.X2b;
+            else
+                calculatorStats.X2b = 0;
+
+            if (battingStats.X3b != null)
+                calculatorStats.X3b = (short)battingStats.X3b;
+            else
+                calculatorStats.X3b = 0;
+
+            if (battingStats.Hr != null)
+                calculatorStats.Hr = (short)battingStats.Hr;
+            else
+                calculatorStats.Hr = 0;
+
+
+            if (battingStats.Bb != null)
+                calculatorStats.Bb = (short)battingStats.Bb;
+            else
+                calculatorStats.Bb = 0;
+
+            if (battingStats.So != null)
+                calculatorStats.So = (short)battingStats.So;
+            else
+                calculatorStats.So = 0;
+
+            if (battingStats.Ibb != null)
+                calculatorStats.Ibb = (short)battingStats.Ibb;
+            else
+                calculatorStats.Ibb = 0;
+
+            if (battingStats.Hbp != null)
+                calculatorStats.Hbp = (short)battingStats.Hbp;
+            else
+                calculatorStats.Hbp = 0;
+
+            if (battingStats.Sh != null)
+                calculatorStats.Sh = (short)battingStats.Sh;
+            else
+                calculatorStats.Sh = 0;
+
+            if (battingStats.Sf != null)
+                calculatorStats.Sf = (short)battingStats.Sf;
+            else
+                calculatorStats.Sf = 0;
+
+            return calculatorStats;
+        }
+
     }
 }
+
 

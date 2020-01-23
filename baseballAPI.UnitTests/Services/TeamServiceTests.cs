@@ -34,7 +34,7 @@ namespace BaseballAPI.UnitTests.Controllers
 
             _service = new TeamService(_database, _mockMapper.Object);
 
-            CreateFakeData(_database);
+            CreateFakeData();
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(actualTeams.ElementAt(0), Is.EqualTo(expectedTeamStats));
         }
 
-        public void CreateFakeData(BaseballDBContext database)
+        public void CreateFakeData()
         {
             _firstTeam = new Teams()
             {

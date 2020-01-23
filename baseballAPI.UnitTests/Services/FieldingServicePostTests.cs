@@ -10,21 +10,21 @@ namespace BaseballAPI.UnitTests.Controllers
 {
     [TestFixture]
     [Category("Unit")]
-    public class FieldingServiceTests
+    public class FieldingServicePostTests
     {
         private BaseballDBContext _database;
         private FieldingService _service;
         private DbContextOptions<BaseballDBContext> _options;
-        private Fielding _firstPerson;
-        private Fielding _secondPerson;
-        private Fielding _duplicatePerson;
+        private FieldingPost _firstPerson;
+        private FieldingPost _secondPerson;
+        private FieldingPost _duplicatePerson;
         private Mock<IFieldingStatsMapper> _mockMapper;
 
         [SetUp]
         public void SetUp()
         {
             _options = new DbContextOptionsBuilder<BaseballDBContext>()
-                .UseInMemoryDatabase(databaseName: "FieldingServiceTests")
+                .UseInMemoryDatabase(databaseName: "FieldingServicePostTests")
                 .Options;
             _database = new BaseballDBContext(_options);
             _database.Database.EnsureDeleted();
@@ -32,68 +32,70 @@ namespace BaseballAPI.UnitTests.Controllers
 
             _service = new FieldingService(_database, _mockMapper.Object);
 
-            CreateFakeData(_database);
+            CreateFakeData();
         }
 
         [Test]
-        public void GetFieldingStatsReturnsStats()
+        public void GetFieldingPostStatsReturnsStats()
         {
             AssertGetFieldingStatsReturnsStats(_firstPerson);
             AssertGetFieldingStatsReturnsStats(_secondPerson);
             AssertGetFieldingStatsReturnsStatsWithDuplicateId(_firstPerson, _duplicatePerson);
         }
 
-
-        public void AssertGetFieldingStatsReturnsStats(Fielding expectedPerson)
+        public void AssertGetFieldingStatsReturnsStats(FieldingPost expectedPerson)
         {
-            var expectedPersonStats = new FieldingStats();
+            var expectedPersonStats = new FieldingPostStats();
 
             _mockMapper.Setup(mockFieldingMapper => mockFieldingMapper.Map(expectedPerson)).Returns(expectedPersonStats);
 
-            var actualFielding = _service.GetFieldingStats(expectedPerson.PlayerId);
+            var actualFielding = _service.GetFieldingPostStats(expectedPerson.PlayerId);
 
             Assert.That(actualFielding.ElementAt(0), Is.EqualTo(expectedPersonStats));
         }
 
-        public void AssertGetFieldingStatsReturnsStatsWithDuplicateId(Fielding firstEntry, Fielding secondEntry)
+        public void AssertGetFieldingStatsReturnsStatsWithDuplicateId(FieldingPost firstEntry, FieldingPost secondEntry)
         {
-            var firstEntryStats = new FieldingStats();
-            var secondEntryStats = new FieldingStats();
+            var firstEntryStats = new FieldingPostStats();
+            var secondEntryStats = new FieldingPostStats();
 
             _mockMapper.Setup(mockFieldingMapper => mockFieldingMapper.Map(firstEntry)).Returns(firstEntryStats);
             _mockMapper.Setup(mockFieldingMapper => mockFieldingMapper.Map(secondEntry)).Returns(secondEntryStats);
-            var actualPeople = _service.GetFieldingStats(firstEntry.PlayerId);
+            var actualPeople = _service.GetFieldingPostStats(firstEntry.PlayerId);
 
             Assert.That(actualPeople.ElementAt(0), Is.EqualTo(firstEntryStats));
             Assert.That(actualPeople.ElementAt(1), Is.EqualTo(secondEntryStats));
         }
-        public void CreateFakeData(BaseballDBContext database)
+        public void CreateFakeData()
         {
-            _firstPerson = new Fielding()
+            _firstPerson = new FieldingPost()
             {
                 Pos = "2B",
                 YearId = 2000,
                 A = 20,
                 E = 100,
-                PlayerId = "id"
+                PlayerId = "id",
+                Round = "WC"
             };
 
-            _secondPerson = new Fielding()
+            _secondPerson = new FieldingPost()
             {
                 Pos = "P",
                 YearId = 2001,
                 A = 10,
                 E = 200,
-                PlayerId = "anotherId"
+                PlayerId = "anotherId",
+                Round = "WS"
             };
 
-            _duplicatePerson = new Fielding()
+            _duplicatePerson = new FieldingPost()
             {
                 Pos = "C",
                 YearId = 1999,
                 A = 18,
                 E = 99,
-                PlayerId = "id"
+                PlayerId = "id",
+                Round = "WS"
             };
 
             _database.Add(_firstPerson);
