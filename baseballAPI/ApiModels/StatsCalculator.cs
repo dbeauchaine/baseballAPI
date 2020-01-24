@@ -5,31 +5,29 @@ namespace BaseballAPI.ApiModels
 {
     public class StatsCalculator : IStatsCalculator
     {
-        public TeamStats CalculateStats(TeamStats teamStats)
+        public void CalculateStats(TeamStats teamStats)
         {
-            var copy = teamStats;
+            var calculatorStats = ConvertOptionalParamsToNonNullable(teamStats);
 
-            copy.Pa = CalulatePa(copy.Ab, copy.Bb, copy.Hbp, copy.Sf, copy.Sh);
+            teamStats.Pa = CalulatePa(calculatorStats.Ab, calculatorStats.Bb, calculatorStats.Hbp, calculatorStats.Sf, calculatorStats.Sh);
 
-            copy.Singles = CalculateSingles(copy.H, copy.X2b, copy.X3b, copy.Hr);
+            teamStats.Singles = CalculateSingles(calculatorStats.H, calculatorStats.X2b, calculatorStats.X3b, calculatorStats.Hr);
 
-            copy.Avg = CalculateAvg(copy.H, copy.Ab);
+            teamStats.Avg = CalculateAvg(calculatorStats.H, calculatorStats.Ab);
 
-            copy.Obp = CalculateObp(copy.H, copy.Bb, copy.Ibb, copy.Ab);
+            teamStats.Obp = CalculateObp(calculatorStats.H, calculatorStats.Bb, calculatorStats.Ibb, calculatorStats.Ab);
 
-            copy.Slg = CalculateSlg(copy.Singles, copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+            teamStats.Slg = CalculateSlg(teamStats.Singles, calculatorStats.X2b, calculatorStats.X3b, calculatorStats.Hr, calculatorStats.Ab);
 
-            copy.Ops = CalculateOps(copy.Obp, copy.Slg);
+            teamStats.Ops = CalculateOps(teamStats.Obp, teamStats.Slg);
 
-            copy.BbRate = CalculateBbRate(copy.Bb, copy.Pa);
+            teamStats.BbRate = CalculateBbRate(calculatorStats.Bb, teamStats.Pa);
 
-            copy.KRate = CalculateKRate(copy.So, copy.Pa);
+            teamStats.KRate = CalculateKRate(calculatorStats.So, teamStats.Pa);
 
-            copy.Iso = CalculateIso(copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+            teamStats.Iso = CalculateIso(calculatorStats.X2b, calculatorStats.X3b, calculatorStats.Hr, calculatorStats.Ab);
 
-            copy.Babip = CalculateBabip(copy.H, copy.Hr, copy.Ab, copy.So, copy.Sf);
-
-            return copy;
+            teamStats.Babip = CalculateBabip(calculatorStats.H, calculatorStats.Hr, calculatorStats.Ab, calculatorStats.So, calculatorStats.Sf);
         }
         public void CalculateStats(BattingStats batting)
         {
@@ -202,7 +200,6 @@ namespace BaseballAPI.ApiModels
             else
                 calculatorStats.Hr = 0;
 
-
             if (battingStats.Bb != null)
                 calculatorStats.Bb = (short)battingStats.Bb;
             else
@@ -265,7 +262,6 @@ namespace BaseballAPI.ApiModels
             else
                 calculatorStats.Hr = 0;
 
-
             if (battingStats.Bb != null)
                 calculatorStats.Bb = (short)battingStats.Bb;
             else
@@ -299,6 +295,60 @@ namespace BaseballAPI.ApiModels
             return calculatorStats;
         }
 
+        private CalculatorStats ConvertOptionalParamsToNonNullable(TeamStats teamStats)
+        {
+            var calculatorStats = new CalculatorStats();
+
+            if (teamStats.Ab != null)
+                calculatorStats.Ab = (short)teamStats.Ab;
+            else
+                calculatorStats.Ab = 0;
+
+            if (teamStats.H != null)
+                calculatorStats.H = (short)teamStats.H;
+            else
+                calculatorStats.H = 0;
+
+            if (teamStats.X2b != null)
+                calculatorStats.X2b = (short)teamStats.X2b;
+            else
+                calculatorStats.X2b = 0;
+
+            if (teamStats.X3b != null)
+                calculatorStats.X3b = (short)teamStats.X3b;
+            else
+                calculatorStats.X3b = 0;
+
+            if (teamStats.Hr != null)
+                calculatorStats.Hr = (short)teamStats.Hr;
+            else
+                calculatorStats.Hr = 0;
+
+            if (teamStats.Bb != null)
+                calculatorStats.Bb = (short)teamStats.Bb;
+            else
+                calculatorStats.Bb = 0;
+
+            if (teamStats.So != null)
+                calculatorStats.So = (short)teamStats.So;
+            else
+                calculatorStats.So = 0;
+
+            if (teamStats.Hbp != null)
+                calculatorStats.Hbp = (short)teamStats.Hbp;
+            else
+                calculatorStats.Hbp = 0;
+
+            if (teamStats.Sf != null)
+                calculatorStats.Sf = (short)teamStats.Sf;
+            else
+                calculatorStats.Sf = 0;
+
+            calculatorStats.Ibb = 0;
+            calculatorStats.Sh = 0;
+
+            return calculatorStats;
+        }
     }
 }
 
