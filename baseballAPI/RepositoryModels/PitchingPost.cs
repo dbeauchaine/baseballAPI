@@ -5,6 +5,7 @@ namespace BaseballAPI.RepositoryModels
 {
     public partial class PitchingPost
     {
+        public People Player { get; set; }
         public string PlayerId { get; set; }
         public short YearId { get; set; }
         public string Round { get; set; }
