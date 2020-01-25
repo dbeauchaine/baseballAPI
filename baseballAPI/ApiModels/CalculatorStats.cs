@@ -13,5 +13,12 @@
         public short Sf { get; set; }
         public short Sh { get; set; }
         public short Hbp { get; set; }
+        public int Singles { get; set; }
+        public double Obp { get; set; }
+        public double Slg { get; set; }
+        public int Pa { get; set; }
+        public double KRate { get; set; }
+        public double BbRate { get; set; }
+
     }
 }

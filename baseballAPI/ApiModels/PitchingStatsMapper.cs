@@ -8,6 +8,12 @@ namespace BaseballAPI.ApiModels
 {
     public class PitchingStatsMapper : IPitchingStatsMapper
     {
+        private IStatsCalculator _calculator;
+
+        public PitchingStatsMapper(IStatsCalculator calculator)
+        {
+            _calculator = calculator;
+        }
         public PitchingStats Map(Pitching pitching)
         {
             var pitchingStats = new PitchingStats()
@@ -20,6 +26,7 @@ namespace BaseballAPI.ApiModels
             };
             CopyPlayerDataIfPlayerExists(pitching, pitchingStats);
             CopyNullableStats(pitching, pitchingStats);
+            _calculator.CalculateStats(pitchingStats);
 
             return pitchingStats;
         }
@@ -35,6 +42,8 @@ namespace BaseballAPI.ApiModels
             };
             CopyPlayerDataIfPlayerExists(pitching, pitchingStats);
             CopyNullableStats(pitching, pitchingStats);
+
+            _calculator.CalculateStats(pitchingStats);
 
             return pitchingStats;
         }

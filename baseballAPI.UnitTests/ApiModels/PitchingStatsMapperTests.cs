@@ -1,5 +1,6 @@
 ﻿using BaseballAPI.ApiModels;
 using BaseballAPI.RepositoryModels;
+using Moq;
 using NUnit.Framework;
 using System;
 
@@ -10,10 +11,12 @@ namespace BaseballAPI.UnitTests.Controllers
     public class PitchingStatsMapperTests
     {
         private PitchingStatsMapper _mapper;
+        private Mock<StatsCalculator> _calculator;
         [SetUp]
         public void SetUp()
         {
-            _mapper = new PitchingStatsMapper();
+            _calculator = new Mock<StatsCalculator>();
+            _mapper = new PitchingStatsMapper(_calculator.Object);
         }
 
         [Test]
@@ -83,7 +86,8 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
             Assert.That(pitchingStats.Baopp, Is.EqualTo(pitching.Baopp));
-            Assert.That(pitchingStats.Era, Is.EqualTo(pitching.Era));
+            var localEra = pitching.Era / 100 ?? 0;
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra,2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));
@@ -120,7 +124,8 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
             Assert.That(pitchingStats.Baopp, Is.EqualTo(pitching.Baopp));
-            Assert.That(pitchingStats.Era, Is.EqualTo(pitching.Era));
+            var localEra = pitching.Era / 100 ?? 0;
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra, 2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));
@@ -154,7 +159,8 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
             Assert.That(pitchingStats.Baopp, Is.EqualTo(pitching.Baopp));
-            Assert.That(pitchingStats.Era, Is.EqualTo(pitching.Era));
+            var localEra = pitching.Era / 100 ?? 0;
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra, 2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));
@@ -191,7 +197,8 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
             Assert.That(pitchingStats.Baopp, Is.EqualTo(pitching.Baopp));
-            Assert.That(pitchingStats.Era, Is.EqualTo(pitching.Era));
+            var localEra = pitching.Era / 100 ?? 0;
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra, 2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));
