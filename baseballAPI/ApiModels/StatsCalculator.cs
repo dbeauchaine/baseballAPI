@@ -5,91 +5,102 @@ namespace BaseballAPI.ApiModels
 {
     public class StatsCalculator : IStatsCalculator
     {
-        public TeamStats CalculateStats(TeamStats teamStats)
+        public void CalculateStats(PitchingStats pitchingStats)
         {
-            var copy = teamStats;
-
-            copy.Pa = CalulatePa(copy.Ab, copy.Bb, copy.Hbp, copy.Sf, copy.Sh);
-
-            copy.Singles = CalculateSingles(copy.H, copy.X2b, copy.X3b, copy.Hr);
-
-            copy.Avg = CalculateAvg(copy.H, copy.Ab);
-
-            copy.Obp = CalculateObp(copy.H, copy.Bb, copy.Ibb, copy.Ab);
-
-            copy.Slg = CalculateSlg(copy.Singles, copy.X2b, copy.X3b, copy.Hr, copy.Ab);
-
-            copy.Ops = CalculateOps(copy.Obp, copy.Slg);
-
-            copy.BbRate = CalculateBbRate(copy.Bb, copy.Pa);
-
-            copy.KRate = CalculateKRate(copy.So, copy.Pa);
-
-            copy.Iso = CalculateIso(copy.X2b, copy.X3b, copy.Hr, copy.Ab);
-
-            copy.Babip = CalculateBabip(copy.H, copy.Hr, copy.Ab, copy.So, copy.Sf);
-
-            return copy;
-        }
-        public BattingStats CalculateStats(BattingStats batting)
-        {
-            var copy = batting;
-
-            copy.Pa = CalulatePa(copy.Ab, copy.Bb, copy.Hbp, copy.Sf, copy.Sh);
-
-            copy.Singles = CalculateSingles(copy.H, copy.X2b, copy.X3b, copy.Hr);
-
-            copy.Avg = CalculateAvg(copy.H, copy.Ab);
-
-            copy.Obp = CalculateObp(copy.H, copy.Bb, copy.Ibb, copy.Ab);
-
-            copy.Slg = CalculateSlg(copy.Singles, copy.X2b, copy.X3b, copy.Hr, copy.Ab);
-
-            copy.Ops = CalculateOps(copy.Obp, copy.Slg);
-
-            copy.BbRate = CalculateBbRate(copy.Bb, copy.Pa);
-
-            copy.KRate = CalculateKRate(copy.So, copy.Pa);
-
-            copy.Iso = CalculateIso(copy.X2b, copy.X3b, copy.Hr, copy.Ab);
-
-            copy.Babip = CalculateBabip(copy.H, copy.Hr, copy.Ab, copy.So, copy.Sf);
-
-            return copy;
+            pitchingStats.Era = CalculateEra(pitchingStats.Era);
         }
 
-        public BattingPostStats CalculateStats(BattingPostStats battingPostStats)
+        public void CalculateStats(PitchingPostStats pitchingPostStats)
         {
-            var copy = battingPostStats;
+            pitchingPostStats.Era = CalculateEra(pitchingPostStats.Era);
+        }
 
-            copy.Pa = CalulatePa(copy.Ab, copy.Bb, copy.Hbp, copy.Sf, copy.Sh);
+        public void CalculateStats(TeamStats teamStats)
+        {
+            var calculatorStats = ConvertOptionalParamsToNonNullable(teamStats);
 
-            copy.Singles = CalculateSingles(copy.H, copy.X2b, copy.X3b, copy.Hr);
+            teamStats.Pa = calculatorStats.Pa;
 
-            copy.Avg = CalculateAvg(copy.H, copy.Ab);
+            teamStats.Singles = calculatorStats.Singles;
 
-            copy.Obp = CalculateObp(copy.H, copy.Bb, copy.Ibb, copy.Ab);
+            teamStats.Obp = calculatorStats.Obp;
 
-            copy.Slg = CalculateSlg(copy.Singles, copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+            teamStats.Slg = calculatorStats.Slg;
 
-            copy.Ops = CalculateOps(copy.Obp, copy.Slg);
+            teamStats.BbRate = calculatorStats.BbRate;
 
-            copy.BbRate = CalculateBbRate(copy.Bb, copy.Pa);
+            teamStats.KRate = calculatorStats.KRate;
 
-            copy.KRate = CalculateKRate(copy.So, copy.Pa);
+            teamStats.Avg = CalculateAvg(calculatorStats);
 
-            copy.Iso = CalculateIso(copy.X2b, copy.X3b, copy.Hr, copy.Ab);
+            teamStats.Ops = CalculateOps(calculatorStats);
 
-            copy.Babip = CalculateBabip(copy.H, copy.Hr, copy.Ab, copy.So, copy.Sf);
+            teamStats.Iso = CalculateIso(calculatorStats);
 
-            return copy;
+            teamStats.Babip = CalculateBabip(calculatorStats);
+        }
+        public void CalculateStats(BattingStats batting)
+        {
+            var calculatorStats = ConvertOptionalParamsToNonNullable(batting);
+
+            batting.Pa = calculatorStats.Pa;
+
+            batting.Singles = calculatorStats.Singles;
+
+            batting.Obp = calculatorStats.Obp;
+
+            batting.Slg = calculatorStats.Slg;
+
+            batting.BbRate = calculatorStats.BbRate;
+
+            batting.KRate = calculatorStats.KRate;
+
+            batting.Avg = CalculateAvg(calculatorStats);
+
+            batting.Ops = CalculateOps(calculatorStats);
+
+            batting.Iso = CalculateIso(calculatorStats);
+
+            batting.Babip = CalculateBabip(calculatorStats);
+        }
+
+        public void CalculateStats(BattingPostStats battingPostStats)
+        {
+            var calculatorStats = ConvertOptionalParamsToNonNullable(battingPostStats);
+
+            battingPostStats.Pa = calculatorStats.Pa;
+
+            battingPostStats.Singles = calculatorStats.Singles;
+
+            battingPostStats.Obp = calculatorStats.Obp;
+
+            battingPostStats.Slg = calculatorStats.Slg;
+
+            battingPostStats.BbRate = calculatorStats.BbRate;
+
+            battingPostStats.KRate = calculatorStats.KRate;
+
+            battingPostStats.Avg = CalculateAvg(calculatorStats);
+
+            battingPostStats.Ops = CalculateOps(calculatorStats);
+
+            battingPostStats.Iso = CalculateIso(calculatorStats);
+
+            battingPostStats.Babip = CalculateBabip(calculatorStats);
+        }
+
+        private double CalculateEra(double? era)
+        {
+            var localEra = era ?? 0;
+
+            return Math.Round(localEra / 100, 2);
         }
 
         //BABIP - Batting Average On Balls In Play (http://www.fangraphs.com/library/offense/babip/)
-        private double CalculateBabip(short H, short Hr, short Ab, short So, short Sf)
+        private double CalculateBabip(CalculatorStats stats)
         {
-            var numerator = (double)H - Hr;
-            var denominator = Ab - So - Hr + Sf;
+            var numerator = (double)stats.H - stats.Hr;
+            var denominator = stats.Ab - stats.So - stats.Hr + stats.Sf;
 
             double babip = SafeDivide.divideDouble(numerator, denominator);
 
@@ -97,10 +108,10 @@ namespace BaseballAPI.ApiModels
         }
 
         //ISO - Isolated Power (http://www.fangraphs.com/library/offense/iso/)
-        private double CalculateIso(short X2b, short X3b, short Hr, short Ab)
+        private double CalculateIso(CalculatorStats stats)
         {
-            var numerator = (double)X2b + (2 * X3b) + (3 * Hr);
-            var denominator = Ab;
+            var numerator = (double)stats.X2b + (2 * stats.X3b) + (3 * stats.Hr);
+            var denominator = stats.Ab;
 
             double iso = SafeDivide.divideDouble(numerator, denominator);
 
@@ -108,10 +119,10 @@ namespace BaseballAPI.ApiModels
         }
 
         //K% - Strikeout Percentage (http://www.fangraphs.com/library/offense/rate-stats/)
-        private double CalculateKRate(short So, int Pa)
+        private double CalculateKRate(CalculatorStats stats)
         {
-            var numerator = (double)So;
-            var denominator = Pa;
+            var numerator = (double)stats.So;
+            var denominator = stats.Pa;
 
             double kRate = SafeDivide.divideDouble(numerator, denominator);
 
@@ -119,40 +130,40 @@ namespace BaseballAPI.ApiModels
         }
 
         //BB% - Walk Percentage (http://www.fangraphs.com/library/offense/rate-stats/)
-        private double CalculateBbRate(short Bb, int Pa)
+        private double CalculateBbRate(CalculatorStats stats)
         {
-            var numerator = (double)Bb;
-            var denominator = Pa;
+            var numerator = (double)stats.Bb;
+            var denominator = stats.Pa;
             double bbRate = SafeDivide.divideDouble(numerator, denominator);
 
             return Math.Round(bbRate, 3);
         }
 
         //Pa - Plate Appearances
-        private int CalulatePa(short Ab, short Bb, short Hbp, short Sf, short Sh)
+        private int CalulatePa(CalculatorStats stats)
         {
-            return Ab + Bb + Hbp + Sf + Sh;
+            return stats.Ab + stats.Bb + stats.Hbp + stats.Sf + stats.Sh;
         }
 
         //S - Singles
-        private int CalculateSingles(short H, short X2b, short X3b, short Hr)
+        private int CalculateSingles(CalculatorStats stats)
         {
-            return H - (X2b + X3b + Hr);
+            return stats.H - (stats.X2b + stats.X3b + stats.Hr);
         }
 
         //AVG - Batting Average
-        private double CalculateAvg(short H, short Ab)
+        private double CalculateAvg(CalculatorStats stats)
         {
-            double avg = SafeDivide.divideDouble((double)H, Ab);
+            double avg = SafeDivide.divideDouble((double)stats.H, stats.Ab);
 
             return Math.Round(avg, 3);
         }
 
         //OBP - On Base Percentage (http://www.fangraphs.com/library/offense/obp/)
-        private double CalculateObp(short H, short Bb, short Ibb, short Ab)
+        private double CalculateObp(CalculatorStats stats)
         {
-            var numerator = (double)H + Bb + Ibb;
-            var denominator = Ab;
+            var numerator = (double)stats.H + stats.Bb + stats.Ibb;
+            var denominator = stats.Ab;
 
             double obp = SafeDivide.divideDouble(numerator, denominator);
 
@@ -160,10 +171,10 @@ namespace BaseballAPI.ApiModels
         }
 
         //SLG - Slugging Percentage
-        private double CalculateSlg(int Singles, short X2b, short X3b, short Hr, short Ab)
+        private double CalculateSlg(CalculatorStats stats)
         {
-            var numerator = (double)Singles + X2b * 2 + X3b * 3 + Hr * 4;
-            var denominator = Ab;
+            var numerator = (double)stats.Singles + stats.X2b * 2 + stats.X3b * 3 + stats.Hr * 4;
+            var denominator = stats.Ab;
 
             double slg = SafeDivide.divideDouble(numerator, denominator);
 
@@ -171,10 +182,117 @@ namespace BaseballAPI.ApiModels
         }
 
         //OPS - On Base + Slugging (http://www.fangraphs.com/library/offense/ops/)
-        private double CalculateOps(double Obp, double Slg)
+        private double CalculateOps(CalculatorStats stats)
         {
-            return Math.Round(Obp + Slg, 3);
+            return Math.Round(stats.Obp + stats.Slg, 3);
+        }
+
+        private CalculatorStats ConvertOptionalParamsToNonNullable(BattingStats battingStats)
+        {
+            var calculatorStats = new CalculatorStats();
+   
+                calculatorStats.Ab = battingStats.Ab ?? 0;
+
+                calculatorStats.H = battingStats.H ?? 0;
+
+                calculatorStats.X2b = battingStats.X2b ?? 0;
+
+                calculatorStats.X3b = battingStats.X3b ?? 0;
+
+                calculatorStats.Hr = battingStats.Hr ?? 0;
+
+                calculatorStats.Bb = battingStats.Bb ?? 0;
+
+                calculatorStats.So = battingStats.So ?? 0;
+
+                calculatorStats.Ibb = battingStats.Ibb ?? 0;
+
+                calculatorStats.Hbp = battingStats.Hbp ?? 0;
+
+                calculatorStats.Sh = battingStats.Sh ?? 0;
+
+                calculatorStats.Sf = battingStats.Sf ?? 0;
+
+            calculatorStats.Pa = CalulatePa(calculatorStats);
+            calculatorStats.Singles = CalculateSingles(calculatorStats);
+            calculatorStats.Obp = CalculateObp(calculatorStats);
+            calculatorStats.Slg = CalculateSlg(calculatorStats);
+            calculatorStats.KRate = CalculateKRate(calculatorStats);
+            calculatorStats.BbRate = CalculateBbRate(calculatorStats);
+
+            return calculatorStats;
+        }
+
+        private CalculatorStats ConvertOptionalParamsToNonNullable(BattingPostStats battingStats)
+        {
+            var calculatorStats = new CalculatorStats();
+
+            calculatorStats.Ab = battingStats.Ab ?? 0;
+
+            calculatorStats.H = battingStats.H ?? 0;
+
+            calculatorStats.X2b = battingStats.X2b ?? 0;
+
+            calculatorStats.X3b = battingStats.X3b ?? 0;
+
+            calculatorStats.Hr = battingStats.Hr ?? 0;
+
+            calculatorStats.Bb = battingStats.Bb ?? 0;
+
+            calculatorStats.So = battingStats.So ?? 0;
+
+            calculatorStats.Ibb = battingStats.Ibb ?? 0;
+
+            calculatorStats.Hbp = battingStats.Hbp ?? 0;
+
+            calculatorStats.Sh = battingStats.Sh ?? 0;
+
+            calculatorStats.Sf = battingStats.Sf ?? 0;
+
+            calculatorStats.Pa = CalulatePa(calculatorStats);
+            calculatorStats.Singles = CalculateSingles(calculatorStats);
+            calculatorStats.Obp = CalculateObp(calculatorStats);
+            calculatorStats.Slg = CalculateSlg(calculatorStats);
+            calculatorStats.KRate = CalculateKRate(calculatorStats);
+            calculatorStats.BbRate = CalculateBbRate(calculatorStats);
+
+            return calculatorStats;
+        }
+
+        private CalculatorStats ConvertOptionalParamsToNonNullable(TeamStats teamStats)
+        {
+            var calculatorStats = new CalculatorStats();
+
+            calculatorStats.Ab = teamStats.Ab ?? 0;
+
+            calculatorStats.H = teamStats.H ?? 0;
+
+            calculatorStats.X2b = teamStats.X2b ?? 0;
+
+            calculatorStats.X3b = teamStats.X3b ?? 0;
+
+            calculatorStats.Hr = teamStats.Hr ?? 0;
+
+            calculatorStats.Bb = teamStats.Bb ?? 0;
+
+            calculatorStats.So = teamStats.So ?? 0;
+
+            calculatorStats.Hbp = teamStats.Hbp ?? 0;
+
+            calculatorStats.Sf = teamStats.Sf ?? 0;
+
+            calculatorStats.Ibb = 0;
+            calculatorStats.Sh = 0;
+            calculatorStats.Pa = CalulatePa(calculatorStats);
+            calculatorStats.Singles = CalculateSingles(calculatorStats);
+            calculatorStats.Obp = CalculateObp(calculatorStats);
+            calculatorStats.Slg = CalculateSlg(calculatorStats);
+            calculatorStats.KRate = CalculateKRate(calculatorStats);
+            calculatorStats.BbRate = CalculateBbRate(calculatorStats);
+
+            return calculatorStats;
         }
     }
 }
+
 

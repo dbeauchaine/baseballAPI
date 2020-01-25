@@ -17,20 +17,34 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public void MapCopiesDataFromBattingToBattingStats()
+        public void MapCopiesDataFromFieldingToFieldingStats()
         {
             Fielding fielding = GenerateFieldingWithoutNullValues();
             FieldingStats fieldingStats = _mapper.Map(fielding);
 
-            AssertThatEachElementIsEqualWithoutNullValues(fielding, fieldingStats);
+            AssertThatEachElementIsEqual(fielding, fieldingStats);
 
             Fielding fieldingWithNull = GenerateFieldingWithNullValues();
             FieldingStats fieldingStatsWithNull = _mapper.Map(fieldingWithNull);
 
-            AssertThatEachElementIsEqualWithNullValues(fieldingWithNull, fieldingStatsWithNull);
+            AssertThatEachElementIsEqual(fieldingWithNull, fieldingStatsWithNull);
         }
 
-        private void AssertThatEachElementIsEqualWithoutNullValues(Fielding fielding, FieldingStats fieldingStats)
+        [Test]
+        public void MapCopiesDataFromFieldingPostToFieldingPostStats()
+        {
+            FieldingPost fielding = GenerateFieldingPostWithoutNullValues();
+            FieldingPostStats fieldingStats = _mapper.Map(fielding);
+
+            AssertThatEachElementIsEqual(fielding, fieldingStats);
+
+            FieldingPost fieldingPostWithNull = GenerateFieldingPostWithNullValues();
+            FieldingPostStats fieldingPostStatsWithNull = _mapper.Map(fieldingPostWithNull);
+
+            AssertThatEachElementIsEqual(fieldingPostWithNull, fieldingPostStatsWithNull);
+        }
+
+        private void AssertThatEachElementIsEqual(Fielding fielding, FieldingStats fieldingStats)
         {
             Assert.That(fieldingStats.PlayerId, Is.EqualTo(fielding.PlayerId));
             Assert.That(fieldingStats.YearId, Is.EqualTo(fielding.YearId));
@@ -52,26 +66,25 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(fieldingStats.Zr, Is.EqualTo(fielding.Zr));
         }
 
-        private void AssertThatEachElementIsEqualWithNullValues(Fielding fielding, FieldingStats fieldingStats)
+        private void AssertThatEachElementIsEqual(FieldingPost fieldingPost, FieldingPostStats fieldingPostStats)
         {
-            Assert.That(fieldingStats.PlayerId, Is.EqualTo(fielding.PlayerId));
-            Assert.That(fieldingStats.YearId, Is.EqualTo(fielding.YearId));
-            Assert.That(fieldingStats.Stint, Is.EqualTo(fielding.Stint));
-            Assert.That(fieldingStats.TeamId, Is.EqualTo(fielding.TeamId));
-            Assert.That(fieldingStats.LgId, Is.EqualTo(fielding.LgId));
-            Assert.That(fieldingStats.Pos, Is.EqualTo(fielding.Pos));
-            Assert.That(fieldingStats.G, Is.EqualTo(0));
-            Assert.That(fieldingStats.Gs, Is.EqualTo(0));
-            Assert.That(fieldingStats.InnOuts, Is.EqualTo(0));
-            Assert.That(fieldingStats.Po, Is.EqualTo(0));
-            Assert.That(fieldingStats.A, Is.EqualTo(0));
-            Assert.That(fieldingStats.E, Is.EqualTo(0));
-            Assert.That(fieldingStats.Dp, Is.EqualTo(0));
-            Assert.That(fieldingStats.Pb, Is.EqualTo(0));
-            Assert.That(fieldingStats.Sb, Is.EqualTo(0));
-            Assert.That(fieldingStats.Cs, Is.EqualTo(0));
-            Assert.That(fieldingStats.Wp, Is.EqualTo(0));
-            Assert.That(fieldingStats.Zr, Is.EqualTo(0));
+            Assert.That(fieldingPostStats.PlayerId, Is.EqualTo(fieldingPost.PlayerId));
+            Assert.That(fieldingPostStats.YearId, Is.EqualTo(fieldingPost.YearId));
+            Assert.That(fieldingPostStats.Round, Is.EqualTo(fieldingPost.Round));
+            Assert.That(fieldingPostStats.TeamId, Is.EqualTo(fieldingPost.TeamId));
+            Assert.That(fieldingPostStats.LgId, Is.EqualTo(fieldingPost.LgId));
+            Assert.That(fieldingPostStats.G, Is.EqualTo(fieldingPost.G));
+            Assert.That(fieldingPostStats.Pos, Is.EqualTo(fieldingPost.Pos));
+            Assert.That(fieldingPostStats.Gs, Is.EqualTo(fieldingPost.Gs));
+            Assert.That(fieldingPostStats.InnOuts, Is.EqualTo(fieldingPost.InnOuts));
+            Assert.That(fieldingPostStats.Po, Is.EqualTo(fieldingPost.Po));
+            Assert.That(fieldingPostStats.A, Is.EqualTo(fieldingPost.A));
+            Assert.That(fieldingPostStats.E, Is.EqualTo(fieldingPost.E));
+            Assert.That(fieldingPostStats.Dp, Is.EqualTo(fieldingPost.Dp));
+            Assert.That(fieldingPostStats.Pb, Is.EqualTo(fieldingPost.Pb));
+            Assert.That(fieldingPostStats.Sb, Is.EqualTo(fieldingPost.Sb));
+            Assert.That(fieldingPostStats.Cs, Is.EqualTo(fieldingPost.Cs));
+            Assert.That(fieldingPostStats.Tp, Is.EqualTo(fieldingPost.Tp));
         }
 
         private Fielding GenerateFieldingWithoutNullValues()
@@ -121,6 +134,54 @@ namespace BaseballAPI.UnitTests.Controllers
                 Sb = null,
                 Cs = null,
                 Zr = null
+            };
+        }
+
+        private FieldingPost GenerateFieldingPostWithoutNullValues()
+        {
+            return new FieldingPost()
+            {
+                PlayerId = "id",
+                YearId = 2000,
+                Round = "WC",
+                TeamId = "team",
+                LgId = "league",
+                Pos = "C",
+                G = 1,
+                Gs = 1,
+                InnOuts = 4,
+                Po = 1,
+                A = 2,
+                E = 1,
+                Dp = 0,
+                Pb = 1,
+                Tp = 1,
+                Sb = 1,
+                Cs = 1
+            };
+        }
+
+        private FieldingPost GenerateFieldingPostWithNullValues()
+        {
+            return new FieldingPost()
+            {
+                PlayerId = "id",
+                YearId = 2000,
+                Round = "WC",
+                TeamId = "team",
+                LgId = "league",
+                Pos = "C",
+                G = null,
+                Gs = null,
+                InnOuts = null,
+                Po = null,
+                A = null,
+                E = null,
+                Dp = null,
+                Pb = null,
+                Tp = null,
+                Sb = null,
+                Cs = null
             };
         }
     }

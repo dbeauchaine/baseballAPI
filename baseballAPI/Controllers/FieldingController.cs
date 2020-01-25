@@ -26,5 +26,13 @@ namespace BaseballAPI.Controllers
 
             return players;
         }
+
+        [HttpGet("/fielding/post/{id}")]
+        public IEnumerable<FieldingPostStats> GetFieldingPostStats(string id)
+        {
+            var players = _fieldingService.GetFieldingPostStats(id);
+
+            return players;
+        }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BaseballAPI.ApiModels
+﻿namespace BaseballAPI.ApiModels
 {
     public class BattingPostStats
     {
@@ -15,23 +10,23 @@ namespace BaseballAPI.ApiModels
         public string Round { get; set; }
         public string TeamId { get; set; }
         public string LgId { get; set; }
-        public short G { get; set; }
-        public short Ab { get; set; }
-        public short R { get; set; }
-        public short H { get; set; }
-        public short X2b { get; set; }
-        public short X3b { get; set; }
-        public short Hr { get; set; }
-        public short Rbi { get; set; }
-        public short Sb { get; set; }
-        public short Cs { get; set; }
-        public short Bb { get; set; }
-        public short So { get; set; }
-        public short Ibb { get; set; }
-        public short Hbp { get; set; }
-        public short Sh { get; set; }
-        public short Sf { get; set; }
-        public short Gidp { get; set; }
+        public short? G { get; set; }
+        public short? Ab { get; set; }
+        public short? R { get; set; }
+        public short? H { get; set; }
+        public short? X2b { get; set; }
+        public short? X3b { get; set; }
+        public short? Hr { get; set; }
+        public short? Rbi { get; set; }
+        public short? Sb { get; set; }
+        public short? Cs { get; set; }
+        public short? Bb { get; set; }
+        public short? So { get; set; }
+        public short? Ibb { get; set; }
+        public short? Hbp { get; set; }
+        public short? Sh { get; set; }
+        public short? Sf { get; set; }
+        public short? Gidp { get; set; }
         public int Singles { get; set; }
         public double Avg { get; set; }
         public double Obp { get; set; }

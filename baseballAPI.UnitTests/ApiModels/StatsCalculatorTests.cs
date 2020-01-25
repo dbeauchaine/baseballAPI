@@ -11,156 +11,160 @@ namespace BaseballAPI.UnitTests.Controllers
     {
         public StatsCalculator _calculator;
         public BattingStats _fakeBattingStats;
-        public BattingStats _computedBattingStats;
         public TeamStats _fakeTeamStats;
-        public TeamStats _computedTeamStats;
         public BattingPostStats _fakeBattingPostStats;
-        public BattingPostStats _computedBattingPostStats;
+        public CalculatorStats _fakeCalculatorStats;
+        public CalculatorStats _fakePostCalculatorStats;
+        public CalculatorStats _fakeTeamCalculatorStats;
+
 
         [SetUp]
         public void SetUp()
         {
             _calculator = new StatsCalculator();
             _fakeBattingStats = GenerateFakeBattingStats();
-            _computedBattingStats = _calculator.CalculateStats(_fakeBattingStats);
+            _fakeCalculatorStats = ConvertOptionalParamsToNonNullable(_fakeBattingStats);
+            _calculator.CalculateStats(_fakeBattingStats);
 
             _fakeTeamStats = GenerateFakeTeamStats();
-            _computedTeamStats = _calculator.CalculateStats(_fakeTeamStats);
+            _fakeTeamCalculatorStats = ConvertOptionalParamsToNonNullable(_fakeTeamStats);
+            _calculator.CalculateStats(_fakeTeamStats);
 
             _fakeBattingPostStats = GenerateFakeBattingPostStats();
-            _computedBattingPostStats = _calculator.CalculateStats(_fakeBattingPostStats);
+            _fakePostCalculatorStats = ConvertOptionalParamsToNonNullable(_fakeBattingPostStats);
+            _calculator.CalculateStats(_fakeBattingPostStats);
         }
 
         [Test]
         public void CalculateBattingStatsReturnsCorrectValues()
         {
             //singles = H - 2B - 3B - HR
-            int expectedSingles = (_fakeBattingStats.H - _fakeBattingStats.X2b - _fakeBattingStats.X3b - _fakeBattingStats.Hr);
-            Assert.That(_computedBattingStats.Singles, Is.EqualTo(expectedSingles));
+            int expectedSingles = (_fakeCalculatorStats.H - _fakeCalculatorStats.X2b - _fakeCalculatorStats.X3b - _fakeCalculatorStats.Hr);
+            Assert.That(_fakeBattingStats.Singles, Is.EqualTo(expectedSingles));
 
             //AVG = H / Ab
-            double expectedAvg = (double)_fakeBattingStats.H / _fakeBattingStats.Ab;
-            Assert.That(_computedBattingStats.Avg, Is.EqualTo(expectedAvg));
+            double expectedAvg = (double)_fakeCalculatorStats.H / _fakeCalculatorStats.Ab;
+            Assert.That(_fakeBattingStats.Avg, Is.EqualTo(expectedAvg));
 
             //OBP = (H + BB + IBB)/Ab
-            double expectedObp = ((double)_fakeBattingStats.H + _fakeBattingStats.Bb + _fakeBattingStats.Ibb) / _fakeBattingStats.Ab;
-            Assert.That(_computedBattingStats.Obp, Is.EqualTo(expectedObp));
+            double expectedObp = ((double)_fakeCalculatorStats.H + _fakeCalculatorStats.Bb + _fakeCalculatorStats.Ibb) / _fakeCalculatorStats.Ab;
+            Assert.That(_fakeBattingStats.Obp, Is.EqualTo(expectedObp));
 
             //SLG = (Singles + 2B*2 + 3B*3 + HR*4)/Ab
-            double expectedSlg = ((double)_fakeBattingStats.Singles + (_fakeBattingStats.X2b * 2) + (_fakeBattingStats.X3b * 3) + (_fakeBattingStats.Hr * 4)) / _fakeBattingStats.Ab;
-            Assert.That(_computedBattingStats.Slg, Is.EqualTo(expectedSlg));
+            double expectedSlg = ((double)_fakeBattingStats.Singles + (_fakeCalculatorStats.X2b * 2) + (_fakeCalculatorStats.X3b * 3) + (_fakeCalculatorStats.Hr * 4)) / _fakeCalculatorStats.Ab;
+            Assert.That(_fakeBattingStats.Slg, Is.EqualTo(expectedSlg));
 
             //OPS = (OBP + SLG)
             double expectedOps = ((double)_fakeBattingStats.Obp + _fakeBattingStats.Slg);
-            Assert.That(_computedBattingStats.Ops, Is.EqualTo(expectedOps));
+            Assert.That(_fakeBattingStats.Ops, Is.EqualTo(expectedOps));
 
             //Pa = AB + BB + HBP + SF + SH
-            int expectedPa = _fakeBattingStats.Ab + _fakeBattingStats.Bb + _fakeBattingStats.Hbp + _fakeBattingStats.Sf + _fakeBattingStats.Sh;
-            Assert.That(_computedBattingStats.Pa, Is.EqualTo(expectedPa));
+            int expectedPa = _fakeCalculatorStats.Ab + _fakeCalculatorStats.Bb + _fakeCalculatorStats.Hbp + _fakeCalculatorStats.Sf + _fakeCalculatorStats.Sh;
+            Assert.That(_fakeBattingStats.Pa, Is.EqualTo(expectedPa));
 
             //BABIP = (H - HR) / (Ab - K -Hr + Sf)
-            double expectedBabip = ((double)_fakeBattingStats.H - _fakeBattingStats.Hr) / (_fakeBattingStats.Ab - _fakeBattingStats.So - _fakeBattingStats.Hr + _fakeBattingStats.Sf);
-            Assert.That(_computedBattingStats.Babip, Is.EqualTo(Math.Round(expectedBabip, 3)));
+            double expectedBabip = ((double)_fakeCalculatorStats.H - _fakeCalculatorStats.Hr) / (_fakeCalculatorStats.Ab - _fakeCalculatorStats.So - _fakeCalculatorStats.Hr + _fakeCalculatorStats.Sf);
+            Assert.That(_fakeBattingStats.Babip, Is.EqualTo(Math.Round(expectedBabip, 3)));
 
             //ISO = (2B + 2 * 3B + 3 * HR) / Ab
-            double expectedIso = ((double)_fakeBattingStats.X2b + 2 * _fakeBattingStats.X3b + 3 * _fakeBattingStats.Hr) / _fakeBattingStats.Ab;
-            Assert.That(_computedBattingStats.Iso, Is.EqualTo(expectedIso));
+            double expectedIso = ((double)_fakeCalculatorStats.X2b + 2 * _fakeCalculatorStats.X3b + 3 * _fakeCalculatorStats.Hr) / _fakeCalculatorStats.Ab;
+            Assert.That(_fakeBattingStats.Iso, Is.EqualTo(expectedIso));
 
             //K% = K / PA
-            double expectedKRate = (double)_fakeBattingStats.So / _fakeBattingStats.Pa;
-            Assert.That(_computedBattingStats.KRate, Is.EqualTo(expectedKRate));
+            double expectedKRate = (double)_fakeCalculatorStats.So / _fakeBattingStats.Pa;
+            Assert.That(_fakeBattingStats.KRate, Is.EqualTo(expectedKRate));
 
             //BB% = BB / PA
-            double expectedBbRate = (double)_fakeBattingStats.Bb / _fakeBattingStats.Pa;
-            Assert.That(_computedBattingStats.BbRate, Is.EqualTo(expectedBbRate));
+            double expectedBbRate = (double)_fakeCalculatorStats.Bb / _fakeBattingStats.Pa;
+            Assert.That(_fakeBattingStats.BbRate, Is.EqualTo(expectedBbRate));
         }
 
         [Test]
         public void CalculateTeamStatsReturnsCorrectValues()
         {
             //singles = H - 2B - 3B - HR
-            int expectedSingles = (_fakeTeamStats.H - _fakeTeamStats.X2b - _fakeTeamStats.X3b - _fakeTeamStats.Hr);
-            Assert.That(_computedTeamStats.Singles, Is.EqualTo(expectedSingles));
+            int expectedSingles = (_fakeTeamCalculatorStats.H - _fakeTeamCalculatorStats.X2b - _fakeTeamCalculatorStats.X3b - _fakeTeamCalculatorStats.Hr);
+            Assert.That(_fakeTeamStats.Singles, Is.EqualTo(expectedSingles));
 
             //AVG = H / Ab
-            double expectedAvg = (double)_fakeTeamStats.H / _fakeTeamStats.Ab;
-            Assert.That(_computedTeamStats.Avg, Is.EqualTo(expectedAvg));
+            double expectedAvg = (double)_fakeTeamCalculatorStats.H / _fakeTeamCalculatorStats.Ab;
+            Assert.That(_fakeTeamStats.Avg, Is.EqualTo(expectedAvg));
 
             //OBP = (H + BB + IBB)/Ab
-            double expectedObp = ((double)_fakeTeamStats.H + _fakeTeamStats.Bb + _fakeTeamStats.Ibb) / _fakeTeamStats.Ab;
-            Assert.That(_computedTeamStats.Obp, Is.EqualTo(expectedObp));
+            double expectedObp = ((double)_fakeTeamCalculatorStats.H + _fakeTeamCalculatorStats.Bb + _fakeTeamCalculatorStats.Ibb) / _fakeTeamCalculatorStats.Ab;
+            Assert.That(_fakeTeamStats.Obp, Is.EqualTo(expectedObp));
 
             //SLG = (Singles + 2B*2 + 3B*3 + HR*4)/Ab
-            double expectedSlg = ((double)_fakeTeamStats.Singles + (_fakeTeamStats.X2b * 2) + (_fakeTeamStats.X3b * 3) + (_fakeTeamStats.Hr * 4)) / _fakeTeamStats.Ab;
-            Assert.That(_computedTeamStats.Slg, Is.EqualTo(expectedSlg));
+            double expectedSlg = ((double)_fakeTeamStats.Singles + (_fakeTeamCalculatorStats.X2b * 2) + (_fakeTeamCalculatorStats.X3b * 3) + (_fakeTeamCalculatorStats.Hr * 4)) / _fakeTeamCalculatorStats.Ab;
+            Assert.That(_fakeTeamStats.Slg, Is.EqualTo(expectedSlg));
 
             //OPS = (OBP + SLG)
             double expectedOps = ((double)_fakeTeamStats.Obp + _fakeTeamStats.Slg);
-            Assert.That(_computedTeamStats.Ops, Is.EqualTo(expectedOps));
+            Assert.That(_fakeTeamStats.Ops, Is.EqualTo(expectedOps));
 
             //Pa = AB + BB + HBP + SF + SH
-            int expectedPa = _fakeTeamStats.Ab + _fakeTeamStats.Bb + _fakeTeamStats.Hbp + _fakeTeamStats.Sf + _fakeTeamStats.Sh;
-            Assert.That(_computedTeamStats.Pa, Is.EqualTo(expectedPa));
+            int expectedPa = _fakeTeamCalculatorStats.Ab + _fakeTeamCalculatorStats.Bb + _fakeTeamCalculatorStats.Hbp + _fakeTeamCalculatorStats.Sf + _fakeTeamCalculatorStats.Sh;
+            Assert.That(_fakeTeamStats.Pa, Is.EqualTo(expectedPa));
 
             //BABIP = (H - HR) / (Ab - K -Hr + Sf)
-            double expectedBabip = ((double)_fakeTeamStats.H - _fakeTeamStats.Hr) / (_fakeTeamStats.Ab - _fakeTeamStats.So - _fakeTeamStats.Hr + _fakeTeamStats.Sf);
-            Assert.That(_computedTeamStats.Babip, Is.EqualTo(Math.Round(expectedBabip, 3)));
+            double expectedBabip = ((double)_fakeTeamCalculatorStats.H - _fakeTeamCalculatorStats.Hr) / (_fakeTeamCalculatorStats.Ab - _fakeTeamCalculatorStats.So - _fakeTeamCalculatorStats.Hr + _fakeTeamCalculatorStats.Sf);
+            Assert.That(_fakeTeamStats.Babip, Is.EqualTo(Math.Round(expectedBabip, 3)));
 
             //ISO = (2B + 2 * 3B + 3 * HR) / Ab
-            double expectedIso = ((double)_fakeTeamStats.X2b + 2 * _fakeTeamStats.X3b + 3 * _fakeTeamStats.Hr) / _fakeTeamStats.Ab;
-            Assert.That(_computedTeamStats.Iso, Is.EqualTo(expectedIso));
+            double expectedIso = ((double)_fakeTeamCalculatorStats.X2b + 2 * _fakeTeamCalculatorStats.X3b + 3 * _fakeTeamCalculatorStats.Hr) / _fakeTeamCalculatorStats.Ab;
+            Assert.That(_fakeTeamStats.Iso, Is.EqualTo(expectedIso));
 
             //K% = K / PA
-            double expectedKRate = (double)_fakeTeamStats.So / _fakeTeamStats.Pa;
-            Assert.That(_computedTeamStats.KRate, Is.EqualTo(expectedKRate));
+            double expectedKRate = (double)_fakeTeamCalculatorStats.So / _fakeTeamStats.Pa;
+            Assert.That(_fakeTeamStats.KRate, Is.EqualTo(expectedKRate));
 
             //BB% = BB / PA
-            double expectedBbRate = (double)_fakeTeamStats.Bb / _fakeTeamStats.Pa;
-            Assert.That(_computedTeamStats.BbRate, Is.EqualTo(expectedBbRate));
+            double expectedBbRate = Math.Round((double)_fakeTeamCalculatorStats.Bb / _fakeTeamStats.Pa,3);
+            Assert.That(_fakeTeamStats.BbRate, Is.EqualTo(expectedBbRate));
         }
 
         [Test]
         public void CalculateBattingPostStatsReturnsCorrectValues()
         {
             //singles = H - 2B - 3B - HR
-            int expectedSingles = (_fakeBattingPostStats.H - _fakeBattingPostStats.X2b - _fakeBattingPostStats.X3b - _fakeBattingPostStats.Hr);
-            Assert.That(_computedBattingPostStats.Singles, Is.EqualTo(expectedSingles));
+            int expectedSingles = (_fakePostCalculatorStats.H - _fakePostCalculatorStats.X2b - _fakePostCalculatorStats.X3b - _fakePostCalculatorStats.Hr);
+            Assert.That(_fakeBattingPostStats.Singles, Is.EqualTo(expectedSingles));
 
             //AVG = H / Ab
-            double expectedAvg = (double)_fakeBattingPostStats.H / _fakeBattingPostStats.Ab;
-            Assert.That(_computedBattingPostStats.Avg, Is.EqualTo(expectedAvg));
+            double expectedAvg = (double)_fakePostCalculatorStats.H / _fakePostCalculatorStats.Ab;
+            Assert.That(_fakeBattingPostStats.Avg, Is.EqualTo(expectedAvg));
 
             //OBP = (H + BB + IBB)/Ab
-            double expectedObp = ((double)_fakeBattingPostStats.H + _fakeBattingPostStats.Bb + _fakeBattingPostStats.Ibb) / _fakeBattingPostStats.Ab;
-            Assert.That(_computedBattingPostStats.Obp, Is.EqualTo(expectedObp));
+            double expectedObp = ((double)_fakePostCalculatorStats.H + _fakePostCalculatorStats.Bb + _fakePostCalculatorStats.Ibb) / _fakePostCalculatorStats.Ab;
+            Assert.That(_fakeBattingPostStats.Obp, Is.EqualTo(expectedObp));
 
             //SLG = (Singles + 2B*2 + 3B*3 + HR*4)/Ab
-            double expectedSlg = ((double)_fakeBattingPostStats.Singles + (_fakeBattingPostStats.X2b * 2) + (_fakeBattingPostStats.X3b * 3) + (_fakeBattingPostStats.Hr * 4)) / _fakeBattingPostStats.Ab;
-            Assert.That(_computedBattingPostStats.Slg, Is.EqualTo(expectedSlg));
+            double expectedSlg = ((double)_fakeBattingPostStats.Singles + (_fakePostCalculatorStats.X2b * 2) + (_fakePostCalculatorStats.X3b * 3) + (_fakePostCalculatorStats.Hr * 4)) / _fakePostCalculatorStats.Ab;
+            Assert.That(_fakeBattingPostStats.Slg, Is.EqualTo(expectedSlg));
 
             //OPS = (OBP + SLG)
             double expectedOps = ((double)_fakeBattingPostStats.Obp + _fakeBattingPostStats.Slg);
-            Assert.That(_computedBattingPostStats.Ops, Is.EqualTo(expectedOps));
+            Assert.That(_fakeBattingPostStats.Ops, Is.EqualTo(expectedOps));
 
             //Pa = AB + BB + HBP + SF + SH
-            int expectedPa = _fakeBattingPostStats.Ab + _fakeBattingPostStats.Bb + _fakeBattingPostStats.Hbp + _fakeBattingPostStats.Sf + _fakeBattingPostStats.Sh;
-            Assert.That(_computedBattingPostStats.Pa, Is.EqualTo(expectedPa));
+            int expectedPa = _fakePostCalculatorStats.Ab + _fakePostCalculatorStats.Bb + _fakePostCalculatorStats.Hbp + _fakePostCalculatorStats.Sf + _fakePostCalculatorStats.Sh;
+            Assert.That(_fakeBattingPostStats.Pa, Is.EqualTo(expectedPa));
 
             //BABIP = (H - HR) / (Ab - K -Hr + Sf)
-            double expectedBabip = ((double)_fakeBattingPostStats.H - _fakeBattingPostStats.Hr) / (_fakeBattingPostStats.Ab - _fakeBattingPostStats.So - _fakeBattingPostStats.Hr + _fakeBattingPostStats.Sf);
-            Assert.That(_computedBattingPostStats.Babip, Is.EqualTo(Math.Round(expectedBabip, 3)));
+            double expectedBabip = ((double)_fakePostCalculatorStats.H - _fakePostCalculatorStats.Hr) / (_fakePostCalculatorStats.Ab - _fakePostCalculatorStats.So - _fakePostCalculatorStats.Hr + _fakePostCalculatorStats.Sf);
+            Assert.That(_fakeBattingPostStats.Babip, Is.EqualTo(Math.Round(expectedBabip, 3)));
 
             //ISO = (2B + 2 * 3B + 3 * HR) / Ab
-            double expectedIso = ((double)_fakeBattingPostStats.X2b + 2 * _fakeBattingPostStats.X3b + 3 * _fakeBattingPostStats.Hr) / _fakeBattingPostStats.Ab;
-            Assert.That(_computedBattingPostStats.Iso, Is.EqualTo(expectedIso));
+            double expectedIso = ((double)_fakePostCalculatorStats.X2b + 2 * _fakePostCalculatorStats.X3b + 3 * _fakePostCalculatorStats.Hr) / _fakePostCalculatorStats.Ab;
+            Assert.That(_fakeBattingPostStats.Iso, Is.EqualTo(expectedIso));
 
             //K% = K / PA
-            double expectedKRate = (double)_fakeBattingPostStats.So / _fakeBattingPostStats.Pa;
-            Assert.That(_computedBattingPostStats.KRate, Is.EqualTo(expectedKRate));
+            double expectedKRate = (double)_fakePostCalculatorStats.So / _fakeBattingPostStats.Pa;
+            Assert.That(_fakeBattingPostStats.KRate, Is.EqualTo(expectedKRate));
 
             //BB% = BB / PA
-            double expectedBbRate = (double)_fakeBattingPostStats.Bb / _fakeBattingPostStats.Pa;
-            Assert.That(_computedBattingPostStats.BbRate, Is.EqualTo(expectedBbRate));
+            double expectedBbRate = (double)_fakePostCalculatorStats.Bb / _fakeBattingPostStats.Pa;
+            Assert.That(_fakeBattingPostStats.BbRate, Is.EqualTo(expectedBbRate));
         }
 
         public BattingStats GenerateFakeBattingStats()
@@ -189,11 +193,9 @@ namespace BaseballAPI.UnitTests.Controllers
                 X3b = 1,
                 Hr = 1,
                 Ab = 10,
-                Ibb = 1,
                 Bb = 2,
                 Hbp = 1,
                 Sf = 2,
-                Sh = 1
             };
         }
 
@@ -214,5 +216,187 @@ namespace BaseballAPI.UnitTests.Controllers
             };
         }
 
+        private CalculatorStats ConvertOptionalParamsToNonNullable(BattingStats battingStats)
+        {
+            var calculatorStats = new CalculatorStats();
+
+            if (battingStats.Ab != null)
+                calculatorStats.Ab = (short)battingStats.Ab;
+            else
+                calculatorStats.Ab = 0;
+
+            if (battingStats.H != null)
+                calculatorStats.H = (short)battingStats.H;
+            else
+                calculatorStats.H = 0;
+
+            if (battingStats.X2b != null)
+                calculatorStats.X2b = (short)battingStats.X2b;
+            else
+                calculatorStats.X2b = 0;
+
+            if (battingStats.X3b != null)
+                calculatorStats.X3b = (short)battingStats.X3b;
+            else
+                calculatorStats.X3b = 0;
+
+            if (battingStats.Hr != null)
+                calculatorStats.Hr = (short)battingStats.Hr;
+            else
+                calculatorStats.Hr = 0;
+
+
+            if (battingStats.Bb != null)
+                calculatorStats.Bb = (short)battingStats.Bb;
+            else
+                calculatorStats.Bb = 0;
+
+            if (battingStats.So != null)
+                calculatorStats.So = (short)battingStats.So;
+            else
+                calculatorStats.So = 0;
+
+            if (battingStats.Ibb != null)
+                calculatorStats.Ibb = (short)battingStats.Ibb;
+            else
+                calculatorStats.Ibb = 0;
+
+            if (battingStats.Hbp != null)
+                calculatorStats.Hbp = (short)battingStats.Hbp;
+            else
+                calculatorStats.Hbp = 0;
+
+            if (battingStats.Sh != null)
+                calculatorStats.Sh = (short)battingStats.Sh;
+            else
+                calculatorStats.Sh = 0;
+
+            if (battingStats.Sf != null)
+                calculatorStats.Sf = (short)battingStats.Sf;
+            else
+                calculatorStats.Sf = 0;
+
+            return calculatorStats;
+        }
+
+        private CalculatorStats ConvertOptionalParamsToNonNullable(BattingPostStats battingStats)
+        {
+            var calculatorStats = new CalculatorStats();
+
+            if (battingStats.Ab != null)
+                calculatorStats.Ab = (short)battingStats.Ab;
+            else
+                calculatorStats.Ab = 0;
+
+            if (battingStats.H != null)
+                calculatorStats.H = (short)battingStats.H;
+            else
+                calculatorStats.H = 0;
+
+            if (battingStats.X2b != null)
+                calculatorStats.X2b = (short)battingStats.X2b;
+            else
+                calculatorStats.X2b = 0;
+
+            if (battingStats.X3b != null)
+                calculatorStats.X3b = (short)battingStats.X3b;
+            else
+                calculatorStats.X3b = 0;
+
+            if (battingStats.Hr != null)
+                calculatorStats.Hr = (short)battingStats.Hr;
+            else
+                calculatorStats.Hr = 0;
+
+
+            if (battingStats.Bb != null)
+                calculatorStats.Bb = (short)battingStats.Bb;
+            else
+                calculatorStats.Bb = 0;
+
+            if (battingStats.So != null)
+                calculatorStats.So = (short)battingStats.So;
+            else
+                calculatorStats.So = 0;
+
+            if (battingStats.Ibb != null)
+                calculatorStats.Ibb = (short)battingStats.Ibb;
+            else
+                calculatorStats.Ibb = 0;
+
+            if (battingStats.Hbp != null)
+                calculatorStats.Hbp = (short)battingStats.Hbp;
+            else
+                calculatorStats.Hbp = 0;
+
+            if (battingStats.Sh != null)
+                calculatorStats.Sh = (short)battingStats.Sh;
+            else
+                calculatorStats.Sh = 0;
+
+            if (battingStats.Sf != null)
+                calculatorStats.Sf = (short)battingStats.Sf;
+            else
+                calculatorStats.Sf = 0;
+
+            return calculatorStats;
+        }
+
+        private CalculatorStats ConvertOptionalParamsToNonNullable(TeamStats teamStats)
+        {
+            var calculatorStats = new CalculatorStats();
+
+            if (teamStats.Ab != null)
+                calculatorStats.Ab = (short)teamStats.Ab;
+            else
+                calculatorStats.Ab = 0;
+
+            if (teamStats.H != null)
+                calculatorStats.H = (short)teamStats.H;
+            else
+                calculatorStats.H = 0;
+
+            if (teamStats.X2b != null)
+                calculatorStats.X2b = (short)teamStats.X2b;
+            else
+                calculatorStats.X2b = 0;
+
+            if (teamStats.X3b != null)
+                calculatorStats.X3b = (short)teamStats.X3b;
+            else
+                calculatorStats.X3b = 0;
+
+            if (teamStats.Hr != null)
+                calculatorStats.Hr = (short)teamStats.Hr;
+            else
+                calculatorStats.Hr = 0;
+
+            if (teamStats.Bb != null)
+                calculatorStats.Bb = (short)teamStats.Bb;
+            else
+                calculatorStats.Bb = 0;
+
+            if (teamStats.So != null)
+                calculatorStats.So = (short)teamStats.So;
+            else
+                calculatorStats.So = 0;
+
+            if (teamStats.Hbp != null)
+                calculatorStats.Hbp = (short)teamStats.Hbp;
+            else
+                calculatorStats.Hbp = 0;
+
+            if (teamStats.Sf != null)
+                calculatorStats.Sf = (short)teamStats.Sf;
+            else
+                calculatorStats.Sf = 0;
+
+            calculatorStats.Ibb = 0;
+            calculatorStats.Sh = 0;
+
+            return calculatorStats;
+        }
+
     }
+
 }

@@ -30,8 +30,6 @@ namespace BaseballAPI.ApiModels
                 TeamIdbr = teams.TeamIdbr,
                 TeamIdlahman45 = teams.TeamIdlahman45,
                 TeamIdretro = teams.TeamIdretro,
-                Sh = 0,
-                Ibb = 0
             };
 
             ConvertOptionalParamsToNonNullable(teams, teamsStats);

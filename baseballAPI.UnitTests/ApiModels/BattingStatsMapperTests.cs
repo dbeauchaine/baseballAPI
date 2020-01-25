@@ -26,12 +26,12 @@ namespace BaseballAPI.UnitTests.Controllers
             Batting batting = GenerateBattingWithoutNullValues();
             BattingStats battingStats = _mapper.Map(batting);
 
-            AssertThatEachElementIsEqualWithoutNullValues(batting, battingStats);
+            AssertThatEachElementIsEqual(batting, battingStats);
 
             Batting battingWithNull = GenerateBattingWithNullValues();
             BattingStats battingStatsWithNull = _mapper.Map(battingWithNull);
 
-            AssertThatEachElementIsEqualWithNullValues(battingWithNull, battingStatsWithNull);
+            AssertThatEachElementIsEqual(battingWithNull, battingStatsWithNull);
         }
 
         [Test]
@@ -49,17 +49,17 @@ namespace BaseballAPI.UnitTests.Controllers
             BattingPost battingPost = GenerateBattingPostWithoutNullValues();
             BattingPostStats battingPostStats = _mapper.Map(battingPost);
 
-            AssertThatEachElementIsEqualWithoutNullValuesPost(battingPost, battingPostStats);
+            AssertThatEachElementIsEqualPost(battingPost, battingPostStats);
 
             BattingPost battingWithNull = GenerateBattingPostWithNullValues();
             BattingPostStats battingStatsWithNull = _mapper.Map(battingWithNull);
 
-            AssertThatEachElementIsEqualWithNullValuesPost(battingWithNull, battingStatsWithNull);
+            AssertThatEachElementIsEqualPost(battingWithNull, battingStatsWithNull);
         }
 
 
 
-        private void AssertThatEachElementIsEqualWithoutNullValues(Batting batting, BattingStats battingStats)
+        private void AssertThatEachElementIsEqual(Batting batting, BattingStats battingStats)
         {
             Assert.That(battingStats.PlayerId, Is.EqualTo(batting.PlayerId));
             Assert.That(battingStats.YearId, Is.EqualTo(batting.YearId));
@@ -86,32 +86,6 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(battingStats.Gidp, Is.EqualTo(batting.Gidp));
         }
 
-        private void AssertThatEachElementIsEqualWithNullValues(Batting batting, BattingStats battingStats)
-        {
-            Assert.That(battingStats.PlayerId, Is.EqualTo(batting.PlayerId));
-            Assert.That(battingStats.YearId, Is.EqualTo(batting.YearId));
-            Assert.That(battingStats.Stint, Is.EqualTo(batting.Stint));
-            Assert.That(battingStats.TeamId, Is.EqualTo(batting.TeamId));
-            Assert.That(battingStats.LgId, Is.EqualTo(batting.LgId));
-            Assert.That(battingStats.G, Is.EqualTo(0));
-            Assert.That(battingStats.GBatting, Is.EqualTo(0));
-            Assert.That(battingStats.Ab, Is.EqualTo(0));
-            Assert.That(battingStats.R, Is.EqualTo(0));
-            Assert.That(battingStats.H, Is.EqualTo(0));
-            Assert.That(battingStats.X2b, Is.EqualTo(0));
-            Assert.That(battingStats.X3b, Is.EqualTo(0));
-            Assert.That(battingStats.Hr, Is.EqualTo(0));
-            Assert.That(battingStats.Rbi, Is.EqualTo(0));
-            Assert.That(battingStats.Sb, Is.EqualTo(0));
-            Assert.That(battingStats.Cs, Is.EqualTo(0));
-            Assert.That(battingStats.Bb, Is.EqualTo(0));
-            Assert.That(battingStats.So, Is.EqualTo(0));
-            Assert.That(battingStats.Ibb, Is.EqualTo(0));
-            Assert.That(battingStats.Hbp, Is.EqualTo(0));
-            Assert.That(battingStats.Sh, Is.EqualTo(0));
-            Assert.That(battingStats.Sf, Is.EqualTo(0));
-            Assert.That(battingStats.Gidp, Is.EqualTo(0));
-        }
 
         private void AssertThatEachElementIsEqualWithPlayerValues(Batting batting, BattingStats battingStats)
         {
@@ -142,7 +116,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(battingStats.Sf, Is.EqualTo(batting.Sf));
             Assert.That(battingStats.Gidp, Is.EqualTo(batting.Gidp));
         }
-        private void AssertThatEachElementIsEqualWithoutNullValuesPost(BattingPost battingPost, BattingPostStats battingPostStats)
+        private void AssertThatEachElementIsEqualPost(BattingPost battingPost, BattingPostStats battingPostStats)
         {
             Assert.That(battingPostStats.PlayerId, Is.EqualTo(battingPost.PlayerId));
             Assert.That(battingPostStats.YearId, Is.EqualTo(battingPost.YearId));
@@ -166,34 +140,6 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(battingPostStats.Sh, Is.EqualTo(battingPost.Sh));
             Assert.That(battingPostStats.Sf, Is.EqualTo(battingPost.Sf));
             Assert.That(battingPostStats.Gidp, Is.EqualTo(battingPost.Gidp));
-        }
-
-
-
-        private void AssertThatEachElementIsEqualWithNullValuesPost(BattingPost battingPost, BattingPostStats battingPostStats)
-        {
-            Assert.That(battingPostStats.PlayerId, Is.EqualTo(battingPost.PlayerId));
-            Assert.That(battingPostStats.YearId, Is.EqualTo(battingPost.YearId));
-            Assert.That(battingPostStats.Round, Is.EqualTo(battingPost.Round));
-            Assert.That(battingPostStats.TeamId, Is.EqualTo(battingPost.TeamId));
-            Assert.That(battingPostStats.LgId, Is.EqualTo(battingPost.LgId));
-            Assert.That(battingPostStats.G, Is.EqualTo(0));
-            Assert.That(battingPostStats.Ab, Is.EqualTo(0));
-            Assert.That(battingPostStats.R, Is.EqualTo(0));
-            Assert.That(battingPostStats.H, Is.EqualTo(0));
-            Assert.That(battingPostStats.X2b, Is.EqualTo(0));
-            Assert.That(battingPostStats.X3b, Is.EqualTo(0));
-            Assert.That(battingPostStats.Hr, Is.EqualTo(0));
-            Assert.That(battingPostStats.Rbi, Is.EqualTo(0));
-            Assert.That(battingPostStats.Sb, Is.EqualTo(0));
-            Assert.That(battingPostStats.Cs, Is.EqualTo(0));
-            Assert.That(battingPostStats.Bb, Is.EqualTo(0));
-            Assert.That(battingPostStats.So, Is.EqualTo(0));
-            Assert.That(battingPostStats.Ibb, Is.EqualTo(0));
-            Assert.That(battingPostStats.Hbp, Is.EqualTo(0));
-            Assert.That(battingPostStats.Sh, Is.EqualTo(0));
-            Assert.That(battingPostStats.Sf, Is.EqualTo(0));
-            Assert.That(battingPostStats.Gidp, Is.EqualTo(0));
         }
 
         private Batting GenerateBattingWithoutNullValues()

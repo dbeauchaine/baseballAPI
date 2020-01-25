@@ -19,9 +19,24 @@ namespace BaseballAPI.Services
         public IEnumerable<FieldingStats> GetFieldingStats(string id)
         {
             var stats = _database.Fielding
-                .Where(s => s.PlayerId == id)
+                .Where(e => e.PlayerId == id)
+                .OrderByDescending(e => e.YearId)
                 .ToList()
-                .Select<Fielding,FieldingStats>(stat=> 
+                .Select<Fielding, FieldingStats>(stat =>
+                 {
+                     return _mapper.Map(stat);
+                 });
+
+            return stats;
+        }
+
+        public IEnumerable<FieldingPostStats> GetFieldingPostStats(string id)
+        {
+            var stats = _database.FieldingPost
+                .Where(e => e.PlayerId == id)
+                .OrderByDescending(e => e.YearId)
+                .ToList()
+                .Select<FieldingPost, FieldingPostStats>(stat =>
                 {
                     return _mapper.Map(stat);
                 });
