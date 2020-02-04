@@ -25,7 +25,7 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public void GetPitchingStatsReturnsEnumerableBattingRecords()
+        public void GetPitchingStatsReturnsEnumerablePitchingRecords()
         {
             var firstPerson = new PitchingStats
             {
@@ -66,7 +66,7 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
-        public void GetPitchingStatsByYearReturnsEnumerableLeagueBattingStats()
+        public void GetPitchingStatsByYearReturnsEnumerableLeaguePitchingStats()
         {
             var firstPerson = new PitchingStats
             {
@@ -108,6 +108,62 @@ namespace BaseballAPI.UnitTests.Controllers
 
             Assert.That(!badReturn.Any());
 
+        }
+
+        [Test]
+        public void GetPitchingPostSeasonStatsReturnsEnumerablePitchingRecords()
+        {
+            var firstPerson = new PitchingPostStats
+            {
+                PlayerId = "personId",
+                YearId = 2000
+            };
+
+            var secondPerson = new PitchingPostStats
+            {
+                PlayerId = "personId",
+                YearId = 2000
+            };
+
+            var expectedPeople = new List<PitchingPostStats>()
+            {
+                firstPerson,
+                secondPerson
+            };
+
+            _service.Setup(mockPitchingService => mockPitchingService.GetPitchingPostStatsByYear(firstPerson.YearId)).Returns(expectedPeople);
+
+            var actualReturn = _controller.GetPitchingPostStatsByYear(firstPerson.YearId);
+
+            Assert.That(actualReturn.ElementAt(0), Is.EqualTo(firstPerson));
+            Assert.That(actualReturn.ElementAt(1), Is.EqualTo(secondPerson));
+        }
+
+        [Test]
+        public void GetPitchingPostStatsReturnsEnumerablePitchingRecords()
+        {
+            var firstPerson = new PitchingPostStats
+            {
+                PlayerId = "personId"
+            };
+
+            var secondPerson = new PitchingPostStats
+            {
+                PlayerId = "personId"
+            };
+
+            var expectedPeople = new List<PitchingPostStats>()
+            {
+                firstPerson,
+                secondPerson
+            };
+
+            _service.Setup(mockPitchingService => mockPitchingService.GetPitchingPostStats(firstPerson.PlayerId)).Returns(expectedPeople);
+
+            var actualReturn = _controller.GetPitchingPostStats(firstPerson.PlayerId);
+
+            Assert.That(actualReturn.ElementAt(0), Is.EqualTo(firstPerson));
+            Assert.That(actualReturn.ElementAt(1), Is.EqualTo(secondPerson));
         }
     }
 

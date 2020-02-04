@@ -34,5 +34,21 @@ namespace BaseballAPI.Controllers
 
             return players;
         }
+
+        [HttpGet("/pitching/post/{id}")]
+        public IEnumerable<PitchingPostStats> GetPitchingPostStats(string id)
+        {
+            var players = _pitchingService.GetPitchingPostStats(id);
+
+            return players;
+        }
+
+        [HttpGet("/pitching/post/year/{year}")]
+        public IEnumerable<PitchingPostStats> GetPitchingPostStatsByYear(int year)
+        {
+            var players = _pitchingService.GetPitchingPostStatsByYear(year);
+
+            return players;
+        }
     }
 }

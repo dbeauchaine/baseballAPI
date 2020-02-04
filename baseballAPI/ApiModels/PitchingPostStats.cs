@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace BaseballAPI.RepositoryModels
+namespace BaseballAPI.ApiModels
 {
-    public partial class PitchingPost
+    public class PitchingPostStats
     {
-        public People Player { get; set; }
+        public string NameFirst { get; set; }
+        public string NameLast { get; set; }
+        public string NameGiven { get; set; }
         public string PlayerId { get; set; }
         public short YearId { get; set; }
         public string Round { get; set; }

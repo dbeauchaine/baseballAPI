@@ -20,11 +20,11 @@ namespace BaseballAPI.Services
         public IEnumerable<PitchingStats> GetPitchingStats(string id)
         {
             var stats = _database.Pitching
-                .Where(s => s.PlayerId == id)
+                .Where(e => e.PlayerId == id)
                 .ToList()
-                .Select<Pitching,PitchingStats>(s => 
+                .Select<Pitching,PitchingStats>(e => 
                 {
-                    return _mapper.Map(s);
+                    return _mapper.Map(e);
                 });
 
             return stats;
@@ -33,17 +33,44 @@ namespace BaseballAPI.Services
         public IEnumerable<PitchingStats> GetPitchingStatsByYear(int year)
         {
             var query = _database.Pitching
-                .Include(p => p.Player)
-                .Where(p => p.YearId == year)
-                .OrderBy(p => p.Player.NameLast)
+                .Include(e => e.Player)
+                .Where(e => e.YearId == year)
+                .OrderBy(e => e.Player.NameLast)
                 .ToList()
-                .Select<Pitching, PitchingStats>(p =>
+                .Select<Pitching, PitchingStats>(e =>
                 {
-                    return _mapper.Map(p);
+                    return _mapper.Map(e);
                 });
 
             return query;
         }
 
+        public IEnumerable<PitchingPostStats> GetPitchingPostStats(string id)
+        {
+            var stats = _database.PitchingPost
+                .Where(e => e.PlayerId == id)
+                .ToList()
+                .Select<PitchingPost, PitchingPostStats>(e =>
+                {
+                    return _mapper.Map(e);
+                });
+
+            return stats;
+        }
+
+        public IEnumerable<PitchingPostStats> GetPitchingPostStatsByYear(int year)
+        {
+            var query = _database.PitchingPost
+                .Include(e => e.Player)
+                .Where(e => e.YearId == year)
+                .OrderBy(e => e.Player.NameLast)
+                .ToList()
+                .Select<PitchingPost, PitchingPostStats>(e =>
+                {
+                    return _mapper.Map(e);
+                });
+
+            return query;
+        }
     }
 }
