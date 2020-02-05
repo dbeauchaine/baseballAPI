@@ -39,7 +39,7 @@ namespace BaseballAPI.ApiModels
 
             teamStats.Iso = CalculateIso(calculatorStats);
 
-            teamStats.Babip = CalculateBabip(calculatorStats.H, calculatorStats.Hr, calculatorStats.Ab, calculatorStats.So, calculatorStats.Sf);
+            teamStats.Babip = CalculateBabip(calculatorStats);
             
             teamStats.Era = CalculateEra(teamStats.Era);
 
@@ -99,13 +99,6 @@ namespace BaseballAPI.ApiModels
             var localEra = era ?? 0;
 
             return Math.Round(localEra / 100, 2);
-        }
-
-        private double? CalculateEra(double? Era)
-        {
-            double localEra = Era ?? 0;
-
-            return Math.Round(localEra/100, 2);
         }
 
         private double? CalculateBaopp(double? Baopp)
