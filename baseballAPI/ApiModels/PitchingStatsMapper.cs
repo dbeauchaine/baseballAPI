@@ -26,7 +26,7 @@ namespace BaseballAPI.ApiModels
             };
 
             CopyPlayerDataIfPlayerExists(pitching, pitchingStats);
-
+            
             CopyNullableStats(pitching, pitchingStats);
 
             _calculator.CalculateStats(pitchingStats);

@@ -12,6 +12,6 @@ namespace BaseballAPI.ApiModels
         public void CalculateStats(BattingPostStats batting);
         public void CalculateStats(TeamStats teamStats);
         public void CalculateStats(PitchingStats pitchingStats);
-        public void CalculateStats(PitchingPostStats pitchingStats);
+        public void CalculateStats(PitchingPostStats pitchingPostStats);
     }
 }

@@ -8,7 +8,7 @@ namespace BaseballAPI.RepositoryModels
 {
     public interface IBaseballDBContext
     {
-        public  DbSet<People> People { get; set; }
+        public DbSet<People> People { get; set; }
         public DbSet<Batting> Batting { get; set; }
         public DbSet<Fielding> Fielding { get; set; }
         public DbSet<Teams> Teams { get; set; }

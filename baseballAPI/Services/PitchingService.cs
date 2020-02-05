@@ -53,6 +53,7 @@ namespace BaseballAPI.Services
                 .Select<PitchingPost, PitchingPostStats>(e =>
                 {
                     return _mapper.Map(e);
+
                 });
 
             return stats;
@@ -68,6 +69,7 @@ namespace BaseballAPI.Services
                 .Select<PitchingPost, PitchingPostStats>(e =>
                 {
                     return _mapper.Map(e);
+
                 });
 
             return query;

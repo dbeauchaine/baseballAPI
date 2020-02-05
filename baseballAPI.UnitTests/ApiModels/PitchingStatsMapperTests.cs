@@ -85,8 +85,10 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Hr, Is.EqualTo(pitching.Hr));
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
-            //Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round((double)pitching.Baopp/100,3)));
-            //Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round((double)pitching.Era/100,3)));
+            var localBaopp = pitching.localBaopp / 100 ?? 0;
+            Assert.That(pitchingStats.baopp, Is.EqualTo(Math.Round(localBaopp,2)));
+            var localEra = pitching.Era / 100 ?? 0;
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra,2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));
@@ -99,8 +101,12 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Gidp, Is.EqualTo(pitching.Gidp));
         }
 
-        private void AssertThatEachElementIsEqual(PitchingPost pitching, PitchingPostStats pitchingStats)
+
+        private void AssertThatEachElementIsEqualWithPlayerValues(Pitching pitching, PitchingStats pitchingStats)
         {
+            Assert.That(pitchingStats.NameFirst, Is.EqualTo(pitching.Player.NameFirst));
+            Assert.That(pitchingStats.NameGiven, Is.EqualTo(pitching.Player.NameGiven));
+            Assert.That(pitchingStats.NameLast, Is.EqualTo(pitching.Player.NameLast));
             Assert.That(pitchingStats.PlayerId, Is.EqualTo(pitching.PlayerId));
             Assert.That(pitchingStats.YearId, Is.EqualTo(pitching.YearId));
             Assert.That(pitchingStats.Round, Is.EqualTo(pitching.Round));
@@ -119,8 +125,10 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Hr, Is.EqualTo(pitching.Hr));
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
-            //Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round((double)pitching.Baopp / 100, 3)));
-            //Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round((double)pitching.Era / 100, 3)));
+            var localBaopp = pitching.localBaopp / 100 ?? 0;
+            Assert.That(pitchingStats.baopp, Is.EqualTo(Math.Round(localBaopp,2)));
+            var localEra = pitching.Era / 100 ?? 0;
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra,2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));
@@ -132,7 +140,6 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Sf, Is.EqualTo(pitching.Sf));
             Assert.That(pitchingStats.Gidp, Is.EqualTo(pitching.Gidp));
         }
-
 
         private void AssertThatEachElementIsEqualWithPlayerValues(PitchingPost pitching, PitchingPostStats pitchingStats)
         {
@@ -157,8 +164,10 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Hr, Is.EqualTo(pitching.Hr));
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
-            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round((double)pitching.Baopp / 100, 3)));
-            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round((double)pitching.Era / 100, 3)));
+            var localBaopp = pitching.localBaopp / 100 ?? 0;
+            Assert.That(pitchingStats.baopp, Is.EqualTo(Math.Round(localBaopp,2)));
+            var localEra = pitching.Era / 100 ?? 0;
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra,2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));

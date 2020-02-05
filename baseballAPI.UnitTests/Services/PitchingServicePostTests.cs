@@ -27,13 +27,14 @@ namespace BaseballAPI.UnitTests.Controllers
         public void SetUp()
         {
             _options = new DbContextOptionsBuilder<BaseballDBContext>()
-                .UseInMemoryDatabase(databaseName: "PitchingServicePostTests")
+                .UseInMemoryDatabase(databaseName: "PitchingPostServiceTests")
                 .Options;
             _database = new BaseballDBContext(_options);
             _database.Database.EnsureDeleted();
             _mockMapper = new Mock<IPitchingStatsMapper>();
 
             _service = new PitchingService(_database, _mockMapper.Object);
+
 
             CreateFakeData();
         }
@@ -61,6 +62,7 @@ namespace BaseballAPI.UnitTests.Controllers
             var actualPitchingLeaderboardStats = _service.GetPitchingPostStatsByYear(expectedPitching.YearId);
 
             Assert.That(actualPitchingLeaderboardStats.ElementAt(0), Is.EqualTo(expectedPitchingPostStats));
+
         }
 
         public void AssertGetPitchingStatsReturnsStats(PitchingPost expectedPitching)
@@ -124,6 +126,7 @@ namespace BaseballAPI.UnitTests.Controllers
                 W = 20,
                 PlayerId = "fourthId",
                 Round = "WC",
+
                 Player = new People()
                 {
                     PlayerId = "fourthId",

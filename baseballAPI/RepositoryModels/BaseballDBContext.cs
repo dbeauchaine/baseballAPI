@@ -829,6 +829,7 @@ namespace BaseballAPI.RepositoryModels
                  .WithMany()
                  .HasForeignKey(e => e.PlayerId);
 
+
                 entity.Property(e => e.PlayerId)
                     .HasColumnName("playerID")
                     .HasMaxLength(9);
