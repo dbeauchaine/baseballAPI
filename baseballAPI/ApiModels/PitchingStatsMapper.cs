@@ -9,11 +9,11 @@ namespace BaseballAPI.ApiModels
     public class PitchingStatsMapper : IPitchingStatsMapper
     {
         private IStatsCalculator _calculator;
-
-        public PitchingStatsMapper(IStatsCalculator calculator)
+        public PitchingStatsMapper(IStatsCalculator statsCalculator)
         {
-            _calculator = calculator;
+            _calculator = statsCalculator;
         }
+
         public PitchingStats Map(Pitching pitching)
         {
             var pitchingStats = new PitchingStats()
@@ -24,15 +24,20 @@ namespace BaseballAPI.ApiModels
                 TeamId = pitching.TeamId,
                 LgId = pitching.LgId,
             };
+
             CopyPlayerDataIfPlayerExists(pitching, pitchingStats);
+            
             CopyNullableStats(pitching, pitchingStats);
+
             _calculator.CalculateStats(pitchingStats);
 
             return pitchingStats;
         }
+
+
         public PitchingPostStats Map(PitchingPost pitching)
         {
-            var pitchingStats = new PitchingPostStats()
+            var pitchingPostStats = new PitchingPostStats()
             {
                 PlayerId = pitching.PlayerId,
                 YearId = pitching.YearId,
@@ -40,12 +45,14 @@ namespace BaseballAPI.ApiModels
                 TeamId = pitching.TeamId,
                 LgId = pitching.LgId,
             };
-            CopyPlayerDataIfPlayerExists(pitching, pitchingStats);
-            CopyNullableStats(pitching, pitchingStats);
 
-            _calculator.CalculateStats(pitchingStats);
+            CopyPlayerDataIfPlayerExists(pitching, pitchingPostStats);
 
-            return pitchingStats;
+            CopyNullableStats(pitching, pitchingPostStats);
+
+            _calculator.CalculateStats(pitchingPostStats);
+
+            return pitchingPostStats;
         }
         private void CopyPlayerDataIfPlayerExists(Pitching pitching, PitchingStats pitchingStats)
         {
@@ -69,56 +76,56 @@ namespace BaseballAPI.ApiModels
 
         private void CopyNullableStats(Pitching pitching, PitchingStats pitchingStats)
         {
-            pitchingStats.W = pitching.W;
+                pitchingStats.W = pitching.W;
 
-            pitchingStats.L = pitching.L;
+                pitchingStats.L = pitching.L;
 
-            pitchingStats.G = pitching.G;
+                pitchingStats.G = pitching.G;
 
-            pitchingStats.Gs = pitching.Gs;
+                pitchingStats.Gs = pitching.Gs;
 
-            pitchingStats.Cg = pitching.Cg;
+                pitchingStats.Cg = pitching.Cg;
 
-            pitchingStats.Sho = pitching.Sho;
+                pitchingStats.Sho = pitching.Sho;
 
-            pitchingStats.Sv = pitching.Sv;
 
-            pitchingStats.Ipouts = pitching.Ipouts;
+                pitchingStats.Sv = pitching.Sv;
 
-            pitchingStats.H = pitching.H;
+                pitchingStats.Ipouts = pitching.Ipouts;
 
-            pitchingStats.Er = pitching.Er;
+                pitchingStats.H = pitching.H;
 
-            pitchingStats.Hr = pitching.Hr;
+                pitchingStats.Er = pitching.Er;
 
-            pitchingStats.Bb = pitching.Bb;
+                pitchingStats.Hr = pitching.Hr;
 
-            pitchingStats.So = pitching.So;
+                pitchingStats.Bb = pitching.Bb;
 
-            pitchingStats.Baopp = pitching.Baopp;
+                pitchingStats.So = pitching.So;
 
-            pitchingStats.Era = pitching.Era;
+                pitchingStats.Baopp = pitching.Baopp; 
 
-            pitchingStats.Ibb = pitching.Ibb;
+                pitchingStats.Era = pitching.Era;
 
-            pitchingStats.Wp = pitching.Wp;
+                pitchingStats.Ibb = pitching.Ibb;
 
-            pitchingStats.Hbp = pitching.Hbp;
+                pitchingStats.Wp = pitching.Wp;
 
-            pitchingStats.Bk = pitching.Bk;
+                pitchingStats.Hbp = pitching.Hbp;
 
-            pitchingStats.Bfp = pitching.Bfp;
+                pitchingStats.Bk = pitching.Bk;
 
-            pitchingStats.Gf = pitching.Gf;
+                pitchingStats.Bfp = pitching.Bfp;
 
-            pitchingStats.R = pitching.R;
+                pitchingStats.Gf = pitching.Gf;
 
-            pitchingStats.Sh = pitching.Sh;
+                pitchingStats.R = pitching.R;
+           
+                pitchingStats.Sh = pitching.Sh;
 
-            pitchingStats.Sf = pitching.Sf;
+                pitchingStats.Sf = pitching.Sf;
 
-            pitchingStats.Gidp = pitching.Gidp;
-
+                pitchingStats.Gidp = pitching.Gidp;
         }
 
         private void CopyNullableStats(PitchingPost pitching, PitchingPostStats pitchingStats)
@@ -135,6 +142,7 @@ namespace BaseballAPI.ApiModels
 
             pitchingStats.Sho = pitching.Sho;
 
+
             pitchingStats.Sv = pitching.Sv;
 
             pitchingStats.Ipouts = pitching.Ipouts;
@@ -172,9 +180,7 @@ namespace BaseballAPI.ApiModels
             pitchingStats.Sf = pitching.Sf;
 
             pitchingStats.Gidp = pitching.Gidp;
-
         }
-
     }
 }
 

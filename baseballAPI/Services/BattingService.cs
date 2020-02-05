@@ -64,7 +64,7 @@ namespace BaseballAPI.Services
         {
             var stats = _database.BattingPost
                 .Include(e => e.Player)
-                .Where(e => e.YearId == year)
+                .Where(e => e.YearId == year && e.Ab > 100)
                 .OrderByDescending(e => e.YearId)
                 .ToList()
                 .Select<BattingPost, BattingPostStats>(e =>

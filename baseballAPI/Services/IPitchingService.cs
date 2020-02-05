@@ -8,7 +8,7 @@ namespace BaseballAPI.Services
     {       
         public IEnumerable<PitchingStats> GetPitchingStats(string id);
         public IEnumerable<PitchingStats> GetPitchingStatsByYear(int year);
-        public IEnumerable<PitchingPostStats> GetPitchingPostStats(string id);
         public IEnumerable<PitchingPostStats> GetPitchingPostStatsByYear(int year);
+        public IEnumerable<PitchingPostStats> GetPitchingPostStats(string id);
     }
 }

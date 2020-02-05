@@ -66,7 +66,9 @@ namespace BaseballAPI.UnitTests.Controllers
         }
 
         [Test]
+
         public void GetPitchingStatsByYearReturnsEnumerablePitchingStats()
+
         {
             var firstPerson = new PitchingStats
             {
@@ -133,6 +135,7 @@ namespace BaseballAPI.UnitTests.Controllers
 
             var actualReturn = _controller.GetPitchingPostStats(firstPerson.PlayerId);
 
+
             Assert.That(actualReturn.ElementAt(0), Is.EqualTo(firstPerson));
             Assert.That(actualReturn.ElementAt(1), Is.EqualTo(secondPerson));
         }
@@ -174,6 +177,7 @@ namespace BaseballAPI.UnitTests.Controllers
                 secondPerson
             };
 
+
             _service.Setup(mockPlayerService => mockPlayerService.GetPitchingPostStatsByYear(firstPerson.YearId)).Returns(expectedRecord);
 
             var actualReturn = _controller.GetPitchingPostStatsByYear(firstPerson.YearId);
@@ -195,6 +199,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(!badReturn.Any());
 
         }
+
     }
 
 }

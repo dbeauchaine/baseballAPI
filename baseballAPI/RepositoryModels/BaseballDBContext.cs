@@ -826,8 +826,9 @@ namespace BaseballAPI.RepositoryModels
                     .HasName("PitchingPost$Index_E71336E6_AB00_432C");
 
                 entity.HasOne(e => e.Player)
-                .WithMany()
-                .HasForeignKey(e => e.PlayerId);
+                 .WithMany()
+                 .HasForeignKey(e => e.PlayerId);
+
 
                 entity.Property(e => e.PlayerId)
                     .HasColumnName("playerID")

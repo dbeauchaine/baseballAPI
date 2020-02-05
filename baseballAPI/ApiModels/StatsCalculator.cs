@@ -8,11 +8,13 @@ namespace BaseballAPI.ApiModels
         public void CalculateStats(PitchingStats pitchingStats)
         {
             pitchingStats.Era = CalculateEra(pitchingStats.Era);
+            pitchingStats.Baopp = CalculateBaopp(pitchingStats.Baopp);
         }
 
-        public void CalculateStats(PitchingPostStats pitchingPostStats)
+        public void CalculateStats(PitchingPostStats pitchingStats)
         {
-            pitchingPostStats.Era = CalculateEra(pitchingPostStats.Era);
+            pitchingStats.Era = CalculateEra(pitchingStats.Era);
+            pitchingStats.Baopp = CalculateBaopp(pitchingStats.Baopp);
         }
 
         public void CalculateStats(TeamStats teamStats)
@@ -37,7 +39,10 @@ namespace BaseballAPI.ApiModels
 
             teamStats.Iso = CalculateIso(calculatorStats);
 
-            teamStats.Babip = CalculateBabip(calculatorStats);
+            teamStats.Babip = CalculateBabip(calculatorStats.H, calculatorStats.Hr, calculatorStats.Ab, calculatorStats.So, calculatorStats.Sf);
+            
+            teamStats.Era = CalculateEra(teamStats.Era);
+
         }
         public void CalculateStats(BattingStats batting)
         {
@@ -96,6 +101,19 @@ namespace BaseballAPI.ApiModels
             return Math.Round(localEra / 100, 2);
         }
 
+        private double? CalculateEra(double? Era)
+        {
+            double localEra = Era ?? 0;
+
+            return Math.Round(localEra/100, 2);
+        }
+
+        private double? CalculateBaopp(double? Baopp)
+        {
+            double localBaopp = Baopp ?? 0;
+
+            return Math.Round(localBaopp / 100, 2);
+        }
         //BABIP - Batting Average On Balls In Play (http://www.fangraphs.com/library/offense/babip/)
         private double CalculateBabip(CalculatorStats stats)
         {
@@ -219,7 +237,7 @@ namespace BaseballAPI.ApiModels
             calculatorStats.Slg = CalculateSlg(calculatorStats);
             calculatorStats.KRate = CalculateKRate(calculatorStats);
             calculatorStats.BbRate = CalculateBbRate(calculatorStats);
-
+            
             return calculatorStats;
         }
 
@@ -240,6 +258,7 @@ namespace BaseballAPI.ApiModels
             calculatorStats.Bb = battingStats.Bb ?? 0;
 
             calculatorStats.So = battingStats.So ?? 0;
+
 
             calculatorStats.Ibb = battingStats.Ibb ?? 0;
 

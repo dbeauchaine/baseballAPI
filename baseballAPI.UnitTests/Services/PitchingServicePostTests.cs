@@ -35,7 +35,8 @@ namespace BaseballAPI.UnitTests.Controllers
 
             _service = new PitchingService(_database, _mockMapper.Object);
 
-            CreateFakeData(_database);
+
+            CreateFakeData();
         }
 
         [Test]
@@ -49,18 +50,19 @@ namespace BaseballAPI.UnitTests.Controllers
         [Test]
         public void GetPitchingStatsByYearReturnsStats()
         {
-            AssertGetPitchingLeaderboardStatsByYearReturnsStats(_fourthPerson);
+            AssertGetPitchingPostStatsByYearReturnsStats(_fourthPerson);
         }
 
-        private void AssertGetPitchingLeaderboardStatsByYearReturnsStats(PitchingPost expectedPitching)
+        private void AssertGetPitchingPostStatsByYearReturnsStats(PitchingPost expectedPitching)
         {
-            var expectedPitchingLeaderboardStats = new PitchingPostStats();
+            var expectedPitchingPostStats = new PitchingPostStats();
 
-            _mockMapper.Setup(mockPitchingMapper => mockPitchingMapper.Map(expectedPitching)).Returns(expectedPitchingLeaderboardStats);
+            _mockMapper.Setup(mockPitchingMapper => mockPitchingMapper.Map(expectedPitching)).Returns(expectedPitchingPostStats);
 
             var actualPitchingLeaderboardStats = _service.GetPitchingPostStatsByYear(expectedPitching.YearId);
 
-            Assert.That(actualPitchingLeaderboardStats.ElementAt(0), Is.EqualTo(expectedPitchingLeaderboardStats));
+            Assert.That(actualPitchingLeaderboardStats.ElementAt(0), Is.EqualTo(expectedPitchingPostStats));
+
         }
 
         public void AssertGetPitchingStatsReturnsStats(PitchingPost expectedPitching)
@@ -88,7 +90,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(actualPeople.ElementAt(1), Is.EqualTo(secondEntryStats));
         }
 
-        public void CreateFakeData(BaseballDBContext database)
+        public void CreateFakeData()
         {
             _firstPerson = new PitchingPost()
             {
@@ -96,7 +98,7 @@ namespace BaseballAPI.UnitTests.Controllers
                 Hr = 20,
                 W = 10,
                 PlayerId = "id",
-                Round = "WC"
+                Round = "WS"
             };
 
             _secondPerson = new PitchingPost()
@@ -114,7 +116,7 @@ namespace BaseballAPI.UnitTests.Controllers
                 Hr = 18,
                 W = 99,
                 PlayerId = "id",
-                Round="WC"
+                Round = "WC"
             };
 
             _fourthPerson = new PitchingPost()
@@ -123,7 +125,8 @@ namespace BaseballAPI.UnitTests.Controllers
                 Hr = 18,
                 W = 20,
                 PlayerId = "fourthId",
-                Round="WS",
+                Round = "WC",
+
                 Player = new People()
                 {
                     PlayerId = "fourthId",
