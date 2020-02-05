@@ -59,8 +59,8 @@ namespace BaseballAPI.UnitTests.Controllers
         [Test]
         public void MapYearCopiesDataFromPitchingPostAndPlayerToPitchingPostStats()
         {
-            PitchingPost pitching = GeneratePitchingPostWithPlayer();
-            PitchingPostStats pitchingLeaderBoardStats = _mapper.Map(pitching);
+            Pitching pitching = GeneratePitchingWithPlayer();
+            PitchingStats pitchingLeaderBoardStats = _mapper.Map(pitching);
 
             AssertThatEachElementIsEqualWithPlayerValues(pitching, pitchingLeaderBoardStats);
         }
@@ -85,8 +85,8 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Hr, Is.EqualTo(pitching.Hr));
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
-            var localBaopp = pitching.localBaopp / 100 ?? 0;
-            Assert.That(pitchingStats.baopp, Is.EqualTo(Math.Round(localBaopp,2)));
+            var localBaopp = pitching.Baopp / 100 ?? 0;
+            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round(localBaopp,2)));
             var localEra = pitching.Era / 100 ?? 0;
             Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra,2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
@@ -109,7 +109,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.NameLast, Is.EqualTo(pitching.Player.NameLast));
             Assert.That(pitchingStats.PlayerId, Is.EqualTo(pitching.PlayerId));
             Assert.That(pitchingStats.YearId, Is.EqualTo(pitching.YearId));
-            Assert.That(pitchingStats.Round, Is.EqualTo(pitching.Round));
+            Assert.That(pitchingStats.Stint, Is.EqualTo(pitching.Stint));
             Assert.That(pitchingStats.TeamId, Is.EqualTo(pitching.TeamId));
             Assert.That(pitchingStats.LgId, Is.EqualTo(pitching.LgId));
             Assert.That(pitchingStats.W, Is.EqualTo(pitching.W));
@@ -125,8 +125,8 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Hr, Is.EqualTo(pitching.Hr));
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
-            var localBaopp = pitching.localBaopp / 100 ?? 0;
-            Assert.That(pitchingStats.baopp, Is.EqualTo(Math.Round(localBaopp,2)));
+            var localBaopp = pitching.Baopp / 100 ?? 0;
+            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round(localBaopp,2)));
             var localEra = pitching.Era / 100 ?? 0;
             Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra,2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
@@ -141,7 +141,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Gidp, Is.EqualTo(pitching.Gidp));
         }
 
-        private void AssertThatEachElementIsEqualWithPlayerValues(PitchingPost pitching, PitchingPostStats pitchingStats)
+        private void AssertThatEachElementIsEqual(PitchingPost pitching, PitchingPostStats pitchingStats)
         {
             Assert.That(pitchingStats.NameFirst, Is.EqualTo(pitching.Player.NameFirst));
             Assert.That(pitchingStats.NameGiven, Is.EqualTo(pitching.Player.NameGiven));
@@ -164,8 +164,8 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Hr, Is.EqualTo(pitching.Hr));
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
-            var localBaopp = pitching.localBaopp / 100 ?? 0;
-            Assert.That(pitchingStats.baopp, Is.EqualTo(Math.Round(localBaopp,2)));
+            var localBaopp = pitching.Baopp / 100 ?? 0;
+            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round(localBaopp,2)));
             var localEra = pitching.Era / 100 ?? 0;
             Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra,2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
