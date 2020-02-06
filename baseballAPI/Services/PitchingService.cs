@@ -22,10 +22,10 @@ namespace BaseballAPI.Services
             var stats = _database.Pitching
                 .Where(e => e.PlayerId == id)
                 .ToList()
-                .Select<Pitching,PitchingStats>(e => 
-                {
-                    return _mapper.Map(e);
-                });
+                .Select<Pitching, PitchingStats>(e =>
+                 {
+                     return _mapper.Map(e);
+                 });
 
             return stats;
         }

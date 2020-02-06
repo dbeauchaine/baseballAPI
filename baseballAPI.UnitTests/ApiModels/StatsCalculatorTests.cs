@@ -119,7 +119,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(_fakeTeamStats.KRate, Is.EqualTo(expectedKRate));
 
             //BB% = BB / PA
-            double expectedBbRate = Math.Round((double)_fakeTeamCalculatorStats.Bb / _fakeTeamStats.Pa,3);
+            double expectedBbRate = Math.Round((double)_fakeTeamCalculatorStats.Bb / _fakeTeamStats.Pa, 3);
             Assert.That(_fakeTeamStats.BbRate, Is.EqualTo(expectedBbRate));
         }
 

@@ -54,7 +54,7 @@ namespace BaseballAPI.ApiModels
 
         private void CopyPlayerDataIfPlayerExists(Batting batting, BattingStats battingStats)
         {
-            if(batting.Player != null)
+            if (batting.Player != null)
             {
                 battingStats.NameFirst = batting.Player.NameFirst;
                 battingStats.NameLast = batting.Player.NameLast;
@@ -74,24 +74,24 @@ namespace BaseballAPI.ApiModels
 
         private void CopyNullableStats(Batting batting, BattingStats battingStats)
         {
-                battingStats.G = batting.G;
-                battingStats.GBatting = batting.GBatting;
-                battingStats.Ab = batting.Ab;
-                battingStats.R = batting.R;
-                battingStats.H = batting.H;
-                battingStats.X2b = batting.X2b;
-                battingStats.X3b = batting.X3b;
-                battingStats.Hr = batting.Hr;
-                battingStats.Rbi = batting.Rbi;
-                battingStats.Sb = batting.Sb;
-                battingStats.Cs = batting.Cs;
-                battingStats.Bb = batting.Bb;
-                battingStats.So = batting.So;
-                battingStats.Ibb = batting.Ibb;
-                battingStats.Hbp = batting.Hbp;
-                battingStats.Sh = batting.Sh;
-                battingStats.Sf = batting.Sf;
-                battingStats.Gidp = batting.Gidp;
+            battingStats.G = batting.G;
+            battingStats.GBatting = batting.GBatting;
+            battingStats.Ab = batting.Ab;
+            battingStats.R = batting.R;
+            battingStats.H = batting.H;
+            battingStats.X2b = batting.X2b;
+            battingStats.X3b = batting.X3b;
+            battingStats.Hr = batting.Hr;
+            battingStats.Rbi = batting.Rbi;
+            battingStats.Sb = batting.Sb;
+            battingStats.Cs = batting.Cs;
+            battingStats.Bb = batting.Bb;
+            battingStats.So = batting.So;
+            battingStats.Ibb = batting.Ibb;
+            battingStats.Hbp = batting.Hbp;
+            battingStats.Sh = batting.Sh;
+            battingStats.Sf = batting.Sf;
+            battingStats.Gidp = batting.Gidp;
         }
 
         private void CopyNullableStats(BattingPost batting, BattingPostStats battingStats)
@@ -117,7 +117,7 @@ namespace BaseballAPI.ApiModels
 
     }
 
-   
+
 
 }
 

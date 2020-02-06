@@ -12,7 +12,7 @@ namespace BaseballAPI.ApiModels
         public string TeamId { get; set; }
         public string FranchId { get; set; }
         public string DivId { get; set; }
-       public short? Rank { get; set; }
+        public short? Rank { get; set; }
         public short? G { get; set; }
         public short? Ghome { get; set; }
         public short? W { get; set; }

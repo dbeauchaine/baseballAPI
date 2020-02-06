@@ -57,7 +57,7 @@ namespace BaseballAPI.UnitTests.Controllers
         {
             string badId = "badId";
             var emptyList = new List<PitchingStats>();
-            
+
             _service.Setup(mockPitchingService => mockPitchingService.GetPitchingStats(badId)).Returns(emptyList);
 
             var badReturn = _controller.GetPitchingStats(badId);

@@ -97,7 +97,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(actualBatting.ElementAt(0), Is.EqualTo(firstEntryStats));
             Assert.That(actualBatting.ElementAt(1), Is.EqualTo(secondEntryStats));
         }
-       
+
         public void CreateFakeData(BaseballDBContext database)
         {
             _firstPerson = new Batting()

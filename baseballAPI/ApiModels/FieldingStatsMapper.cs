@@ -39,34 +39,34 @@ namespace BaseballAPI.ApiModels
         }
 
         private void ConvertOptionalParamsToNonNullable(Fielding fielding, FieldingStats fieldingStats)
-        { 
-                fieldingStats.G = fielding.G;
-                fieldingStats.Gs = fielding.Gs;
-                fieldingStats.InnOuts = fielding.InnOuts;
-                fieldingStats.Po = fielding.Po;        
-                fieldingStats.A = fielding.A;
-                fieldingStats.E = fielding.E;
-                fieldingStats.Dp = fielding.Dp;
-                fieldingStats.Pb = fielding.Pb;
-                fieldingStats.Wp = fielding.Wp;
-                fieldingStats.Sb = fielding.Sb;
-                fieldingStats.Cs = fielding.Cs;
-                fieldingStats.Zr = fielding.Zr;
+        {
+            fieldingStats.G = fielding.G;
+            fieldingStats.Gs = fielding.Gs;
+            fieldingStats.InnOuts = fielding.InnOuts;
+            fieldingStats.Po = fielding.Po;
+            fieldingStats.A = fielding.A;
+            fieldingStats.E = fielding.E;
+            fieldingStats.Dp = fielding.Dp;
+            fieldingStats.Pb = fielding.Pb;
+            fieldingStats.Wp = fielding.Wp;
+            fieldingStats.Sb = fielding.Sb;
+            fieldingStats.Cs = fielding.Cs;
+            fieldingStats.Zr = fielding.Zr;
         }
 
         private void ConvertOptionalParamsToNonNullable(FieldingPost fielding, FieldingPostStats fieldingStats)
         {
-                fieldingStats.G = fielding.G;
-                fieldingStats.Gs = fielding.Gs;
-                fieldingStats.InnOuts = fielding.InnOuts;
-                fieldingStats.Po = fielding.Po;
-                fieldingStats.A = fielding.A;
-                fieldingStats.E = fielding.E;
-                fieldingStats.Dp = fielding.Dp;
-                fieldingStats.Tp = fielding.Tp;
-                fieldingStats.Pb = fielding.Pb;
-                fieldingStats.Sb = fielding.Sb;
-                fieldingStats.Cs = fielding.Cs;
+            fieldingStats.G = fielding.G;
+            fieldingStats.Gs = fielding.Gs;
+            fieldingStats.InnOuts = fielding.InnOuts;
+            fieldingStats.Po = fielding.Po;
+            fieldingStats.A = fielding.A;
+            fieldingStats.E = fielding.E;
+            fieldingStats.Dp = fielding.Dp;
+            fieldingStats.Tp = fielding.Tp;
+            fieldingStats.Pb = fielding.Pb;
+            fieldingStats.Sb = fielding.Sb;
+            fieldingStats.Cs = fielding.Cs;
         }
     }
 }

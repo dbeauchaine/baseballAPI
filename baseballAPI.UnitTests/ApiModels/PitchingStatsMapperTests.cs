@@ -86,9 +86,45 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
             var localBaopp = pitching.Baopp / 100 ?? 0;
-            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round(localBaopp,2)));
+            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round(localBaopp, 2)));
             var localEra = pitching.Era / 100 ?? 0;
-            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra,2)));
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra, 2)));
+            Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
+            Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
+            Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));
+            Assert.That(pitchingStats.Bk, Is.EqualTo(pitching.Bk));
+            Assert.That(pitchingStats.Bfp, Is.EqualTo(pitching.Bfp));
+            Assert.That(pitchingStats.Gf, Is.EqualTo(pitching.Gf));
+            Assert.That(pitchingStats.R, Is.EqualTo(pitching.R));
+            Assert.That(pitchingStats.Sh, Is.EqualTo(pitching.Sh));
+            Assert.That(pitchingStats.Sf, Is.EqualTo(pitching.Sf));
+            Assert.That(pitchingStats.Gidp, Is.EqualTo(pitching.Gidp));
+        }
+
+        private void AssertThatEachElementIsEqual(PitchingPost pitching, PitchingPostStats pitchingStats)
+        {
+            Assert.That(pitchingStats.PlayerId, Is.EqualTo(pitching.PlayerId));
+            Assert.That(pitchingStats.YearId, Is.EqualTo(pitching.YearId));
+            Assert.That(pitchingStats.Round, Is.EqualTo(pitching.Round));
+            Assert.That(pitchingStats.TeamId, Is.EqualTo(pitching.TeamId));
+            Assert.That(pitchingStats.LgId, Is.EqualTo(pitching.LgId));
+            Assert.That(pitchingStats.W, Is.EqualTo(pitching.W));
+            Assert.That(pitchingStats.L, Is.EqualTo(pitching.L));
+            Assert.That(pitchingStats.G, Is.EqualTo(pitching.G));
+            Assert.That(pitchingStats.Gs, Is.EqualTo(pitching.Gs));
+            Assert.That(pitchingStats.Cg, Is.EqualTo(pitching.Cg));
+            Assert.That(pitchingStats.Sho, Is.EqualTo(pitching.Sho));
+            Assert.That(pitchingStats.Sv, Is.EqualTo(pitching.Sv));
+            Assert.That(pitchingStats.Ipouts, Is.EqualTo(pitching.Ipouts));
+            Assert.That(pitchingStats.H, Is.EqualTo(pitching.H));
+            Assert.That(pitchingStats.Er, Is.EqualTo(pitching.Er));
+            Assert.That(pitchingStats.Hr, Is.EqualTo(pitching.Hr));
+            Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
+            Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
+            var localBaopp = pitching.Baopp / 100 ?? 0;
+            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round(localBaopp, 2)));
+            var localEra = pitching.Era / 100 ?? 0;
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra, 2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));
@@ -126,9 +162,9 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
             var localBaopp = pitching.Baopp / 100 ?? 0;
-            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round(localBaopp,2)));
+            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round(localBaopp, 2)));
             var localEra = pitching.Era / 100 ?? 0;
-            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra,2)));
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra, 2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));
@@ -141,7 +177,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Gidp, Is.EqualTo(pitching.Gidp));
         }
 
-        private void AssertThatEachElementIsEqual(PitchingPost pitching, PitchingPostStats pitchingStats)
+        private void AssertThatEachElementIsEqualWithPlayerValues(PitchingPost pitching, PitchingPostStats pitchingStats)
         {
             Assert.That(pitchingStats.NameFirst, Is.EqualTo(pitching.Player.NameFirst));
             Assert.That(pitchingStats.NameGiven, Is.EqualTo(pitching.Player.NameGiven));
@@ -165,9 +201,9 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(pitchingStats.Bb, Is.EqualTo(pitching.Bb));
             Assert.That(pitchingStats.So, Is.EqualTo(pitching.So));
             var localBaopp = pitching.Baopp / 100 ?? 0;
-            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round(localBaopp,2)));
+            Assert.That(pitchingStats.Baopp, Is.EqualTo(Math.Round(localBaopp, 2)));
             var localEra = pitching.Era / 100 ?? 0;
-            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra,2)));
+            Assert.That(pitchingStats.Era, Is.EqualTo(Math.Round(localEra, 2)));
             Assert.That(pitchingStats.Ibb, Is.EqualTo(pitching.Ibb));
             Assert.That(pitchingStats.Wp, Is.EqualTo(pitching.Wp));
             Assert.That(pitchingStats.Hbp, Is.EqualTo(pitching.Hbp));
@@ -189,7 +225,7 @@ namespace BaseballAPI.UnitTests.Controllers
                 Stint = 2,
                 TeamId = "team",
                 LgId = "league",
-                W =1,
+                W = 1,
                 L = 1,
                 G = 1,
                 Gs = 1,
@@ -198,7 +234,7 @@ namespace BaseballAPI.UnitTests.Controllers
                 Sv = 2,
                 Ipouts = 1,
                 H = 2,
-                Er =1,
+                Er = 1,
                 Hr = 1,
                 Bb = 1,
                 So = 2,
@@ -208,7 +244,7 @@ namespace BaseballAPI.UnitTests.Controllers
                 Wp = 1,
                 Hbp = 1,
                 Bk = 1,
-                Bfp =1,
+                Bfp = 1,
                 Gf = 1,
                 R = 1,
                 Sh = 1,
@@ -288,12 +324,13 @@ namespace BaseballAPI.UnitTests.Controllers
                 Sh = 1,
                 Sf = 1,
                 Gidp = 1,
-                Player = new People() { 
+                Player = new People()
+                {
                     PlayerId = "id",
                     NameFirst = "first",
                     NameGiven = "first middle",
                     NameLast = "last"
-                
+
                 }
             };
         }
