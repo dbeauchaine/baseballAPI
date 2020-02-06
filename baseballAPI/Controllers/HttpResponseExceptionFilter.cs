@@ -9,11 +9,11 @@ namespace BaseballAPI.Controllers
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            if(context.Exception is HttpResponseException exception)
+            if (context.Exception is HttpResponseException exception)
             {
                 context.Result = new ObjectResult(null)
                 {
-                    StatusCode = (int) exception.Status,
+                    StatusCode = (int)exception.Status,
                 };
                 context.ExceptionHandled = true;
             }

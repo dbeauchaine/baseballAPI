@@ -229,15 +229,16 @@ namespace BaseballAPI.UnitTests.Controllers
                 Sh = 1,
                 Sf = 1,
                 Gidp = 1,
-                Player = new People() { 
+                Player = new People()
+                {
                     PlayerId = "id",
                     NameFirst = "first",
                     NameGiven = "first middle",
                     NameLast = "last"
-                
+
                 }
             };
-        }       
+        }
         private BattingPost GenerateBattingPostWithoutNullValues()
         {
             return new BattingPost()

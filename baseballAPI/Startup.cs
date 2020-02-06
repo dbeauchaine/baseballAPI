@@ -28,7 +28,7 @@ namespace BaseballAPI
                     builder.WithOrigins("*");
                 });
             });
-            
+
             services.AddControllers(options =>
                 options.Filters.Add(new HttpResponseExceptionFilter()));
 

@@ -40,7 +40,7 @@ namespace BaseballAPI.ApiModels
             teamStats.Iso = CalculateIso(calculatorStats);
 
             teamStats.Babip = CalculateBabip(calculatorStats);
-            
+
             teamStats.Era = CalculateEra(teamStats.Era);
 
         }
@@ -201,28 +201,28 @@ namespace BaseballAPI.ApiModels
         private CalculatorStats ConvertOptionalParamsToNonNullable(BattingStats battingStats)
         {
             var calculatorStats = new CalculatorStats();
-   
-                calculatorStats.Ab = battingStats.Ab ?? 0;
 
-                calculatorStats.H = battingStats.H ?? 0;
+            calculatorStats.Ab = battingStats.Ab ?? 0;
 
-                calculatorStats.X2b = battingStats.X2b ?? 0;
+            calculatorStats.H = battingStats.H ?? 0;
 
-                calculatorStats.X3b = battingStats.X3b ?? 0;
+            calculatorStats.X2b = battingStats.X2b ?? 0;
 
-                calculatorStats.Hr = battingStats.Hr ?? 0;
+            calculatorStats.X3b = battingStats.X3b ?? 0;
 
-                calculatorStats.Bb = battingStats.Bb ?? 0;
+            calculatorStats.Hr = battingStats.Hr ?? 0;
 
-                calculatorStats.So = battingStats.So ?? 0;
+            calculatorStats.Bb = battingStats.Bb ?? 0;
 
-                calculatorStats.Ibb = battingStats.Ibb ?? 0;
+            calculatorStats.So = battingStats.So ?? 0;
 
-                calculatorStats.Hbp = battingStats.Hbp ?? 0;
+            calculatorStats.Ibb = battingStats.Ibb ?? 0;
 
-                calculatorStats.Sh = battingStats.Sh ?? 0;
+            calculatorStats.Hbp = battingStats.Hbp ?? 0;
 
-                calculatorStats.Sf = battingStats.Sf ?? 0;
+            calculatorStats.Sh = battingStats.Sh ?? 0;
+
+            calculatorStats.Sf = battingStats.Sf ?? 0;
 
             calculatorStats.Pa = CalulatePa(calculatorStats);
             calculatorStats.Singles = CalculateSingles(calculatorStats);
@@ -230,7 +230,7 @@ namespace BaseballAPI.ApiModels
             calculatorStats.Slg = CalculateSlg(calculatorStats);
             calculatorStats.KRate = CalculateKRate(calculatorStats);
             calculatorStats.BbRate = CalculateBbRate(calculatorStats);
-            
+
             return calculatorStats;
         }
 

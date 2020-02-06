@@ -118,7 +118,7 @@ namespace BaseballAPI.UnitTests.Controllers
                 Hr = 20,
                 Ab = 100,
                 TeamId = "SE1",
-                FranchId ="SEA",
+                FranchId = "SEA",
                 LgId = "AL"
             };
 
@@ -128,8 +128,8 @@ namespace BaseballAPI.UnitTests.Controllers
                 Hr = 10,
                 Ab = 200,
                 TeamId = "AT1",
-                FranchId="ATL",
-                LgId ="NL"
+                FranchId = "ATL",
+                LgId = "NL"
             };
 
             _thirdTeam = new Teams()

@@ -89,7 +89,7 @@ namespace BaseballAPI.UnitTests.Controllers
 
             _fieldingService.Setup(mockPlayerService => mockPlayerService.GetFieldingStats(badId)).Returns(emptyList);
 
-           var badReturn = _controller.GetFieldingStats(badId);
+            var badReturn = _controller.GetFieldingStats(badId);
 
             Assert.That(!badReturn.Any());
         }

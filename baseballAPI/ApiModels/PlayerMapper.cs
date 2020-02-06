@@ -11,9 +11,9 @@ namespace BaseballAPI.ApiModels
         public Player Map(People person)
         {
             var player = CopyValues(person);
-            
+
             generateValues(player);
-            
+
             return player;
         }
 

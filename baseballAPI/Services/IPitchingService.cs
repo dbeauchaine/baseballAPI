@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace BaseballAPI.Services
 {
     public interface IPitchingService
-    {       
+    {
         public IEnumerable<PitchingStats> GetPitchingStats(string id);
         public IEnumerable<PitchingStats> GetPitchingStatsByYear(int year);
         public IEnumerable<PitchingPostStats> GetPitchingPostStatsByYear(int year);

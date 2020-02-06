@@ -17,7 +17,7 @@ namespace BaseballAPI.Services
         }
         public IEnumerable<Player> GetPlayerId(string name)
         {
-            if(name == null)
+            if (name == null)
             {
                 return new List<Player>();
             }
