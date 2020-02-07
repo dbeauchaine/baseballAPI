@@ -22,29 +22,33 @@ namespace BaseballAPI.Controllers
         [HttpGet("{id}")]
         public IEnumerable<BattingStats> GetBattingStats(string id)
         {
-            var players = _battingService.GetBattingStats(id);
-            return players;
+            return _battingService.GetBattingStats(id);
         }
 
         [HttpGet("/batting/year/{year}")]
         public IEnumerable<BattingStats> GetBattingStatsByYear(int year)
         {
-            var players = _battingService.GetBattingStatsByYear(year);
-            return players;
+            return _battingService.GetBattingStatsByYear(year);
+
         }
 
         [HttpGet("/batting/post/{id}")]
         public IEnumerable<BattingPostStats> GetBattingPostStats(string id)
         {
-            var players = _battingService.GetBattingPostStats(id);
-            return players;
+            return _battingService.GetBattingPostStats(id);
         }
 
         [HttpGet("/batting/post/year/{year}")]
         public IEnumerable<BattingPostStats> GetBattingPostStatsByYear(int year)
         {
-            var players = _battingService.GetBattingPostStatsByYear(year);
-            return players;
+            return _battingService.GetBattingPostStatsByYear(year);
         }
+
+        [HttpGet("/batting/team/{year}/{team}")]
+        public IEnumerable<BattingStats> GetBattingStatsByTeam(string team, int year)
+        {
+            return _battingService.GetBattingStatsByTeam(team, year);
+        }
+
     }
 }

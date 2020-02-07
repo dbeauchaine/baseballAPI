@@ -41,8 +41,6 @@ namespace BaseballAPI.ApiModels
 
             teamStats.Babip = CalculateBabip(calculatorStats);
 
-            teamStats.Era = CalculateEra(teamStats.Era);
-
         }
         public void CalculateStats(BattingStats batting)
         {

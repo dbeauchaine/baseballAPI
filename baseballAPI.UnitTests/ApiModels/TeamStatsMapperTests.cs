@@ -64,7 +64,8 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(teamStats.Sf, Is.EqualTo(teams.Sf));
             Assert.That(teamStats.Ra, Is.EqualTo(teams.Ra));
             Assert.That(teamStats.Er, Is.EqualTo(teams.Er));
-            Assert.That(teamStats.Era, Is.EqualTo(Math.Round((double)teams.Era / 100, 2)));
+            var localEra = teams.Era / 100 ?? 0;
+            Assert.That(teamStats.Era, Is.EqualTo(Math.Round(localEra, 2)));
             Assert.That(teamStats.Cg, Is.EqualTo(teams.Cg));
             Assert.That(teamStats.Sho, Is.EqualTo(teams.Sho));
             Assert.That(teamStats.Sv, Is.EqualTo(teams.Sv));

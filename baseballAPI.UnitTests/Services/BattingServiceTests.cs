@@ -21,6 +21,7 @@ namespace BaseballAPI.UnitTests.Controllers
         private Batting _secondPerson;
         private Batting _thirdPerson;
         private Batting _fourthPerson;
+        private Batting _fifthPerson;
 
         private Mock<IBattingStatsMapper> _mockMapper;
 
@@ -36,7 +37,7 @@ namespace BaseballAPI.UnitTests.Controllers
 
             _service = new BattingService(_database, _mockMapper.Object);
 
-            CreateFakeData(_database);
+            CreateFakeData();
         }
 
         [Test]
@@ -52,6 +53,26 @@ namespace BaseballAPI.UnitTests.Controllers
         {
             AssertGetBattingStatsByYearReturnsStats(_fourthPerson);
             AssertGetBattingLeaderboardStatsByYearWithBadIdReturnsEmptyIEnumerable();
+        }
+
+        [Test]
+        public void GetBattingStatsByTeamReturnsStats()
+        {
+            AssertGetBattingStatsByTeamReturnsStats(_fourthPerson, _fifthPerson);
+        }
+
+        private void AssertGetBattingStatsByTeamReturnsStats(Batting firstPerson, Batting secondPerson)
+        {
+            var firstBattingStats = new BattingStats();
+            var secondBattingStats = new BattingStats();
+
+            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(firstPerson)).Returns(firstBattingStats);
+            _mockMapper.Setup(mockBattingMapper => mockBattingMapper.Map(secondPerson)).Returns(secondBattingStats);
+
+            var actualBattingStats = _service.GetBattingStatsByTeam(firstPerson.TeamId, firstPerson.YearId);
+
+            Assert.That(actualBattingStats.ElementAt(0), Is.EqualTo(firstBattingStats));
+            //Assert.That(actualBattingStats.ElementAt(1), Is.EqualTo(secondBattingStats));
         }
 
         private void AssertGetBattingLeaderboardStatsByYearWithBadIdReturnsEmptyIEnumerable()
@@ -98,7 +119,7 @@ namespace BaseballAPI.UnitTests.Controllers
             Assert.That(actualBatting.ElementAt(1), Is.EqualTo(secondEntryStats));
         }
 
-        public void CreateFakeData(BaseballDBContext database)
+        public void CreateFakeData()
         {
             _firstPerson = new Batting()
             {
@@ -140,7 +161,23 @@ namespace BaseballAPI.UnitTests.Controllers
                     NameGiven = "first middle",
                     NameLast = "last"
                 },
-                TeamId = "SEA"
+                TeamId = "NYA"
+            };
+
+            _fifthPerson = new Batting
+            {
+                YearId = 1998,
+                Hr = 18,
+                Ab = 101,
+                PlayerId = "fifthId",
+                Player = new People()
+                {
+                    PlayerId = "fifthId",
+                    NameFirst = "fifth",
+                    NameGiven = "fifth middle",
+                    NameLast = "last"
+                },
+                TeamId = "NYA"
             };
 
             _database.Add(_firstPerson);

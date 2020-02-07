@@ -1,6 +1,8 @@
 ﻿using BaseballAPI.ApiModels;
 using BaseballAPI.RepositoryModels;
 using BaseballAPI.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BaseballAPI
@@ -8,14 +10,18 @@ namespace BaseballAPI
     public class ContainerInitializer
     {
         IServiceCollection _services;
-        public ContainerInitializer(IServiceCollection services)
+        IConfiguration _configuration;
+        public ContainerInitializer(IServiceCollection services, IConfiguration configuration)
         {
             _services = services;
+            _configuration = configuration;
         }
 
         public void Execute()
         {
-            _services.AddDbContext<IBaseballDBContext, BaseballDBContext>();
+            string connectionString = _configuration.GetValue<string>("ConnectionString");
+
+            _services.AddDbContext<IBaseballDBContext, BaseballDBContext>(options => options.UseSqlServer(connectionString));
             _services.AddControllers();
             _services.AddTransient<IPlayerService, PlayerService>();
             _services.AddTransient<IBattingService, BattingService>();

@@ -19,59 +19,65 @@ namespace BaseballAPI.Services
 
         public IEnumerable<BattingStats> GetBattingStats(string id)
         {
-            var stats = _database.Batting
-                .Where(e => e.PlayerId == id)
-                .OrderByDescending(e => e.YearId)
-                .ToList()
-                .Select<Batting, BattingStats>(e =>
-                 {
-                     return _mapper.Map(e);
-                 });
-
-            return stats;
+            return _database.Batting
+                  .Where(e => e.PlayerId == id)
+                  .OrderByDescending(e => e.YearId)
+                  .ToList()
+                  .Select(e =>
+                   {
+                       return _mapper.Map(e);
+                   });
         }
 
         public IEnumerable<BattingStats> GetBattingStatsByYear(int year)
         {
-            var query = _database.Batting
-                .Include(e => e.Player)
-                .Where(e => e.YearId == year && e.Ab > 100)
-                .OrderBy(e => e.Player.NameLast)
-                .ToList()
-                .Select<Batting, BattingStats>(e =>
-                {
-                    return _mapper.Map(e);
-                });
-
-            return query;
+            return _database.Batting
+                 .Include(e => e.Player)
+                 .Where(e => e.YearId == year && e.Ab > 100)
+                 .OrderBy(e => e.Player.NameLast)
+                 .ToList()
+                 .Select(e =>
+                 {
+                     return _mapper.Map(e);
+                 });
         }
 
         public IEnumerable<BattingPostStats> GetBattingPostStats(string id)
         {
-            var stats = _database.BattingPost
-                .Where(e => e.PlayerId == id)
-                .OrderByDescending(e => e.YearId)
-                .ToList()
-                .Select<BattingPost, BattingPostStats>(e =>
-                {
-                    return _mapper.Map(e);
-                });
+            return _database.BattingPost
+                  .Where(e => e.PlayerId == id)
+                  .OrderByDescending(e => e.YearId)
+                  .ToList()
+                  .Select(e =>
+                  {
+                      return _mapper.Map(e);
+                  });
 
-            return stats;
         }
 
         public IEnumerable<BattingPostStats> GetBattingPostStatsByYear(int year)
         {
-            var stats = _database.BattingPost
+            return _database.BattingPost
                 .Include(e => e.Player)
                 .Where(e => e.YearId == year)
                 .OrderByDescending(e => e.YearId)
                 .ToList()
-                .Select<BattingPost, BattingPostStats>(e =>
+                .Select(e =>
                 {
                     return _mapper.Map(e);
                 });
-            return stats;
+        }
+
+        public IEnumerable<BattingStats> GetBattingStatsByTeam(string team, int year)
+        {
+            return _database.Batting
+                .Include(e => e.Player)
+                .Where(e => e.TeamId == team && e.YearId == year)
+                .ToList()
+                .Select(e =>
+               {
+                   return _mapper.Map(e);
+               });
         }
     }
 }

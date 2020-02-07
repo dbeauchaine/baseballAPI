@@ -32,7 +32,7 @@ namespace BaseballAPI
             services.AddControllers(options =>
                 options.Filters.Add(new HttpResponseExceptionFilter()));
 
-            ContainerInitializer initializer = new ContainerInitializer(services);
+            ContainerInitializer initializer = new ContainerInitializer(services, Configuration);
             initializer.Execute();
         }
 
