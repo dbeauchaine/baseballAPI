@@ -34,13 +34,13 @@ namespace BaseballAPI.Services
         {
             var query = _database.Pitching
                 .Include(e => e.Player)
-                .Where(e => e.YearId == year)
-                .OrderBy(e => e.Player.NameLast)
+                .Where(e => e.YearId == year && e.Ipouts >= 486)
                 .ToList()
                 .Select<Pitching, PitchingStats>(e =>
                 {
                     return _mapper.Map(e);
-                });
+                })
+                .OrderBy(e => e.Era);
 
             return query;
         }
@@ -64,13 +64,13 @@ namespace BaseballAPI.Services
             var query = _database.PitchingPost
                 .Include(e => e.Player)
                 .Where(e => e.YearId == year)
-                .OrderBy(e => e.Player.NameLast)
                 .ToList()
                 .Select<PitchingPost, PitchingPostStats>(e =>
                 {
                     return _mapper.Map(e);
 
-                });
+                })
+                .OrderBy(e => e.Era);
 
             return query;
         }

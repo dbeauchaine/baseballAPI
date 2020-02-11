@@ -34,12 +34,12 @@ namespace BaseballAPI.Services
             return _database.Batting
                  .Include(e => e.Player)
                  .Where(e => e.YearId == year && e.Ab > 100)
-                 .OrderBy(e => e.Player.NameLast)
                  .ToList()
                  .Select(e =>
                  {
                      return _mapper.Map(e);
-                 });
+                 })
+                 .OrderByDescending(e => e.Avg);
         }
 
         public IEnumerable<BattingPostStats> GetBattingPostStats(string id)
@@ -60,12 +60,12 @@ namespace BaseballAPI.Services
             return _database.BattingPost
                 .Include(e => e.Player)
                 .Where(e => e.YearId == year)
-                .OrderByDescending(e => e.YearId)
                 .ToList()
                 .Select(e =>
                 {
                     return _mapper.Map(e);
-                });
+                })
+                .OrderByDescending(e => e.Avg);
         }
 
         public IEnumerable<BattingStats> GetBattingStatsByTeam(string team, int year)
