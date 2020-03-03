@@ -29,9 +29,8 @@ namespace BaseballAPI.Controllers
         public IEnumerable<BattingStats> GetBattingStatsByYear(int year)
         {
             return _battingService.GetBattingStatsByYear(year);
-
         }
-
+    
         [HttpGet("/batting/post/{id}")]
         public IEnumerable<BattingPostStats> GetBattingPostStats(string id)
         {

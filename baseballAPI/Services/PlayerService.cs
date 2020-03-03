@@ -7,8 +7,8 @@ namespace BaseballAPI.Services
 {
     public class PlayerService : IPlayerService
     {
-        private IBaseballDBContext _database;
-        private IPlayerMapper _mapper;
+        private readonly IBaseballDBContext _database;
+        private readonly IPlayerMapper _mapper;
 
         public PlayerService(IBaseballDBContext database, IPlayerMapper mapper)
         {
@@ -25,14 +25,12 @@ namespace BaseballAPI.Services
             var data = _database.People;
             var names = name.Split(null);
 
-            var players = MatchAllNames(data, names)
+           return MatchAllNames(data, names)
             .ToList()
             .Select<People, Player>(s =>
             {
                 return _mapper.Map(s);
-            });
-
-            return players;
+            });      
         }
 
         public Player GetPlayer(string id)

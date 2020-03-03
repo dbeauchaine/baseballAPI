@@ -8,8 +8,8 @@ namespace BaseballAPI.Services
 {
     public class PitchingService : IPitchingService
     {
-        private IBaseballDBContext _database;
-        private IPitchingStatsMapper _mapper;
+        private readonly IBaseballDBContext _database;
+        private readonly IPitchingStatsMapper _mapper;
 
         public PitchingService(IBaseballDBContext database, IPitchingStatsMapper mapper)
         {
@@ -19,7 +19,7 @@ namespace BaseballAPI.Services
 
         public IEnumerable<PitchingStats> GetPitchingStats(string id)
         {
-            var stats = _database.Pitching
+           return _database.Pitching
                 .Where(e => e.PlayerId == id)
                 .ToList()
                 .Select<Pitching, PitchingStats>(e =>
@@ -27,12 +27,11 @@ namespace BaseballAPI.Services
                      return _mapper.Map(e);
                  });
 
-            return stats;
         }
 
         public IEnumerable<PitchingStats> GetPitchingStatsByYear(int year)
         {
-            var query = _database.Pitching
+          return _database.Pitching
                 .Include(e => e.Player)
                 .Where(e => e.YearId == year && e.Ipouts >= 486)
                 .ToList()
@@ -41,13 +40,11 @@ namespace BaseballAPI.Services
                     return _mapper.Map(e);
                 })
                 .OrderBy(e => e.Era);
-
-            return query;
         }
 
         public IEnumerable<PitchingPostStats> GetPitchingPostStats(string id)
         {
-            var stats = _database.PitchingPost
+           return _database.PitchingPost
                 .Where(e => e.PlayerId == id)
                 .ToList()
                 .Select<PitchingPost, PitchingPostStats>(e =>
@@ -55,13 +52,11 @@ namespace BaseballAPI.Services
                     return _mapper.Map(e);
 
                 });
-
-            return stats;
         }
 
         public IEnumerable<PitchingPostStats> GetPitchingPostStatsByYear(int year)
         {
-            var query = _database.PitchingPost
+           return _database.PitchingPost
                 .Include(e => e.Player)
                 .Where(e => e.YearId == year)
                 .ToList()
@@ -71,8 +66,6 @@ namespace BaseballAPI.Services
 
                 })
                 .OrderBy(e => e.Era);
-
-            return query;
         }
     }
 }

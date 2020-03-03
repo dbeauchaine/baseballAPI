@@ -8,8 +8,8 @@ namespace BaseballAPI.Services
 {
     public class BattingService : IBattingService
     {
-        private IBaseballDBContext _database;
-        private IBattingStatsMapper _mapper;
+        private readonly IBaseballDBContext _database;
+        private readonly IBattingStatsMapper _mapper;
 
         public BattingService(IBaseballDBContext database, IBattingStatsMapper mapper)
         {

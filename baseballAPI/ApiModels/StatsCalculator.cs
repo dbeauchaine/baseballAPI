@@ -198,29 +198,30 @@ namespace BaseballAPI.ApiModels
 
         private CalculatorStats ConvertOptionalParamsToNonNullable(BattingStats battingStats)
         {
-            var calculatorStats = new CalculatorStats();
+            var calculatorStats = new CalculatorStats
+            {
+                Ab = battingStats.Ab ?? 0,
 
-            calculatorStats.Ab = battingStats.Ab ?? 0;
+                H = battingStats.H ?? 0,
 
-            calculatorStats.H = battingStats.H ?? 0;
+                X2b = battingStats.X2b ?? 0,
 
-            calculatorStats.X2b = battingStats.X2b ?? 0;
+                X3b = battingStats.X3b ?? 0,
 
-            calculatorStats.X3b = battingStats.X3b ?? 0;
+                Hr = battingStats.Hr ?? 0,
 
-            calculatorStats.Hr = battingStats.Hr ?? 0;
+                Bb = battingStats.Bb ?? 0,
 
-            calculatorStats.Bb = battingStats.Bb ?? 0;
+                So = battingStats.So ?? 0,
 
-            calculatorStats.So = battingStats.So ?? 0;
+                Ibb = battingStats.Ibb ?? 0,
 
-            calculatorStats.Ibb = battingStats.Ibb ?? 0;
+                Hbp = battingStats.Hbp ?? 0,
 
-            calculatorStats.Hbp = battingStats.Hbp ?? 0;
+                Sh = battingStats.Sh ?? 0,
 
-            calculatorStats.Sh = battingStats.Sh ?? 0;
-
-            calculatorStats.Sf = battingStats.Sf ?? 0;
+                Sf = battingStats.Sf ?? 0
+            };
 
             calculatorStats.Pa = CalulatePa(calculatorStats);
             calculatorStats.Singles = CalculateSingles(calculatorStats);
@@ -234,30 +235,31 @@ namespace BaseballAPI.ApiModels
 
         private CalculatorStats ConvertOptionalParamsToNonNullable(BattingPostStats battingStats)
         {
-            var calculatorStats = new CalculatorStats();
+            var calculatorStats = new CalculatorStats
+            {
+                Ab = battingStats.Ab ?? 0,
 
-            calculatorStats.Ab = battingStats.Ab ?? 0;
+                H = battingStats.H ?? 0,
 
-            calculatorStats.H = battingStats.H ?? 0;
+                X2b = battingStats.X2b ?? 0,
 
-            calculatorStats.X2b = battingStats.X2b ?? 0;
+                X3b = battingStats.X3b ?? 0,
 
-            calculatorStats.X3b = battingStats.X3b ?? 0;
+                Hr = battingStats.Hr ?? 0,
 
-            calculatorStats.Hr = battingStats.Hr ?? 0;
+                Bb = battingStats.Bb ?? 0,
 
-            calculatorStats.Bb = battingStats.Bb ?? 0;
-
-            calculatorStats.So = battingStats.So ?? 0;
+                So = battingStats.So ?? 0,
 
 
-            calculatorStats.Ibb = battingStats.Ibb ?? 0;
+                Ibb = battingStats.Ibb ?? 0,
 
-            calculatorStats.Hbp = battingStats.Hbp ?? 0;
+                Hbp = battingStats.Hbp ?? 0,
 
-            calculatorStats.Sh = battingStats.Sh ?? 0;
+                Sh = battingStats.Sh ?? 0,
 
-            calculatorStats.Sf = battingStats.Sf ?? 0;
+                Sf = battingStats.Sf ?? 0
+            };
 
             calculatorStats.Pa = CalulatePa(calculatorStats);
             calculatorStats.Singles = CalculateSingles(calculatorStats);
@@ -271,28 +273,29 @@ namespace BaseballAPI.ApiModels
 
         private CalculatorStats ConvertOptionalParamsToNonNullable(TeamStats teamStats)
         {
-            var calculatorStats = new CalculatorStats();
+            var calculatorStats = new CalculatorStats
+            {
+                Ab = teamStats.Ab ?? 0,
 
-            calculatorStats.Ab = teamStats.Ab ?? 0;
+                H = teamStats.H ?? 0,
 
-            calculatorStats.H = teamStats.H ?? 0;
+                X2b = teamStats.X2b ?? 0,
 
-            calculatorStats.X2b = teamStats.X2b ?? 0;
+                X3b = teamStats.X3b ?? 0,
 
-            calculatorStats.X3b = teamStats.X3b ?? 0;
+                Hr = teamStats.Hr ?? 0,
 
-            calculatorStats.Hr = teamStats.Hr ?? 0;
+                Bb = teamStats.Bb ?? 0,
 
-            calculatorStats.Bb = teamStats.Bb ?? 0;
+                So = teamStats.So ?? 0,
 
-            calculatorStats.So = teamStats.So ?? 0;
+                Hbp = teamStats.Hbp ?? 0,
 
-            calculatorStats.Hbp = teamStats.Hbp ?? 0;
+                Sf = teamStats.Sf ?? 0,
 
-            calculatorStats.Sf = teamStats.Sf ?? 0;
-
-            calculatorStats.Ibb = 0;
-            calculatorStats.Sh = 0;
+                Ibb = 0,
+                Sh = 0
+            };
             calculatorStats.Pa = CalulatePa(calculatorStats);
             calculatorStats.Singles = CalculateSingles(calculatorStats);
             calculatorStats.Obp = CalculateObp(calculatorStats);

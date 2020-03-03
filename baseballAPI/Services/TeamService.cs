@@ -8,8 +8,8 @@ namespace BaseballAPI.Services
 {
     public class TeamService : ITeamService
     {
-        private IBaseballDBContext _database;
-        private ITeamStatsMapper _mapper;
+        private readonly IBaseballDBContext _database;
+        private readonly ITeamStatsMapper _mapper;
 
         public TeamService(IBaseballDBContext database, ITeamStatsMapper mapper)
         {
@@ -19,7 +19,7 @@ namespace BaseballAPI.Services
 
         public IEnumerable<TeamStats> GetTeamStatsByYear(int year)
         {
-            var query = _database.Teams
+           return _database.Teams
                 .Where(e => e.YearId == year)
                 .OrderByDescending(e => e.W)
                 .ToList()
@@ -27,13 +27,11 @@ namespace BaseballAPI.Services
                 {
                     return _mapper.Map(e);
                 });
-
-            return query;
         }
 
         public IEnumerable<TeamStats> GetTeamStats(string team)
         {
-            var query = _database.Teams
+          return _database.Teams
                 .Where(e => e.TeamId == team)
                 .OrderByDescending(e => e.YearId)
                 .ToList()
@@ -41,8 +39,6 @@ namespace BaseballAPI.Services
                 {
                     return _mapper.Map(e);
                 });
-
-            return query;
         }
     }
 }

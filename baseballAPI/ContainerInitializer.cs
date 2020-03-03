@@ -20,7 +20,6 @@ namespace BaseballAPI
         public void Execute()
         {
             string connectionString = _configuration.GetValue<string>("ConnectionString");
-
             _services.AddDbContext<IBaseballDBContext, BaseballDBContext>(options => options.UseSqlServer(connectionString));
             _services.AddControllers();
             _services.AddTransient<IPlayerService, PlayerService>();
