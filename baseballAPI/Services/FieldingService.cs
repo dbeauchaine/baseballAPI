@@ -7,8 +7,8 @@ namespace BaseballAPI.Services
 {
     public class FieldingService : IFieldingService
     {
-        private IBaseballDBContext _database;
-        private IFieldingStatsMapper _mapper;
+        private readonly IBaseballDBContext _database;
+        private readonly IFieldingStatsMapper _mapper;
 
         public FieldingService(IBaseballDBContext database, IFieldingStatsMapper mapper)
         {
@@ -18,7 +18,7 @@ namespace BaseballAPI.Services
 
         public IEnumerable<FieldingStats> GetFieldingStats(string id)
         {
-            var stats = _database.Fielding
+            return _database.Fielding
                 .Where(e => e.PlayerId == id)
                 .OrderByDescending(e => e.YearId)
                 .ToList()
@@ -26,13 +26,11 @@ namespace BaseballAPI.Services
                  {
                      return _mapper.Map(stat);
                  });
-
-            return stats;
         }
 
         public IEnumerable<FieldingPostStats> GetFieldingPostStats(string id)
         {
-            var stats = _database.FieldingPost
+            return _database.FieldingPost
                 .Where(e => e.PlayerId == id)
                 .OrderByDescending(e => e.YearId)
                 .ToList()
@@ -40,8 +38,6 @@ namespace BaseballAPI.Services
                 {
                     return _mapper.Map(stat);
                 });
-
-            return stats;
         }
     }
 }
